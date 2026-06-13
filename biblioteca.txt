@@ -1,0 +1,169 @@
+ARTISTA,1,Bad Bunny,Reggaeton
+ARTISTA,2,Taylor Swift,Pop
+ARTISTA,3,The Weeknd,R&B
+ARTISTA,4,Rosalia,Flamenco Pop
+ARTISTA,5,Kendrick Lamar,Hip Hop
+ARTISTA,6,Dua Lipa,Dance Pop
+ARTISTA,7,Drake,Hip Hop
+ARTISTA,8,Billie Eilish,Indie Pop
+ARTISTA,9,Ed Sheeran,Pop
+ARTISTA,10,Ozuna,Reggaeton
+ARTISTA,11,J Balvin,Reggaeton
+ARTISTA,12,Shakira,Pop Latino
+ARTISTA,13,Coldplay,Rock Alternativo
+ARTISTA,14,Imagine Dragons,Rock
+ARTISTA,15,Peso Pluma,Regional Mexicano
+ARTISTA,16,Feid,Urbano Latino
+ARTISTA,17,SZA,R&B
+ARTISTA,18,Post Malone,Pop Rap
+ARTISTA,19,Ariana Grande,Pop
+ARTISTA,20,Rauw Alejandro,Urbano Latino
+CANCION,1,Titi Me Pregunto,Bad Bunny,195,Reggaeton,5
+CANCION,2,Me Porto Bonito,Bad Bunny,178,Reggaeton,0
+CANCION,3,Moscow Mule,Bad Bunny,234,Reggaeton,0
+CANCION,4,Ojitos Lindos,Bad Bunny,220,Reggaeton,0
+CANCION,5,Un Verano Sin Ti,Bad Bunny,198,Reggaeton,0
+CANCION,6,Efecto,Bad Bunny,183,Reggaeton,0
+CANCION,7,Un Preview,Bad Bunny,167,Reggaeton,3
+CANCION,8,Perro Negro,Bad Bunny,210,Reggaeton,0
+CANCION,9,Anti-Hero,Taylor Swift,200,Pop,0
+CANCION,10,Lavender Haze,Taylor Swift,202,Pop,0
+CANCION,11,Shake It Off,Taylor Swift,219,Pop,0
+CANCION,12,Cruel Summer,Taylor Swift,178,Pop,0
+CANCION,13,Blank Space,Taylor Swift,231,Pop,0
+CANCION,14,Fortnight,Taylor Swift,228,Pop,0
+CANCION,15,So Long London,Taylor Swift,264,Pop,0
+CANCION,16,Down Bad,Taylor Swift,222,Pop,0
+CANCION,17,Blinding Lights,The Weeknd,200,R&B,0
+CANCION,18,Save Your Tears,The Weeknd,215,R&B,0
+CANCION,19,Starboy,The Weeknd,230,R&B,0
+CANCION,20,Die For You,The Weeknd,260,R&B,0
+CANCION,21,Sacrifice,The Weeknd,190,R&B,0
+CANCION,22,Popular,The Weeknd,195,R&B,0
+CANCION,23,Malamente,Rosalia,203,Flamenco Pop,0
+CANCION,24,Con Altura,Rosalia,174,Flamenco Pop,0
+CANCION,25,SAOKO,Rosalia,168,Flamenco Pop,0
+CANCION,26,Despecha,Rosalia,188,Flamenco Pop,0
+CANCION,27,Chicken Teriyaki,Rosalia,122,Flamenco Pop,0
+CANCION,28,HUMBLE.,Kendrick Lamar,177,Hip Hop,0
+CANCION,29,DNA.,Kendrick Lamar,185,Hip Hop,0
+CANCION,30,Not Like Us,Kendrick Lamar,274,Hip Hop,0
+CANCION,31,Swimming Pools,Kendrick Lamar,313,Hip Hop,3
+CANCION,32,Squabble Up,Kendrick Lamar,137,Hip Hop,0
+CANCION,33,Levitate,Kendrick Lamar,198,Hip Hop,0
+CANCION,34,Levitating,Dua Lipa,203,Dance Pop,0
+CANCION,35,Dont Start Now,Dua Lipa,183,Dance Pop,0
+CANCION,36,Physical,Dua Lipa,193,Dance Pop,0
+CANCION,37,Cold Heart,Dua Lipa,209,Dance Pop,0
+CANCION,38,Illusion,Dua Lipa,188,Dance Pop,0
+CANCION,39,Training Season,Dua Lipa,196,Dance Pop,0
+CANCION,40,God's Plan,Drake,198,Hip Hop,0
+CANCION,41,Hotline Bling,Drake,267,Hip Hop,0
+CANCION,42,One Dance,Drake,173,Hip Hop,0
+CANCION,43,Rich Flex,Drake,234,Hip Hop,0
+CANCION,44,Spin Bout U,Drake,182,Hip Hop,0
+CANCION,45,Bad Guy,Billie Eilish,194,Indie Pop,0
+CANCION,46,Happier Than Ever,Billie Eilish,298,Indie Pop,0
+CANCION,47,Lovely,Billie Eilish,200,Indie Pop,0
+CANCION,48,Birds of a Feather,Billie Eilish,210,Indie Pop,0
+CANCION,49,Lunch,Billie Eilish,181,Indie Pop,0
+CANCION,50,Shape of You,Ed Sheeran,234,Pop,0
+CANCION,51,Perfect,Ed Sheeran,263,Pop,0
+CANCION,52,Thinking Out Loud,Ed Sheeran,281,Pop,0
+CANCION,53,Shivers,Ed Sheeran,207,Pop,0
+CANCION,54,Eyes Closed,Ed Sheeran,218,Pop,0
+CANCION,55,Taina,Ozuna,222,Reggaeton,0
+CANCION,56,Caramelo,Ozuna,208,Reggaeton,0
+CANCION,57,La Modelo,Ozuna,214,Reggaeton,0
+CANCION,58,Favorito,Ozuna,218,Reggaeton,0
+CANCION,59,Coco,J Balvin,193,Reggaeton,0
+CANCION,60,Mi Gente,J Balvin,189,Reggaeton,0
+CANCION,61,Safari,J Balvin,211,Reggaeton,0
+CANCION,62,Ritmo,J Balvin,206,Reggaeton,0
+CANCION,63,Shakira Bzrp Session,Shakira,196,Pop Latino,0
+CANCION,64,Waka Waka,Shakira,222,Pop Latino,4
+CANCION,65,Loba,Shakira,237,Pop Latino,0
+CANCION,66,Soltera,Shakira,205,Pop Latino,3
+CANCION,67,Yellow,Coldplay,268,Rock Alternativo,0
+CANCION,68,The Scientist,Coldplay,309,Rock Alternativo,4
+CANCION,69,Fix You,Coldplay,295,Rock Alternativo,1
+CANCION,70,A Sky Full of Stars,Coldplay,268,Rock Alternativo,0
+CANCION,71,My Universe,Coldplay,230,Rock Alternativo,0
+CANCION,72,Believer,Imagine Dragons,204,Rock,0
+CANCION,73,Thunder,Imagine Dragons,187,Rock,0
+CANCION,74,Enemy,Imagine Dragons,173,Rock,1
+CANCION,75,Bones,Imagine Dragons,175,Rock,0
+CANCION,76,Natural,Imagine Dragons,189,Rock,0
+CANCION,77,Ella Baila Sola,Peso Pluma,176,Regional Mexicano,0
+CANCION,78,La Bebe,Peso Pluma,185,Regional Mexicano,3
+CANCION,79,Por Las Noches,Peso Pluma,191,Regional Mexicano,0
+CANCION,80,Bzrp Session 55,Peso Pluma,195,Regional Mexicano,0
+CANCION,81,Felicity,Feid,199,Urbano Latino,0
+CANCION,82,Castigo,Feid,210,Urbano Latino,0
+CANCION,83,Chorrito Pa Las Animas,Feid,204,Urbano Latino,0
+CANCION,84,Normal,Feid,215,Urbano Latino,0
+CANCION,85,Kill Bill,SZA,153,R&B,0
+CANCION,86,Good Days,SZA,278,R&B,0
+CANCION,87,Snooze,SZA,221,R&B,0
+CANCION,88,Shirt,SZA,196,R&B,3
+CANCION,89,Sunflower,Post Malone,158,Pop Rap,0
+CANCION,90,Circles,Post Malone,215,Pop Rap,2
+CANCION,91,Rockstar,Post Malone,218,Pop Rap,0
+CANCION,92,Chemical,Post Malone,210,Pop Rap,0
+CANCION,93,7 Rings,Ariana Grande,178,Pop,3
+CANCION,94,Thank U Next,Ariana Grande,207,Pop,0
+CANCION,95,Positions,Ariana Grande,172,Pop,0
+CANCION,96,Yes And,Ariana Grande,210,Pop,0
+CANCION,97,Hayami,Rauw Alejandro,198,Urbano Latino,0
+CANCION,98,Punto 40,Rauw Alejandro,204,Urbano Latino,3
+CANCION,99,Esclava,Rauw Alejandro,215,Urbano Latino,0
+CANCION,100,Todo de Ti,Rauw Alejandro,188,Urbano Latino,0
+ALBUM,1,Un Verano Sin Ti,2022,Bad Bunny,Reggaeton
+ALBUM,2,Nadie Sabe Lo Que Va a Pasar Manana,2023,Bad Bunny,Reggaeton
+ALBUM,3,Midnights,2022,Taylor Swift,Pop
+ALBUM,4,The Tortured Poets Department,2024,Taylor Swift,Pop
+ALBUM,5,After Hours,2020,The Weeknd,R&B
+ALBUM,6,Dawn FM,2022,The Weeknd,R&B
+ALBUM,7,El Mal Querer,2018,Rosalia,Flamenco Pop
+ALBUM,8,Motomami,2022,Rosalia,Flamenco Pop
+ALBUM,9,Mr. Morale and The Big Steppers,2022,Kendrick Lamar,Hip Hop
+ALBUM,10,GNX,2024,Kendrick Lamar,Hip Hop
+ALBUM,11,Future Nostalgia,2020,Dua Lipa,Dance Pop
+ALBUM,12,Radical Optimism,2024,Dua Lipa,Dance Pop
+ALBUM,13,For All The Dogs,2023,Drake,Hip Hop
+ALBUM,14,Hit Me Hard and Soft,2024,Billie Eilish,Indie Pop
+ALBUM,15,Subtract,2023,Ed Sheeran,Pop
+ALBUM,16,Ozutochi,2023,Ozuna,Reggaeton
+ALBUM,17,Jose,2021,J Balvin,Reggaeton
+ALBUM,18,Las Mujeres Ya No Lloran,2024,Shakira,Pop Latino
+ALBUM,19,Music of the Spheres,2021,Coldplay,Rock Alternativo
+ALBUM,20,Loom,2024,Imagine Dragons,Rock
+ALBUM,21,Exodo,2023,Peso Pluma,Regional Mexicano
+ALBUM,22,Mor,2023,Feid,Urbano Latino
+ALBUM,23,SOS,2022,SZA,R&B
+ALBUM,24,Austin,2023,Post Malone,Pop Rap
+ALBUM,25,Eternal Sunshine,2024,Ariana Grande,Pop
+ALBUM,26,Playa del Cielo,2023,Rauw Alejandro,Urbano Latino
+PODCAST,1,El Podcast de la Republica,Ivan Torrealba,0
+PODCAST,2,Entiende Tu Mente,Molo Cebrian,0
+PODCAST,3,Cosas de Internet,Ricardo Sala,0
+PODCAST,4,Invest Like The Best,Patrick OShaughnessy,0
+PODCAST,5,Huberman Lab,Andrew Huberman,0
+PODCAST,6,La Maquina del Tiempo,Hector Morales,0
+PODCAST,7,True Crime Peru,Carmen Vilchez,0
+PODCAST,8,Codigo Fuente,Luis Roca,0
+PODCAST,9,The Joe Rogan Experience,Joe Rogan,0
+PODCAST,10,Startup Peru,Marco Flores,0
+GENERO,1,Reggaeton,Musica urbana latina de ritmo sincopado
+GENERO,2,Pop,Musica popular contemporanea de alcance masivo
+GENERO,3,R&B,Rhythm and Blues con influencias soul y funk
+GENERO,4,Hip Hop,Cultura urbana basada en rap y beats
+GENERO,5,Dance Pop,Pop electronico orientado a la pista de baile
+GENERO,6,Flamenco Pop,Fusion de flamenco tradicional con produccion moderna
+GENERO,7,Indie Pop,Pop independiente de produccion alternativa
+GENERO,8,Rock Alternativo,Rock moderno con influencias experimentales
+GENERO,9,Rock,Genero basado en guitarra electrica y bateria
+GENERO,10,Pop Latino,Pop en espanol con raices latinas
+GENERO,11,Regional Mexicano,Musica tradicional mexicana contemporanea
+GENERO,12,Urbano Latino,Fusion de generos urbanos latinoamericanos
+GENERO,13,Pop Rap,Fusion de rap con melodias pop accesibles

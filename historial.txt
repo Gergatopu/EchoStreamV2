@@ -1,0 +1,5 @@
+HIST,12,1,Punto 40,Cancion,Rauw Alejandro,2026-05-10 03:11:17
+HIST,12,2,Shirt,Cancion,SZA,2026-05-10 03:11:19
+HIST,99,1,Waka Waka,Cancion,Shakira,2026-05-10 03:15:44
+HIST,99,2,La Bebe,Cancion,Peso Pluma,2026-05-10 03:15:46
+HIST,99,3,Enemy,Cancion,Imagine Dragons,2026-05-10 03:15:47
