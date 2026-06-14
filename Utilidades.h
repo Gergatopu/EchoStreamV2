@@ -1,26 +1,17 @@
 #pragma once
 #include <iostream>
 #include <string>
+#include <vector>
 #include <ctime>
 #include <cstdlib>
+#include <conio.h>
 
 using namespace std;
 using namespace System;
 
-string obtenerFechaHoy() {
-    time_t t = time(nullptr);
-    char buf[20];
-    strftime(buf, sizeof(buf), "%Y-%m-%d", localtime(&t));
-    return string(buf);
-}
-
-string obtenerHoraActual() {
-    time_t t = time(nullptr);
-    char buf[30];
-    strftime(buf, sizeof(buf), "%Y-%m-%d %H:%M:%S", localtime(&t));
-    return string(buf);
-}
-
+#define TECLA_ARRIBA 72
+#define TECLA_ABAJO 80
+#define TECLA_ENTER 13
 
 void ubicar(int x, int y) {
     Console::SetCursorPosition(x, y);
@@ -47,7 +38,60 @@ void asignarcolor(int color) {
     case 15: Console::ForegroundColor = ConsoleColor::DarkGray; break;
 
     default: Console::ForegroundColor = ConsoleColor::Blue; break;
+    }
+}
 
+string obtenerFechaHoy() {
+    time_t t = time(nullptr);
+    char buf[20];
+    strftime(buf, sizeof(buf), "%Y-%m-%d", localtime(&t));
+    return string(buf);
+}
+
+string obtenerHoraActual() {
+    time_t t = time(nullptr);
+    char buf[30];
+    strftime(buf, sizeof(buf), "%Y-%m-%d %H:%M:%S", localtime(&t));
+    return string(buf);
+}
+
+int menuInteractivo(const vector<string>& opciones, int posX, int posY) {
+    int seleccion = 0;
+    int totalOpciones = opciones.size();
+    bool eligiendo = true;
+
+    while (eligiendo) {
+        for (int i = 0; i < totalOpciones; i++) {
+            Console::SetCursorPosition(posX, posY + (i * 2));
+
+            if (i == seleccion) {
+                asignarcolor(14);
+                cout << ">> " << opciones[i] << "   ";
+            }
+            else {
+                asignarcolor(7);
+                cout << "   " << opciones[i] << "   ";
+            }
+        }
+
+        int tecla = _getch();
+
+        if (tecla == 224) {
+            tecla = _getch();
+
+            if (tecla == TECLA_ARRIBA) {
+                seleccion--;
+                if (seleccion < 0) seleccion = totalOpciones - 1;
+            }
+            else if (tecla == TECLA_ABAJO) {
+                seleccion++;
+                if (seleccion >= totalOpciones) seleccion = 0;
+            }
+        }
+        else if (tecla == TECLA_ENTER) {
+            eligiendo = false;
+        }
     }
 
+    return seleccion;
 }

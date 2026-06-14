@@ -24,11 +24,14 @@ void menuAgregarACola(GestorBiblioteca* lib, GestorReproduccion* repro, Usuario*
     int op = 0;
     while (op != 3) {
         cabecera("AGREGAR A COLA");
-        cout << "Que quieres agregar?" << endl;
-        cout << "1. Cancion individual" << endl;
-        cout << "2. Playlist completa" << endl;
-        cout << "3. Volver" << endl;
-        asignarcolor(14); cout << "Seleccione: "; cin >> op; asignarcolor(7);
+        ubicar(5, 4); cout << "Que quieres agregar?";
+
+        vector<string> opciones = {
+            "Cancion individual",
+            "Playlist completa",
+            "Volver"
+        };
+        op = menuInteractivo(opciones, 5, 6) + 1;
 
         if (op == 1) {
             lib->mostrarSoloCanciones();
@@ -68,12 +71,14 @@ void menuPlaylists(GestorBiblioteca* lib, Usuario* usuario) {
     int op = 0;
     while (op != 5) {
         cabecera("MIS PLAYLISTS");
-        cout << "1. Ver mis playlists" << endl;
-        cout << "2. Crear nueva playlist" << endl;
-        cout << "3. Agregar cancion a una playlist" << endl;
-        cout << "4. Ver canciones de una playlist" << endl;
-        cout << "5. Volver" << endl;
-        asignarcolor(14); cout << "Seleccione: "; cin >> op; asignarcolor(7);
+        vector<string> opciones = {
+            "Ver mis playlists",
+            "Crear nueva playlist",
+            "Agregar cancion a una playlist",
+            "Ver canciones de una playlist",
+            "Volver"
+        };
+        op = menuInteractivo(opciones, 5, 4) + 1;
 
         if (op == 1) {
             cout << "\n--- Mis Playlists ---" << endl;
@@ -84,7 +89,7 @@ void menuPlaylists(GestorBiblioteca* lib, Usuario* usuario) {
         }
         else if (op == 2) {
             string nom, desc;
-            cout << "Nombre de la playlist: "; cin.ignore(); asignarcolor(14); getline(cin, nom); asignarcolor(7);
+            cout << "\nNombre de la playlist: "; cin.ignore(); asignarcolor(14); getline(cin, nom); asignarcolor(7);
             cout << "Descripcion: "; asignarcolor(14); getline(cin, desc); asignarcolor(7);
             Playlist* pl = usuario->crearPlaylist(nom, desc);
             GestorPersistencia::guardarLinea("usuarios.txt", pl->toString());
@@ -102,7 +107,7 @@ void menuPlaylists(GestorBiblioteca* lib, Usuario* usuario) {
             if (!pl) { cout << "  Playlist no encontrada." << endl; pausar(); continue; }
 
             lib->mostrarSoloCanciones();
-            int idC; cout << "ID de la cancion a agregar: "; asignarcolor(14); cin >> idC; asignarcolor(7);
+            int idC; cout << "\nID de la cancion a agregar: "; asignarcolor(14); cin >> idC; asignarcolor(7);
             Cancion* c = lib->buscarCancionId(idC);
             if (c) {
                 pl->agregarCancion(c);
@@ -139,11 +144,13 @@ void menuExplorar(GestorBiblioteca* lib) {
     int op = 0;
     while (op != 4) {
         cabecera("EXPLORAR BIBLIOTECA");
-        cout << "1. Ver todas las canciones (Sin ordenar)" << endl;
-        cout << "2. Ordenar canciones A-Z (Insercion)" << endl;
-        cout << "3. Ver Top Reproducciones (Shell Sort)" << endl;
-        cout << "4. Volver" << endl;
-        asignarcolor(14); cout << "Seleccione: "; cin >> op; asignarcolor(7);
+        vector<string> opciones = {
+            "Ver todas las canciones (Sin ordenar)",
+            "Ordenar canciones A-Z (Insercion)",
+            "Ver Top Reproducciones (Shell Sort)",
+            "Volver"
+        };
+        op = menuInteractivo(opciones, 5, 4) + 1;
 
         if (op == 1) { lib->mostrarSoloCanciones(); pausar(); }
         else if (op == 2) { lib->mostrarCancionesOrdenadasA_Z(); pausar(); }
@@ -155,22 +162,25 @@ void menuFavoritos(GestorBiblioteca* lib, Usuario* usuario) {
     int op = 0;
     while (op != 4) {
         cabecera("MIS FAVORITOS");
-        cout << "1. Ver canciones favoritas" << endl;
-        cout << "2. Agregar cancion a favoritos" << endl;
-        cout << "3. Ver favoritos ordenados A-Z (Insercion)" << endl;
-        cout << "4. Volver" << endl;
-        asignarcolor(14); cout << "Seleccione: "; cin >> op; asignarcolor(7);
+        vector<string> opciones = {
+            "Ver canciones favoritas",
+            "Agregar cancion a favoritos",
+            "Ver favoritos ordenados A-Z (Insercion)",
+            "Volver"
+        };
+        op = menuInteractivo(opciones, 5, 4) + 1;
 
         vector<Cancion*> favs = usuario->getFavoritos().toVector();
 
         if (op == 1) {
+            cout << "\n--- Canciones Favoritas ---" << endl;
             if (favs.empty()) cout << "  (Sin canciones favoritas)" << endl;
             else for (Cancion* c : favs) c->mostrarDetalles();
             pausar();
         }
         else if (op == 2) {
             lib->mostrarSoloCanciones();
-            int idC; cout << "ID de la cancion: "; asignarcolor(14); cin >> idC; asignarcolor(7);
+            int idC; cout << "\nID de la cancion: "; asignarcolor(14); cin >> idC; asignarcolor(7);
             Cancion* c = lib->buscarCancionId(idC);
             if (c) {
                 usuario->agregarFavorito(c);
@@ -180,9 +190,9 @@ void menuFavoritos(GestorBiblioteca* lib, Usuario* usuario) {
             pausar();
         }
         else if (op == 3) {
-            if (favs.empty()) { cout << "  (Sin canciones favoritas)" << endl; }
+            if (favs.empty()) { cout << "\n  (Sin canciones favoritas)" << endl; }
             else {
-                Algoritmos::insertionSortPorNombre(favs); // Usa la vista, no daña la lista
+                Algoritmos::insertionSortPorNombre(favs);
                 cout << "\n  Favoritos ordenados (A-Z):" << endl;
                 for (Cancion* c : favs) c->mostrarDetalles();
             }
@@ -196,22 +206,24 @@ void menuSuscripcion(GestorUsuarios* userG) {
     Usuario* u = userG->getUsuarioLogueado();
 
     if (u->esPremium()) {
-        cout << "  Plan actual: Premium | Vence: " << u->getSuscripcion().fechaVencimiento << endl;
-        cout << "\n  Ya disfrutas de todos los beneficios." << endl;
+        ubicar(5, 5); cout << "Plan actual: Premium | Vence: " << u->getSuscripcion().fechaVencimiento;
+        ubicar(5, 7); cout << "Ya disfrutas de todos los beneficios de EchoStream.";
+        cout << endl;
         pausar();
         return;
     }
 
-    cout << "  Plan actual: Gratuito" << endl;
-    cout << "\n1. Actualizar a Premium (S/29.90/mes)" << endl;
-    cout << "2. Volver" << endl;
-    asignarcolor(14); cout << "Seleccione: ";
-    int op; cin >> op; asignarcolor(7);
+    ubicar(5, 4); cout << "Plan actual: Gratuito";
+    vector<string> opciones = {
+        "Actualizar a Premium (S/29.90/mes)",
+        "Volver"
+    };
+    int op = menuInteractivo(opciones, 5, 6) + 1;
 
     if (op == 1) {
         u->activarPremium({ "Premium", 29.90, obtenerFechaHoy(), "2026-12-31", true });
         GestorPersistencia::guardarLinea("usuarios.txt", "SUSCRIPCION,999," + to_string(u->getId()) + ",PlanPremium,Premium,29.90,Hoy,2026-12-31,1");
-        cout << "  Plan Premium activado exitosamente." << endl;
+        cout << "\n  Plan Premium activado exitosamente." << endl;
     }
     pausar();
 }
@@ -249,18 +261,18 @@ void menuStreaming(GestorBiblioteca* lib, GestorUsuarios* userG, GestorReproducc
 
         asignarcolor(14); Console::SetCursorPosition(35, 6);  cout << "==========================================================";
 
-        // --- OPCIONES DEL MENÚ (Ajustadas) ---
-        asignarcolor(7);  Console::SetCursorPosition(40, 9);  cout << "1. Explorar Biblioteca y Catalogo";
-        asignarcolor(7);  Console::SetCursorPosition(40, 11); cout << "2. Agregar a la Cola";
-        asignarcolor(7);  Console::SetCursorPosition(40, 13); cout << "3. Reproducir Siguiente";
-        asignarcolor(7);  Console::SetCursorPosition(40, 15); cout << "4. Gestionar Cola (Ver / Mezclar)";
-        asignarcolor(7);  Console::SetCursorPosition(40, 17); cout << "5. Mis Playlists";
-        asignarcolor(7);  Console::SetCursorPosition(40, 19); cout << "6. Mis Favoritos";
-        asignarcolor(7);  Console::SetCursorPosition(40, 21); cout << "7. Mi Historial e Info Suscripcion";
-        asignarcolor(8);  Console::SetCursorPosition(40, 23); cout << "8. Cerrar Sesion";
+        vector<string> opcionesMenuPrincipal = {
+            "Explorar Biblioteca y Catalogo",
+            "Agregar a la Cola",
+            "Reproducir Siguiente",
+            "Gestionar Cola (Ver / Mezclar)",
+            "Mis Playlists",
+            "Mis Favoritos",
+            "Mi Historial e Info Suscripcion",
+            "Cerrar Sesion"
+        };
 
-        asignarcolor(14); Console::SetCursorPosition(40, 26); cout << ">> Seleccione una opcion: ";
-        cin >> op; asignarcolor(7);
+        op = menuInteractivo(opcionesMenuPrincipal, 40, 9) + 1;
 
         switch (op) {
         case 1: menuExplorar(lib); break;
@@ -272,10 +284,17 @@ void menuStreaming(GestorBiblioteca* lib, GestorUsuarios* userG, GestorReproducc
         case 4: {
             cabecera("GESTIONAR COLA");
             repro->mostrarCola();
-            cout << "\n1. Mezclar aleatoriamente (Shuffle recursivo)" << endl;
-            cout << "2. Volver" << endl;
-            asignarcolor(14); cout << "Seleccione: ";
-            int sub; cin >> sub; asignarcolor(7);
+
+            // Calculamos la posición Y dinámicamente debajo de la cola actual impresa
+            cout << "\n";
+            int currentY = Console::CursorTop;
+
+            vector<string> opcionesCola = {
+                "Mezclar aleatoriamente (Shuffle recursivo)",
+                "Volver"
+            };
+            int sub = menuInteractivo(opcionesCola, 5, currentY + 1) + 1;
+
             if (sub == 1) repro->modoAleatorio();
             pausar(); break;
         }
@@ -319,13 +338,14 @@ int main() {
 
         // --- OPCIONES DEL MENÚ ---
         asignarcolor(7);  Console::SetCursorPosition(70, 21); cout << "[ MENU DE ACCESO ]";
-        asignarcolor(7);  Console::SetCursorPosition(70, 23); cout << "1. Iniciar Sesion";
-        asignarcolor(7);  Console::SetCursorPosition(70, 25); cout << "2. Registrar Nuevo Usuario";
-        asignarcolor(8);  Console::SetCursorPosition(70, 27); cout << "3. Salir";
 
-        asignarcolor(14); Console::SetCursorPosition(70, 31); cout << ">> Seleccione una opcion: ";
-        asignarcolor(15);
-        cin >> opAcceso;
+        vector<string> opcionesAcceso = {
+            "Iniciar Sesion",
+            "Registrar Nuevo Usuario",
+            "Salir"
+        };
+
+        opAcceso = menuInteractivo(opcionesAcceso, 70, 23) + 1;
 
         if (opAcceso == 1) {
             system("cls");
