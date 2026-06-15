@@ -2,7 +2,6 @@ USUARIO,12,Ilder Ojeda,ojedailder411@gmail.com,6112
 SUSCRIPCION,1012,12,Premium EchoStream,Premium,29.9,2026-05-09,2026-12-31,1
 DISPOSITIVO,100,PC Principal,Windows,11,1,12
 DISPOSITIVO,101,Celular,iOs,17,1,12
-PLAYLIST,1201,goku,canciones insanas,12
 PLAYLIST_CANCION,1201,68
 USUARIO,99,Gerardo,gerardo@gmail.com,1111
 SUSCRIPCION,1099,99,Premium EchoStream,Premium,29.9,2026-05-09,2026-12-31,1
@@ -13,9 +12,15 @@ PLAYLIST_CANCION,1201,69
 PLAYLIST,1203,jugado,musica para jugar,12
 PLAYLIST,1204,deporte,canciones para entrenar y jugar deportes,12
 PLAYLIST_CANCION,1204,98
-PLAYLIST_CANCION,1204,88PLAYLIST,9901,gym,para el gym,99
+PLAYLIST_CANCION,1204,88
+PLAYLIST,9901,gym,para el gym,99
 PLAYLIST_CANCION,9901,1
 PLAYLIST,9901,prueba,hola,99
 PLAYLIST_CANCION,9901,77
 USUARIO,1,gonzalo,gonzaloprueba@gmail.com,1
 SUSCRIPCION,1001,1,PlanPremium,Premium,29.90,Hoy,2026-12-31,1
+ 
+ 
+PLAYLIST,1205,studio,Musica para estudiar programacion,12
+PLAYLIST_CANCION,1205,171
+PLAYLIST_CANCION,1205,170

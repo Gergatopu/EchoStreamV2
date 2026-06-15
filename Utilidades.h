@@ -65,7 +65,7 @@ int menuInteractivo(const vector<string>& opciones, int posX, int posY) {
             Console::SetCursorPosition(posX, posY + (i * 2));
 
             if (i == seleccion) {
-                asignarcolor(14);
+                asignarcolor(4);
                 cout << ">> " << opciones[i] << "   ";
             }
             else {

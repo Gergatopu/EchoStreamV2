@@ -23,3 +23,4 @@ HIST,99,999,En La Ciudad De La Furia,Cancion,Soda Stereo,2026-06-15 03:08:20
 HIST,99,999,You Only Live Once,Cancion,The Strokes,2026-06-15 03:08:21
 HIST,99,999,Last Nite,Cancion,The Strokes,2026-06-15 03:08:22
 HIST,99,999,Let It Be,Cancion,The Beatles,2026-06-15 03:08:24
+HIST,12,999,The Middle,Cancion,Zedd,2026-06-15 16:02:39

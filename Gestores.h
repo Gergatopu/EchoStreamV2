@@ -240,6 +240,11 @@ public:
                 if (due) due->agregarPlaylist(new Playlist(stoi(id), nom, desc, stoi(uid)));
             }
         }
+        vector<Usuario*> usuarios = listaUsuarios.toVector();
+
+        for (Usuario* u : usuarios) {
+            u->recalcularNextPlaylistId();
+        }
         archivo.close();
     }
 
@@ -280,6 +285,51 @@ public:
 
     Usuario* getUsuarioLogueado() { return usuarioLogueado; }
     void cerrarSesion() { usuarioLogueado = nullptr; cout << "  Sesion cerrada." << endl; }
+    void cargarCancionesDePlaylists(GestorBiblioteca* lib) {
+        ifstream archivo("usuarios.txt");
+        if (!archivo.is_open()) return;
+
+        string linea;
+
+        while (getline(archivo, linea)) {
+            if (linea.empty()) continue;
+
+            stringstream ss(linea);
+            string tag;
+            getline(ss, tag, ',');
+
+            if (tag == "PLAYLIST_CANCION") {
+                string idPlaylistStr, idCancionStr;
+
+                getline(ss, idPlaylistStr, ',');
+                getline(ss, idCancionStr, ',');
+
+                if (!idCancionStr.empty() && idCancionStr.back() == '\r') {
+                    idCancionStr.pop_back();
+                }
+
+                int idPlaylist = stoi(idPlaylistStr);
+                int idCancion = stoi(idCancionStr);
+
+                Cancion* cancion = lib->buscarCancionId(idCancion);
+
+                if (cancion != nullptr) {
+                    vector<Usuario*> usuarios = listaUsuarios.toVector();
+
+                    for (Usuario* u : usuarios) {
+                        Playlist* playlist = u->buscarPlaylistPorId(idPlaylist);
+
+                        if (playlist != nullptr) {
+                            playlist->agregarCancion(cancion);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        archivo.close();
+    }
 };
 
 class GestorReproduccion {

@@ -329,6 +329,8 @@ int main() {
 
     GestorBiblioteca* biblioteca = new GestorBiblioteca();
     GestorUsuarios* usuarios = new GestorUsuarios();
+    usuarios->cargarCancionesDePlaylists(biblioteca);
+
     GestorReproduccion* reproduccion = nullptr;
 
     int opAcceso = 0;
