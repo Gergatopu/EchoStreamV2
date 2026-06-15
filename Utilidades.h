@@ -95,3 +95,171 @@ int menuInteractivo(const vector<string>& opciones, int posX, int posY) {
 
     return seleccion;
 }
+
+string obtenerNombreGenero(int id) {
+    switch (id) {
+    case 10: return "Metal";
+    case 20: return "Rock";
+	case 40: return "Pop";
+    case 60: return "Electronica";
+    case 80: return "Reggaeton";
+    case 90: return "Cumbia";
+    default: return "Desconocido";
+    }
+}
+
+string obtenerNombreArtista(int id) {
+    switch (id) {
+        // --- 10: METAL ---
+    case 11: return "Metallica";
+    case 12: return "Megadeth";
+    case 13: return "Iron Maiden";
+    case 14: return "Black Sabbath";
+    case 15: return "Judas Priest";
+    case 16: return "Slayer";
+    case 17: return "Pantera";
+    case 18: return "Slipknot";
+    case 19: return "System of a Down";
+    case 20: return "Korn";
+
+        // --- 20: ROCK ---
+    case 21: return "AC/DC";
+    case 22: return "Led Zeppelin";
+    case 23: return "Nirvana";
+    case 24: return "Queen";
+    case 25: return "The Strokes";
+    case 26: return "Arctic Monkeys";
+    case 27: return "Radiohead";
+    case 28: return "Libido";
+    case 29: return "Soda Stereo";
+    case 30: return "The Beatles";
+
+        // --- 40: POP ---
+    case 41: return "Coldplay";
+    case 42: return "Ed Sheeran";
+    case 43: return "Taylor Swift";
+    case 44: return "Dua Lipa";
+    case 45: return "Billie Eilish";
+    case 46: return "Ariana Grande";
+    case 47: return "Katy Perry";
+    case 48: return "Lady Gaga";
+    case 49: return "Michael Jackson";
+    case 50: return "Harry Styles";
+
+        // --- 60: ELECTRONICA ---
+    case 61: return "Daft Punk";
+    case 62: return "Calvin Harris";
+    case 63: return "The Weeknd";
+    case 64: return "Avicii";
+    case 65: return "David Guetta";
+    case 66: return "Grimes";
+    case 67: return "Tiesto";
+    case 68: return "Skrillex";
+    case 69: return "Martin Garrix";
+    case 70: return "Zedd";
+
+        // --- 80: REGGAETON ---
+    case 81: return "Daddy Yankee";
+    case 82: return "Don Omar";
+    case 83: return "Wisin & Yandel";
+    case 84: return "Bad Bunny";
+    case 85: return "J Balvin";
+    case 86: return "Ozuna";
+    case 87: return "Rauw Alejandro";
+    case 88: return "Maluma";
+    case 89: return "Karol G";
+    case 90: return "Feid";
+
+        // --- 90: CUMBIA ---
+    case 91: return "Agua Marina";
+    case 92: return "Grupo 5";
+    case 93: return "Armonia 10";
+    case 94: return "Corazon Serrano";
+    case 95: return "Los Angeles Azules";
+    case 96: return "Rombai";
+    case 97: return "Marama";
+    case 98: return "Ke Personajes";
+    case 99: return "Rafaga";
+    case 100: return "Amar Azul";
+
+    default: return "Desconocido";
+    }
+}
+
+string obtenerNombreAlbum(int id) {
+    switch (id) {
+        // --- ALBUMES METAL (111 - 203) ---
+    case 111: return "Master of Puppets"; case 112: return "Metallica (Black Album)"; case 113: return "Ride the Lightning";
+    case 121: return "Countdown to Extinction"; case 122: return "Rust in Peace"; case 123: return "Peace Sells";
+    case 131: return "The Number of the Beast"; case 132: return "Powerslave"; case 133: return "Fear of the Dark";
+    case 141: return "Paranoid"; case 142: return "Master of Reality"; case 143: return "Vol. 4";
+    case 151: return "British Steel"; case 152: return "Painkiller"; case 153: return "Screaming for Vengeance";
+    case 161: return "Reign in Blood"; case 162: return "South of Heaven"; case 163: return "Seasons in the Abyss";
+    case 171: return "Vulgar Display of Power"; case 172: return "Cowboys from Hell"; case 173: return "Far Beyond Driven";
+    case 181: return "Vol. 3"; case 182: return "Iowa"; case 183: return "All Hope Is Gone";
+    case 191: return "Toxicity"; case 192: return "Mezmerize"; case 193: return "Steal This Album";
+    case 201: return "Follow the Leader"; case 202: return "Issues"; case 203: return "Korn";
+
+        // --- ALBUMES ROCK (211 - 303) ---
+    case 211: return "Back in Black"; case 212: return "Highway to Hell"; case 213: return "The Razors Edge";
+    case 221: return "Led Zeppelin IV"; case 222: return "Led Zeppelin II"; case 223: return "Physical Graffiti";
+    case 231: return "Nevermind"; case 232: return "In Utero"; case 233: return "Bleach";
+    case 241: return "A Night at the Opera"; case 242: return "Jazz"; case 243: return "The Game";
+    case 251: return "Room on Fire"; case 252: return "Is This It"; case 253: return "First Impressions of Earth";
+    case 261: return "AM"; case 262: return "Favourite Worst Nightmare"; case 263: return "Whatever People Say";
+    case 271: return "OK Computer"; case 272: return "Pablo Honey"; case 273: return "The Bends";
+    case 281: return "Libido"; case 282: return "Hembra"; case 283: return "Pop*Porn";
+    case 291: return "Cancion Animal"; case 292: return "Signos"; case 293: return "Doble Vida";
+    case 301: return "Let It Be"; case 302: return "Past Masters"; case 303: return "Abbey Road";
+
+        // --- ALBUMES POP (411 - 503) ---
+    case 411: return "Parachutes"; case 412: return "Viva la Vida"; case 413: return "A Rush of Blood";
+    case 421: return "Divide"; case 422: return "Multiply"; case 423: return "Subtract";
+    case 431: return "Lover"; case 432: return "Midnights"; case 433: return "The Tortured Poets Department";
+    case 441: return "Future Nostalgia"; case 442: return "Radical Optimism"; case 443: return "Dua Lipa";
+    case 451: return "Hit Me Hard and Soft"; case 452: return "Happier Than Ever"; case 453: return "When We All Fall Asleep";
+    case 461: return "thank u next"; case 462: return "Dangerous Woman"; case 463: return "Sweetener";
+    case 471: return "Teenage Dream"; case 472: return "PRISM"; case 473: return "One of the Boys";
+    case 481: return "The Fame"; case 482: return "Born This Way"; case 483: return "A Star Is Born";
+    case 491: return "Thriller"; case 492: return "Bad"; case 493: return "Off the Wall";
+    case 501: return "Harrys House"; case 502: return "Fine Line"; case 503: return "Harry Styles";
+
+        // --- ALBUMES ELECTRONICA (611 - 703) ---
+    case 611: return "Discovery"; case 612: return "Homework"; case 613: return "Random Access Memories";
+    case 621: return "Motion"; case 622: return "18 Months"; case 623: return "Funk Wav Bounces";
+    case 631: return "After Hours"; case 632: return "Dawn FM"; case 633: return "Starboy";
+    case 641: return "True"; case 642: return "Stories"; case 643: return "Tim";
+    case 651: return "Nothing but the Beat"; case 652: return "Listen"; case 653: return "One Love";
+    case 661: return "Visions"; case 662: return "Art Angels"; case 663: return "Miss Anthropocene";
+    case 671: return "Elements of Life"; case 672: return "Kaleidoscope"; case 673: return "The London Sessions";
+    case 681: return "Scary Monsters"; case 682: return "Bangarang"; case 683: return "Recess";
+    case 691: return "Sentio"; case 692: return "Seven"; case 693: return "The Martin Garrix Collection";
+    case 701: return "Clarity"; case 702: return "True Colors"; case 703: return "Orbit";
+
+        // --- ALBUMES REGGAETON (811 - 903) ---
+    case 811: return "Barrio Fino"; case 812: return "El Cartel"; case 813: return "Legendaddy";
+    case 821: return "Meet the Orphans"; case 822: return "King of Kings"; case 823: return "The Last Don";
+    case 831: return "Pal Mundo"; case 832: return "Los Extraterrestres"; case 833: return "La Revolucion";
+    case 841: return "YHLQMDLG"; case 842: return "Un Verano Sin Ti"; case 843: return "Nadie Sabe Lo Que Va a Pasar";
+    case 851: return "Jose"; case 852: return "Colores"; case 853: return "Vibras";
+    case 861: return "Ozutochi"; case 862: return "Odisea"; case 863: return "Aura";
+    case 871: return "Playa del Cielo"; case 872: return "Vice Versa"; case 873: return "Saturno";
+    case 881: return "F.A.M.E."; case 882: return "Papi Juancho"; case 883: return "11:11";
+    case 891: return "Manana Sera Bonito"; case 892: return "KG0516"; case 893: return "Unstoppable";
+    case 901: return "Feliz Cumpleanos Ferxxo"; case 902: return "MOR"; case 903: return "Inter Shibuya";
+
+        // --- ALBUMES CUMBIA (911 - 1003) ---
+    case 911: return "Tu Traicion Se Acabo"; case 912: return "Pasitos Para Bailar"; case 913: return "Volumen 22";
+    case 921: return "Motor y Motivo"; case 922: return "El Ritmo de mi Corazon"; case 923: return "Lloraras";
+    case 931: return "El Cervecero"; case 932: return "Siempre Pierdo En El Amor"; case 933: return "Llorando Tu Partida";
+    case 941: return "Late Mi Corazon"; case 942: return "No Deja de Latir"; case 943: return "Vuelve";
+    case 951: return "Como Te Voy A Olvidar"; case 952: return "De Plaza en Plaza"; case 953: return "Esto Si Es Cumbia";
+    case 961: return "De Fiesta"; case 962: return "Rombai"; case 963: return "Noche Loca";
+    case 971: return "Todo Comenzo Bailando"; case 972: return "Enganchados"; case 973: return "Marama";
+    case 981: return "Ke Personajes"; case 982: return "En Vivo"; case 983: return "Sesiones";
+    case 991: return "Imparables"; case 992: return "Un Siglo De Amor"; case 993: return "Vuela";
+    case 1001: return "Cumbia Nena"; case 1002: return "Gracias a Vos"; case 1003: return "Me Enamore";
+
+    default: return "Desconocido";
+    }
+}

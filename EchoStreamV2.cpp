@@ -228,6 +228,15 @@ void menuSuscripcion(GestorUsuarios* userG) {
     pausar();
 }
 
+void menuMostrarCancionesSugeridas(GestorBiblioteca* lib, Usuario* usuarioActual) {
+
+    int idUsu = usuarioActual->getId();
+
+    vector<double> perfilUsuario = lib->calcularPreferencias(idUsu);
+
+    lib->mostrarCancionesSugeridas(perfilUsuario, usuarioActual->getId());
+}
+
 void menuStreaming(GestorBiblioteca* lib, GestorUsuarios* userG, GestorReproduccion* repro) {
     int op = 0;
     Usuario* actual = userG->getUsuarioLogueado();
@@ -264,12 +273,13 @@ void menuStreaming(GestorBiblioteca* lib, GestorUsuarios* userG, GestorReproducc
         vector<string> opcionesMenuPrincipal = {
             "Explorar Biblioteca y Catalogo",
             "Agregar a la Cola",
-            "Reproducir Siguiente",
+            "Reproducir cancion",
             "Gestionar Cola (Ver / Mezclar)",
             "Mis Playlists",
             "Mis Favoritos",
             "Mi Historial e Info Suscripcion",
-            "Cerrar Sesion"
+            "Cerrar Sesion",
+            "TOP MAS RECOMENDADAS PARA TI"
         };
 
         op = menuInteractivo(opcionesMenuPrincipal, 40, 9) + 1;
@@ -306,6 +316,9 @@ void menuStreaming(GestorBiblioteca* lib, GestorUsuarios* userG, GestorReproducc
             pausar();
             menuSuscripcion(userG);
             break;
+        case 9: menuMostrarCancionesSugeridas(lib, actual)
+            ; pausar(); break; // 
+
         }
     }
     userG->cerrarSesion();

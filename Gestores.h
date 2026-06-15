@@ -4,6 +4,7 @@
 #include <vector>
 #include "Entidades.h"
 #include "Algoritmos.h"
+#include "GestionArchivos.h" 
 
 using namespace std;
 
@@ -24,26 +25,55 @@ public:
     GestorBiblioteca() { cargarDesdeArchivo(); }
     ~GestorBiblioteca() { catalogoCanciones.vaciar(); catalogoPodcasts.vaciar(); }
 
+    // Formato CANCION en biblioteca.txt (8 campos tras el tag):
+    //   CANCION, id, nombre, artista_id, album_id, duracion, genero_id, reproducciones
+    //
+    // Formato PODCAST (4 campos tras el tag):
+    //   PODCAST, id, nombre, host, reproducciones
+    //
+    // Los strings de artista, álbum y género se resuelven mediante
+    // obtenerNombreArtista/Album/Genero() de Utilidades.h dentro de Cancion.
     void cargarDesdeArchivo() {
         ifstream archivo("biblioteca.txt");
         if (!archivo.is_open()) return;
+
         string linea;
         while (getline(archivo, linea)) {
             if (linea.empty()) continue;
-            stringstream ss(linea); string tag;
+
+            stringstream ss(linea);
+            string tag;
             getline(ss, tag, ',');
 
             if (tag == "CANCION") {
-                string id, nom, art, dur, gen, rep;
-                getline(ss, id, ','); getline(ss, nom, ','); getline(ss, art, ',');
-                getline(ss, dur, ','); getline(ss, gen, ','); getline(ss, rep, ',');
-                catalogoCanciones.insertarAlFinal(new Cancion(stoi(id), nom, art, "S/A", stoi(dur), gen, stoi(rep)));
+                string id, nom, artistaId, albumId, dur, genId, rep;
+                getline(ss, id, ',');
+                getline(ss, nom, ',');
+                getline(ss, artistaId, ',');
+                getline(ss, albumId, ',');
+                getline(ss, dur, ',');
+                getline(ss, genId, ',');
+                getline(ss, rep, ',');
+
+                catalogoCanciones.insertarAlFinal(new Cancion(
+                    stoi(id),
+                    nom,
+                    stoi(artistaId),   // ID — Cancion resuelve el nombre con Utilidades
+                    stoi(albumId),
+                    stoi(dur),
+                    stoi(genId),
+                    stoi(rep)
+                ));
             }
             else if (tag == "PODCAST") {
                 string id, nom, host, rep;
-                getline(ss, id, ','); getline(ss, nom, ','); getline(ss, host, ','); getline(ss, rep, ',');
+                getline(ss, id, ',');
+                getline(ss, nom, ',');
+                getline(ss, host, ',');
+                getline(ss, rep, ',');
                 catalogoPodcasts.insertarAlFinal(new Podcast(stoi(id), nom, host, ""));
             }
+            // Las líneas ARTISTA, ALBUM y GENERO ya no existen en biblioteca.txt.
         }
         archivo.close();
     }
@@ -75,6 +105,93 @@ public:
         for (Cancion* c : vista) { if (c->getId() == id) return c; }
         return nullptr;
     }
+
+    struct Recomendacion {
+        double distancia;
+        Cancion* cancion;
+
+        bool operator>(const Recomendacion& otra) const {
+            return distancia > otra.distancia;
+        }
+
+        bool operator<(const Recomendacion& otra) const {
+            return distancia < otra.distancia;
+        }
+    };
+
+    bool cancionEscuchada(int idCancion, int idUsuario) {
+
+        GestorArchivos gestor;
+        vector<Cancion*> historial = gestor.getHistorialUsuario(idUsuario, catalogoCanciones.toVector());
+
+        for (Cancion* c : historial) {
+            if (idCancion == c->getId()) return true;
+        }
+        return false;
+    }
+
+    void mostrarCancionesSugeridas(vector<double> usuarioPreferencias, int idUsuario) {
+        vector<Cancion*> canciones = catalogoCanciones.toVector();
+        vector<Recomendacion> listaDistancias; 
+
+        if (canciones.empty()) return;
+
+        for (Cancion* cancion : canciones) {
+
+
+
+            vector<double> metaDatosCancion = {
+                (double)cancion->getDuracion(),
+                (double)cancion->getGenero(),
+                (double)cancion->getArtista(),
+                (double)cancion->getAlbum()
+            };
+
+            double dist = DistanciaEuclidiana(usuarioPreferencias, metaDatosCancion);
+
+            // Insertamos el objeto
+            
+            listaDistancias.push_back({ dist, cancion });
+        }
+        
+        
+        Algoritmos alg;
+        alg.heapSort(listaDistancias);
+
+        // Mostramos los resultados ya ordenados
+        cout << "\n--- TUS RECOMENDACIONES ---" << endl;
+        for (int i = 0; i < listaDistancias.size(); i++) {
+            if(listaDistancias[i].distancia <= 50 && !cancionEscuchada(listaDistancias[i].cancion->getId(),idUsuario) ){
+            cout << " [Distancia: " << listaDistancias[i].distancia << "] ";
+            listaDistancias[i].cancion->mostrarDetalles();
+            }
+        }
+    }
+
+	vector<Cancion*> getCatalogoCanciones() { return catalogoCanciones.toVector(); }
+
+    vector<double> calcularPreferencias(int idUsuario) {
+        double generoProm = 0, artistaProm = 0, duracionProm = 0, albumProm = 0;
+
+        // Llamas a GestorArchivos pasándole el catálogo actual
+        GestorArchivos gestor;
+        vector<Cancion*> historial =  gestor.getHistorialUsuario(idUsuario, catalogoCanciones.toVector());
+
+        if (historial.empty()) {
+            return { 0, 0, 0, 0 }; // O devuelve un vector por defecto si no ha escuchado nada
+        }
+
+        for (Cancion* c : historial) {
+            duracionProm += c->getDuracion();
+            generoProm += c->getGenero();
+            artistaProm += c->getArtista();
+            albumProm += c->getAlbum();
+        }
+
+        int total = historial.size();
+        // Construimos el vector promedio: [Duracion, Genero, Artista, Album]
+        return { duracionProm / total, generoProm / total, artistaProm / total, albumProm / total };
+    }
 };
 
 class GestorUsuarios {
@@ -98,7 +215,14 @@ public:
             if (tag == "USUARIO") {
                 string id, nom, email, pass;
                 getline(ss, id, ','); getline(ss, nom, ',');
-                getline(ss, email, ','); getline(ss, pass, ',');
+                getline(ss, email, ',');
+
+               
+                getline(ss, pass);
+
+               
+                if (!pass.empty() && pass.back() == '\r') pass.pop_back();
+
                 listaUsuarios.insertarAlFinal(new Usuario(stoi(id), nom, email, pass));
             }
             else if (tag == "SUSCRIPCION") {
@@ -131,6 +255,9 @@ public:
             if (u->getEmail() == email && u->getContrasena() == password) {
                 usuarioLogueado = u;
                 cout << "\n  Bienvenido/a, " << u->getNombre() << "!" << endl;
+
+                GestorArchivos::cargarHistorialUsuario(usuarioLogueado);
+
                 return true;
             }
         }
@@ -175,20 +302,21 @@ public:
             cout << "  Cancion no encontrada." << endl;
         }
     }
-
+    
     void reproducirSiguiente() {
         if (filaEspera.estaVacia()) { cout << "  La cola esta vacia." << endl; return; }
 
         Cancion* c = filaEspera.verFrente();
         c->reproducir();
-        usuarioActual->registrarEnHistorial(c->getNombre(), "Cancion", c->getArtista());
+        usuarioActual->registrarEnHistorial(c->getNombre(), "Cancion", obtenerNombreArtista(c->getArtista()));
 
-        // Persistencia directa del historial
-        string linea = "HIST," + to_string(usuarioActual->getId()) + ",999," + c->getNombre() + ",Cancion," + c->getArtista() + "," + obtenerHoraActual();
+        string linea = "HIST," + to_string(usuarioActual->getId()) + ",999," +
+            c->getNombre() + ",Cancion," + obtenerNombreArtista(c->getArtista()) + "," + obtenerHoraActual();
         GestorPersistencia::guardarLinea("historial.txt", linea);
 
         filaEspera.desencolar();
     }
+  
 
     void modoAleatorio() {
         vector<Cancion*> vista = filaEspera.toVector();

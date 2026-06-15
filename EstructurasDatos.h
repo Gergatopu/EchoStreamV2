@@ -293,3 +293,13 @@ public:
     int getTamano() const { return tamano; }
     bool estaVacia() const { return frente == nullptr; }
 };
+
+
+
+double DistanciaEuclidiana(const vector<double>& v1, const vector<double>& v2) {
+    double sumaTotal = 0.0;
+    for (size_t i = 0; i < v1.size() && i < v2.size(); i++) {
+        sumaTotal += pow(v1[i] - v2[i], 2);
+    }
+    return sqrt(sumaTotal);
+}

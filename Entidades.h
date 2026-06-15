@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include "vector"
 #include "EstructurasDatos.h"
 #include "Utilidades.h" 
 
@@ -49,36 +50,59 @@ struct Episodio {
 // ENTIDADES DE NEGOCIO 
 class Cancion : public EntidadBase {
 private:
-    string artista;
-    string album;
+    int id_artista;
+    int id_album;
+    int id_genero;
+
     int duracion;
-    string genero;
     int reproducciones;
+
+	//El sistema de recomendacion usara los siguientes parámetros para sugerir canciones similares: 
+    // { artista, duracion, genero, album }
+
 public:
-    Cancion(int id, string nombre, string artista, string album, int duracion, string genero, int repro = 0)
-        : EntidadBase(id, nombre), artista(artista), album(album),
-        duracion(duracion), genero(genero), reproducciones(repro) {
+    Cancion(int id, string nombre, int id_artista, int id_album, int duracion, int id_genero, int repro = 0)
+        : EntidadBase(id, nombre), id_artista(id_artista), id_album(id_album),
+        duracion(duracion), id_genero(id_genero), reproducciones(repro) {
     }
 
-    string getArtista() const { return artista; }
-    string getAlbum() const { return album; }
-    string getGenero() const { return genero; }
+    int getArtista() const { return id_artista; }
+    int getAlbum() const { return id_album; }
+    int getGenero() const { return id_genero; }
     int getDuracion() const { return duracion; }
     int getReproducciones() const { return reproducciones; }
 
+    
     void reproducir() {
         reproducciones++;
-        cout << "  >> Reproduciendo: \"" << nombre << "\" - " << artista << endl;
+        cout << "  >> Reproduciendo: \"" << nombre << "\" - " << obtenerNombreArtista(id_artista) << endl;
     }
+    
+
 
     void mostrarDetalles() const override {
-        cout << "  [ID:" << id << "] \"" << nombre << "\" | " << artista
-            << " | Reprod: " << reproducciones << endl;
+        cout << "  [ID:" << id << "] \"" << nombre << "\" | "
+            << obtenerNombreArtista(id_artista) << " | "
+            << obtenerNombreAlbum(id_album) << " | "
+            << obtenerNombreGenero(id_genero) << " | "
+            << "Duracion: " << duracion << "s | "
+            << "Reprod: " << reproducciones << endl;
+	}
+
+    vector<double> obtenerVectorComponentes() {
+
+        vector<double> cancionComponentes = {
+            (double)id_artista,
+            (double)duracion,
+            (double)id_genero,
+            (double)id_album
+        };
+        return cancionComponentes;
     }
 
     string toString() const override {
         stringstream ss;
-        ss << "CANCION," << id << "," << nombre << "," << artista << "," << album << "," << duracion << "," << genero << "," << reproducciones;
+        ss << "CANCION," << id << "," << nombre << "," << id_artista << "," << id_album << "," << duracion << "," << id_genero << "," << reproducciones;
         return ss.str();
     }
 };
@@ -149,7 +173,7 @@ private:
     ListaDoble<Cancion*> misFavoritos;
     ListaDoble<Playlist*> misPlaylists;
     Pila<EntradaHistorial> miHistorial;
-
+    
     int nextPlaylistId;
 
 public:
@@ -184,6 +208,10 @@ public:
     // --- HISTORIAL ---
     void registrarEnHistorial(string titulo, string tipo, string artista) {
         miHistorial.push({ titulo, tipo, artista, obtenerHoraActual() });
+    }
+
+    void cargarEnHistorial(string titulo, string tipo, string artista, string fechaOriginal) {
+        miHistorial.push({ titulo, tipo, artista, fechaOriginal });
     }
 
     void mostrarHistorial() const {
@@ -229,4 +257,5 @@ public:
         ss << "USUARIO," << id << "," << nombre << "," << email << "," << contrasena;
         return ss.str();
     }
+	
 };

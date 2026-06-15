@@ -2,7 +2,6 @@
 #include <vector>
 #include <cstdlib>
 #include <ctime>
-#include "Entidades.h"
 
 class Algoritmos {
 public:
@@ -53,6 +52,50 @@ public:
         for (int i = n - 1; i > 0; i--) {
             int j = rand() % (i + 1);
             std::swap(arr[i], arr[j]);
+        }
+    }
+
+    // Función para intercambiar dos elementos
+    template<typename T>
+    void intercambiar(T& a, T& b) {
+        T temp = a;
+        a = b;
+        b = temp;
+    }
+
+    // Heapify genérico configurado como MAX-HEAP (usa >)
+    template<typename T>
+    void heapify(vector<T>& arr, int n, int i) {
+        int mayor = i; // Inicializamos el mayor como la raíz
+        int izq = 2 * i + 1; // Hijo izquierdo
+        int der = 2 * i + 2; // Hijo derecho
+
+        // El template funcionará perfecto porque T tiene sobrecargado el operador >
+        if (izq < n && arr[izq] > arr[mayor])
+            mayor = izq;
+
+        if (der < n && arr[der] > arr[mayor])
+            mayor = der;
+
+        if (mayor != i) {
+            intercambiar(arr[i], arr[mayor]);
+            heapify(arr, n, mayor);
+        }
+    }
+
+    // HeapSort genérico
+    template<typename T>
+    void heapSort(vector<T>& arr) {
+        int n = arr.size();
+
+        // Paso 1: Construir el Max-Heap 
+        for (int i = n / 2 - 1; i >= 0; i--)
+            heapify(arr, n, i);
+
+        // Paso 2: Extraer elementos. El mayor va al final, ordenando de MENOR a MAYOR.
+        for (int i = n - 1; i > 0; i--) {
+            intercambiar(arr[0], arr[i]);
+            heapify(arr, i, 0);
         }
     }
 };
