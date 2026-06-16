@@ -1,5 +1,25 @@
-HIST,12,1,Punto 40,Cancion,Rauw Alejandro,2026-05-10 03:11:17
-HIST,12,2,Shirt,Cancion,SZA,2026-05-10 03:11:19
-HIST,99,1,Waka Waka,Cancion,Shakira,2026-05-10 03:15:44
-HIST,99,2,La Bebe,Cancion,Peso Pluma,2026-05-10 03:15:46
-HIST,99,3,Enemy,Cancion,Imagine Dragons,2026-05-10 03:15:47
+HIST,99,999,Get Lucky,Cancion,Daft Punk,2026-06-15 01:42:03
+HIST,99,999,Starboy,Cancion,The Weeknd,2026-06-15 01:42:19
+HIST,99,999,Blinding Lights,Cancion,The Weeknd,2026-06-15 01:43:08
+HIST,1,999,Smells Like Teen Spirit,Cancion,Nirvana,2026-06-15 02:29:13
+HIST,1,999,Paranoid Android,Cancion,Radiohead,2026-06-15 02:29:16
+HIST,1,999,Creep,Cancion,Radiohead,2026-06-15 02:29:17
+HIST,1,999,Reptilia,Cancion,The Strokes,2026-06-15 02:29:19
+HIST,99,999,Master of Puppets,Cancion,Metallica,2026-06-15 02:49:55
+HIST,99,999,Enter Sandman,Cancion,Metallica,2026-06-15 02:49:57
+HIST,99,999,Creeping Death,Cancion,Metallica,2026-06-15 02:49:58
+HIST,99,999,Symphony of Destruction,Cancion,Megadeth,2026-06-15 02:50:00
+HIST,99,999,Holy Wars,Cancion,Megadeth,2026-06-15 02:50:01
+HIST,99,999,Peace Sells,Cancion,Megadeth,2026-06-15 02:50:03
+HIST,99,999,Run to the Hills,Cancion,Iron Maiden,2026-06-15 02:50:04
+HIST,99,999,Creep,Cancion,Radiohead,2026-06-15 03:08:05
+HIST,99,999,Fake Plastic Trees,Cancion,Radiohead,2026-06-15 03:08:07
+HIST,99,999,Reptilia,Cancion,The Strokes,2026-06-15 03:08:09
+HIST,99,999,505,Cancion,Arctic Monkeys,2026-06-15 03:08:14
+HIST,99,999,Hey Jude,Cancion,The Beatles,2026-06-15 03:08:16
+HIST,99,999,Come Together,Cancion,The Beatles,2026-06-15 03:08:17
+HIST,99,999,Fortnight,Cancion,Taylor Swift,2026-06-15 03:08:19
+HIST,99,999,En La Ciudad De La Furia,Cancion,Soda Stereo,2026-06-15 03:08:20
+HIST,99,999,You Only Live Once,Cancion,The Strokes,2026-06-15 03:08:21
+HIST,99,999,Last Nite,Cancion,The Strokes,2026-06-15 03:08:22
+HIST,99,999,Let It Be,Cancion,The Beatles,2026-06-15 03:08:24
