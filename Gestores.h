@@ -24,15 +24,20 @@ private:
 public:
     GestorBiblioteca() { cargarDesdeArchivo(); }
     ~GestorBiblioteca() { catalogoCanciones.vaciar(); catalogoPodcasts.vaciar(); }
+    struct Recomendacion {
+        double distancia;
+        Cancion* cancion;
 
-    // Formato CANCION en biblioteca.txt (8 campos tras el tag):
-    //   CANCION, id, nombre, artista_id, album_id, duracion, genero_id, reproducciones
-    //
-    // Formato PODCAST (4 campos tras el tag):
-    //   PODCAST, id, nombre, host, reproducciones
-    //
-    // Los strings de artista, álbum y género se resuelven mediante
-    // obtenerNombreArtista/Album/Genero() de Utilidades.h dentro de Cancion.
+        bool operator>(const Recomendacion& otra) const {
+            return distancia > otra.distancia;
+        }
+
+        bool operator<(const Recomendacion& otra) const {
+            return distancia < otra.distancia;
+        }
+    };
+
+    // CARGA DE BIBLIOTECA DESDE ARCHIVO
     void cargarDesdeArchivo() {
         ifstream archivo("biblioteca.txt");
         if (!archivo.is_open()) return;
@@ -78,47 +83,8 @@ public:
         archivo.close();
     }
 
-    // --- VISTAS Y ALGORITMOS (Sin alterar la ListaDoble original) ---
-    void mostrarCancionesOrdenadasA_Z() {
-        vector<Cancion*> vista = catalogoCanciones.toVector();
-        Algoritmos::insertionSortPorNombre(vista);
-        cout << "\n  [Insercion] Canciones (A-Z):" << endl;
-        for (Cancion* c : vista) c->mostrarDetalles();
-    }
 
-    void mostrarTopReproducciones() {
-        vector<Cancion*> vista = catalogoCanciones.toVector();
-        Algoritmos::shellSortPorReproducciones(vista);
-        cout << "\n  [Shell Sort] Top Reproducciones:" << endl;
-        for (Cancion* c : vista) c->mostrarDetalles();
-    }
-
-    void mostrarSoloCanciones() {
-        cout << "\n--- CANCIONES DISPONIBLES ---" << endl;
-        vector<Cancion*> vista = catalogoCanciones.toVector();
-        if (vista.empty()) cout << "  (Sin canciones)" << endl;
-        for (Cancion* c : vista) c->mostrarDetalles();
-    }
-
-    Cancion* buscarCancionId(int id) {
-        vector<Cancion*> vista = catalogoCanciones.toVector();
-        for (Cancion* c : vista) { if (c->getId() == id) return c; }
-        return nullptr;
-    }
-
-    struct Recomendacion {
-        double distancia;
-        Cancion* cancion;
-
-        bool operator>(const Recomendacion& otra) const {
-            return distancia > otra.distancia;
-        }
-
-        bool operator<(const Recomendacion& otra) const {
-            return distancia < otra.distancia;
-        }
-    };
-
+    // FUNCIONES DE RECOMENDACION
     bool cancionEscuchada(int idCancion, int idUsuario) {
 
         GestorArchivos gestor;
@@ -130,16 +96,16 @@ public:
         return false;
     }
 
-    void mostrarCancionesSugeridas(vector<double> usuarioPreferencias, int idUsuario) {
+    // Calcula y devuelve la lista de recomendaciones ya ordenadas (Heap Sort) y
+    // filtradas (distancia <= 50 y no escuchadas). No imprime nada: la UI decide
+    // como mostrar el resultado.
+    vector<Recomendacion> obtenerRecomendaciones(vector<double> preferenciasUsuario, int idUsuario) {
         vector<Cancion*> canciones = catalogoCanciones.toVector();
-        vector<Recomendacion> listaDistancias; 
+        vector<Recomendacion> listaDistancias;
 
-        if (canciones.empty()) return;
+        if (canciones.empty()) return listaDistancias;
 
         for (Cancion* cancion : canciones) {
-
-
-
             vector<double> metaDatosCancion = {
                 (double)cancion->getDuracion(),
                 (double)cancion->getGenero(),
@@ -147,35 +113,50 @@ public:
                 (double)cancion->getAlbum()
             };
 
-            double dist = DistanciaEuclidiana(usuarioPreferencias, metaDatosCancion);
-
-            // Insertamos el objeto
-            
+            double dist = DistanciaEuclidiana(preferenciasUsuario, metaDatosCancion);
             listaDistancias.push_back({ dist, cancion });
         }
-        
-        
+
         Algoritmos alg;
         alg.heapSort(listaDistancias);
 
-        // Mostramos los resultados ya ordenados
-        cout << "\n--- TUS RECOMENDACIONES ---" << endl;
-        for (int i = 0; i < listaDistancias.size(); i++) {
-            if(listaDistancias[i].distancia <= 50 && !cancionEscuchada(listaDistancias[i].cancion->getId(),idUsuario) ){
-            cout << " [Distancia: " << listaDistancias[i].distancia << "] ";
-            listaDistancias[i].cancion->mostrarDetalles();
+        vector<Recomendacion> resultado;
+        for (Recomendacion& r : listaDistancias) {
+            if (r.distancia <= 50 && !cancionEscuchada(r.cancion->getId(), idUsuario)) {
+                resultado.push_back(r);
             }
         }
+        return resultado;
     }
 
-	vector<Cancion*> getCatalogoCanciones() { return catalogoCanciones.toVector(); }
+    Cancion* buscarCancionId(int id) {
+        vector<Cancion*> vista = catalogoCanciones.toVector();
+        for (Cancion* c : vista) { if (c->getId() == id) return c; }
+        return nullptr;
+    }
+
+    // VISTAS PROCESADAS DEL CATALOGO (la UI solo imprime el resultado)
+    vector<Cancion*> obtenerCancionesOrdenadasAZ() {
+        vector<Cancion*> vista = catalogoCanciones.toVector();
+        Algoritmos::insertionSortPorNombre(vista);
+        return vista;
+    }
+
+    vector<Cancion*> obtenerTopReproducciones() {
+        vector<Cancion*> vista = catalogoCanciones.toVector();
+        Algoritmos::shellSortPorReproducciones(vista);
+        return vista;
+    }
+
+    //GETTERS:
+    vector<Cancion*> getCatalogoCanciones() { return catalogoCanciones.toVector(); }
 
     vector<double> calcularPreferencias(int idUsuario) {
         double generoProm = 0, artistaProm = 0, duracionProm = 0, albumProm = 0;
 
         // Llamas a GestorArchivos pasándole el catálogo actual
         GestorArchivos gestor;
-        vector<Cancion*> historial =  gestor.getHistorialUsuario(idUsuario, catalogoCanciones.toVector());
+        vector<Cancion*> historial = gestor.getHistorialUsuario(idUsuario, catalogoCanciones.toVector());
 
         if (historial.empty()) {
             return { 0, 0, 0, 0 }; // O devuelve un vector por defecto si no ha escuchado nada
@@ -192,6 +173,12 @@ public:
         // Construimos el vector promedio: [Duracion, Genero, Artista, Album]
         return { duracionProm / total, generoProm / total, artistaProm / total, albumProm / total };
     }
+
+    ListaDoble<Cancion*>& getListaCanciones() { return catalogoCanciones; }
+
+    ListaDoble<Podcast*>& getListaPodcasts() { return catalogoPodcasts; }
+
+
 };
 
 class GestorUsuarios {
@@ -217,10 +204,10 @@ public:
                 getline(ss, id, ','); getline(ss, nom, ',');
                 getline(ss, email, ',');
 
-               
+
                 getline(ss, pass);
 
-               
+
                 if (!pass.empty() && pass.back() == '\r') pass.pop_back();
 
                 listaUsuarios.insertarAlFinal(new Usuario(stoi(id), nom, email, pass));
@@ -243,28 +230,27 @@ public:
         archivo.close();
     }
 
+    // FUNCIONES DE GESTION DE USUARIOS
     Usuario* buscarPorId(int id) {
         vector<Usuario*> v = listaUsuarios.toVector();
         for (Usuario* u : v) { if (u->getId() == id) return u; }
         return nullptr;
     }
 
+    // Devuelve true/false; ya no imprime nada (la UI decide el mensaje).
     bool iniciarSesion(string email, string password) {
         vector<Usuario*> v = listaUsuarios.toVector();
         for (Usuario* u : v) {
             if (u->getEmail() == email && u->getContrasena() == password) {
                 usuarioLogueado = u;
-                cout << "\n  Bienvenido/a, " << u->getNombre() << "!" << endl;
-
                 GestorArchivos::cargarHistorialUsuario(usuarioLogueado);
-
                 return true;
             }
         }
-        cout << "  Error: Credenciales incorrectas." << endl;
         return false;
     }
 
+    // Solo logica de registro/persistencia. La UI imprime los mensajes de exito.
     void registrarNuevoUsuario(int id, string nom, string email, string pass, int plan) {
         Usuario* nuevo = new Usuario(id, nom, email, pass);
         listaUsuarios.insertarAlFinal(nuevo);
@@ -273,40 +259,53 @@ public:
         if (plan == 2) {
             nuevo->activarPremium({ "Premium", 29.90, obtenerFechaHoy(), "2026-12-31", true });
             GestorPersistencia::guardarLinea("usuarios.txt", "SUSCRIPCION,1001," + to_string(id) + ",PlanPremium,Premium,29.90,Hoy,2026-12-31,1");
-            cout << "  Plan Premium activado." << endl;
         }
-        cout << "  Usuario registrado." << endl;
     }
 
+    void cerrarSesion() { usuarioLogueado = nullptr; }
+
+    // Activa el plan Premium de un usuario y persiste el cambio.
+    void activarPlanPremium(Usuario* u) {
+        if (!u) return;
+        u->activarPremium({ "Premium", 29.90, obtenerFechaHoy(), "2026-12-31", true });
+        GestorPersistencia::guardarLinea("usuarios.txt", "SUSCRIPCION,999," + to_string(u->getId()) + ",PlanPremium,Premium,29.90,Hoy,2026-12-31,1");
+    }
+
+    // Devuelve los favoritos de un usuario ordenados A-Z (Insertion Sort).
+    static vector<Cancion*> obtenerFavoritosOrdenados(Usuario* usuario) {
+        vector<Cancion*> favs = usuario->getFavoritos().toVector();
+        Algoritmos::insertionSortPorNombre(favs);
+        return favs;
+    }
+
+    // GETTERS
     Usuario* getUsuarioLogueado() { return usuarioLogueado; }
-    void cerrarSesion() { usuarioLogueado = nullptr; cout << "  Sesion cerrada." << endl; }
 };
 
 class GestorReproduccion {
 private:
-    Cola<Cancion*> filaEspera;
+    Cola<Cancion*> cancionesEspera;
     GestorBiblioteca* biblioteca;
     Usuario* usuarioActual;
 
 public:
     GestorReproduccion(GestorBiblioteca* lib, Usuario* user) : biblioteca(lib), usuarioActual(user) {}
-    ~GestorReproduccion() { filaEspera.vaciar(); }
+    ~GestorReproduccion() { cancionesEspera.vaciar(); }
 
-    void agregarCancionAFila(int idCancion) {
+    // Devuelve la cancion encolada, o nullptr si no existe. La UI imprime el resultado.
+    Cancion* agregarCancionAFila(int idCancion) {
         Cancion* c = biblioteca->buscarCancionId(idCancion);
         if (c) {
-            filaEspera.encolar(c);
-            cout << "  Cancion encolada: " << c->getNombre() << endl;
+            cancionesEspera.encolar(c);
         }
-        else {
-            cout << "  Cancion no encontrada." << endl;
-        }
+        return c;
     }
-    
-    void reproducirSiguiente() {
-        if (filaEspera.estaVacia()) { cout << "  La cola esta vacia." << endl; return; }
 
-        Cancion* c = filaEspera.verFrente();
+    // Devuelve la cancion reproducida, o nullptr si la cola estaba vacia.
+    Cancion* reproducirSiguiente() {
+        if (cancionesEspera.estaVacia()) return nullptr;
+
+        Cancion* c = cancionesEspera.verFrente();
         c->reproducir();
         usuarioActual->registrarEnHistorial(c->getNombre(), "Cancion", obtenerNombreArtista(c->getArtista()));
 
@@ -314,22 +313,22 @@ public:
             c->getNombre() + ",Cancion," + obtenerNombreArtista(c->getArtista()) + "," + obtenerHoraActual();
         GestorPersistencia::guardarLinea("historial.txt", linea);
 
-        filaEspera.desencolar();
+        cancionesEspera.desencolar();
+        return c;
     }
-  
 
-    void modoAleatorio() {
-        vector<Cancion*> vista = filaEspera.toVector();
-        if (vista.size() < 2) return;
+    // Devuelve true si se pudo mezclar (>=2 elementos), false en caso contrario.
+    bool modoAleatorio() {
+        vector<Cancion*> vista = cancionesEspera.toVector();
+        if (vista.size() < 2) return false;
         Algoritmos::fisherYatesShuffle(vista);
-        filaEspera.vaciar();
-        for (Cancion* c : vista) filaEspera.encolar(c);
-        cout << "  [Fisher-Yates] Cola mezclada aleatoriamente." << endl;
+        cancionesEspera.vaciar();
+        for (Cancion* c : vista) cancionesEspera.encolar(c);
+        return true;
     }
 
-    void mostrarCola() {
-        vector<Cancion*> vista = filaEspera.toVector();
-        cout << "\n--- Cola (" << vista.size() << ") ---" << endl;
-        for (Cancion* c : vista) cout << "  -> " << c->getNombre() << endl;
+    // Getter puro: la impresion de la cola la hace la UI.
+    vector<Cancion*> obtenerCola() {
+        return cancionesEspera.toVector();
     }
 };
