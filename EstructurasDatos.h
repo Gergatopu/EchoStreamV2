@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <stdexcept>
+#include <cmath>
 #include "Utilidades.h"
 
 using namespace std;

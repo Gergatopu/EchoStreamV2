@@ -257,5 +257,7 @@ public:
         ss << "USUARIO," << id << "," << nombre << "," << email << "," << contrasena;
         return ss.str();
     }
+
+    
 	
 };

@@ -12,6 +12,8 @@ using namespace System;
 #define TECLA_ARRIBA 72
 #define TECLA_ABAJO 80
 #define TECLA_ENTER 13
+#define TECLA_IZQUIERDA 75
+#define TECLA_DERECHA   77
 
 void ubicar(int x, int y) {
     Console::SetCursorPosition(x, y);
@@ -55,45 +57,87 @@ string obtenerHoraActual() {
     return string(buf);
 }
 
-int menuInteractivo(const vector<string>& opciones, int posX, int posY) {
-    int seleccion = 0;
-    int totalOpciones = opciones.size();
+
+
+// Version "grid": permite filas con varias opciones laterales.
+// Las celdas vacias ("") se saltan hasta encontrar una valida.
+pair<int, int> menuInteractivoGrid(const vector<vector<string>>& opciones, int posX, int posY, int anchoColumna, int altoFila) {
+    int fila = 0, columna = 0;
+
+    // Ubicar la primera celda no vacia como punto de partida
+    for (int f = 0; f < (int)opciones.size(); f++) {
+        for (int c = 0; c < (int)opciones[f].size(); c++) {
+            if (!opciones[f][c].empty()) { fila = f; columna = c; goto encontrado; }
+        }
+    }
+encontrado:;
+
     bool eligiendo = true;
-
     while (eligiendo) {
-        for (int i = 0; i < totalOpciones; i++) {
-            Console::SetCursorPosition(posX, posY + (i * 2));
+        for (int f = 0; f < (int)opciones.size(); f++) {
+            for (int c = 0; c < (int)opciones[f].size(); c++) {
+                const string& texto = opciones[f][c];
+                if (texto.empty()) continue; // no se imprime ni ocupa espacio visual
 
-            if (i == seleccion) {
-                asignarcolor(14);
-                cout << ">> " << opciones[i] << "   ";
-            }
-            else {
-                asignarcolor(7);
-                cout << "   " << opciones[i] << "   ";
+                Console::SetCursorPosition(posX + (c * anchoColumna), posY + (f * altoFila));
+
+                if (f == fila && c == columna) {
+                    asignarcolor(4); 
+                    cout << ">> " << texto << "   ";
+                }
+                else {
+                    asignarcolor(7);
+                    cout << "   " << texto << "   ";
+                }
             }
         }
+        asignarcolor(7);
 
         int tecla = _getch();
-
         if (tecla == 224) {
             tecla = _getch();
 
-            if (tecla == TECLA_ARRIBA) {
-                seleccion--;
-                if (seleccion < 0) seleccion = totalOpciones - 1;
-            }
-            else if (tecla == TECLA_ABAJO) {
-                seleccion++;
-                if (seleccion >= totalOpciones) seleccion = 0;
+            // Definir la dirección del movimiento (Delta Fila, Delta Columna)
+            int df = 0, dc = 0;
+            if (tecla == TECLA_ARRIBA)       df = -1;
+            else if (tecla == TECLA_ABAJO)   df = 1;
+            else if (tecla == TECLA_IZQUIERDA) dc = -1;
+            else if (tecla == TECLA_DERECHA)   dc = 1;
+
+            if (df != 0 || dc != 0) {
+                int nf = fila + df;
+                int nc = columna + dc;
+
+                // Avanzar en la dirección indicada hasta encontrar un string lleno o salir del límite
+                while (nf >= 0 && nf < (int)opciones.size() &&
+                    nc >= 0 && nc < (int)opciones[nf].size()) {
+
+                    if (!opciones[nf][nc].empty()) {
+                        // Se encontró una celda con texto, actualizamos la posición y rompemos el bucle
+                        fila = nf;
+                        columna = nc;
+                        break;
+                    }
+                    // Si está vacío, continuamos buscando en la misma dirección
+                    nf += df;
+                    nc += dc;
+                }
+                // Si el bucle termina y nunca hizo 'break', significa que llegó al borde de la matriz.
+                // Como consecuencia, 'fila' y 'columna' conservan su valor original, sin causar colapsos.
             }
         }
         else if (tecla == TECLA_ENTER) {
             eligiendo = false;
         }
     }
+    return { fila, columna };
+}
 
-    return seleccion;
+// Tu funcion original, ahora como wrapper de la version grid (1 sola columna)
+int menuInteractivo(const vector<string>& opciones, int posX, int posY) {
+    vector<vector<string>> grid;
+    for (const string& s : opciones) grid.push_back({ s });
+    return menuInteractivoGrid(grid, posX, posY, 0, 2).first;
 }
 
 string obtenerNombreGenero(int id) {

@@ -362,31 +362,46 @@ private:
     void mostrarCabecera() {
         system("cls");
 
-        asignarcolor(14); Console::SetCursorPosition(35, 3);  cout << "==========================================================";
+        // Ancho total del marco (58 caracteres)
+        string borde = "==========================================================";
 
-        asignarcolor(14); Console::SetCursorPosition(35, 4);  cout << "| ";
+        asignarcolor(14);
+        Console::SetCursorPosition(35, 3);  cout << borde;
+
+        // Fila del Título
+        Console::SetCursorPosition(35, 4);
+        asignarcolor(14); cout << "| ";
         asignarcolor(7);  cout << "               ECHOSTREAM PLAYER                ";
         asignarcolor(14); cout << " |";
 
-        asignarcolor(14); Console::SetCursorPosition(35, 5);  cout << "| ";
-        asignarcolor(7);  cout << " Usuario: ";
-        asignarcolor(14); cout << actual->getNombre();
+        // Fila de Usuario y Estado
+        string nombre = actual->getNombre();
+        string tipo = actual->esPremium() ? "Premium" : "Gratuito";
 
-        if (actual->esPremium()) {
-            string estado = " | Estado: Premium";
-            asignarcolor(7); cout << estado;
-            int espacios = 52 - (10 + actual->getNombre().length() + estado.length());
-            for (int i = 0; i < espacios; i++) cout << " ";
-        }
-        else {
-            string estado = " | Estado: Gratuito";
-            asignarcolor(7); cout << estado;
-            int espacios = 52 - (10 + actual->getNombre().length() + estado.length());
-            for (int i = 0; i < espacios; i++) cout << " ";
-        }
-        asignarcolor(14); cout << " |";
+        // Formateamos el texto central: " Usuario: NOMBRE | Estado: TIPO"
+        // Usamos un buffer para calcular la longitud exacta del texto interior
+        string contenido = " Usuario: " + nombre + " | Estado: " + tipo;
 
-        asignarcolor(14); Console::SetCursorPosition(35, 6);  cout << "==========================================================";
+        // Calculamos cuánto espacio sobra para rellenar
+        // El marco interno mide 54 caracteres (58 total - 2 de los bordes laterales "| " - 2 de los bordes laterales " |")
+        int anchoInterior = 54;
+        int espaciosNecesarios = anchoInterior - contenido.length();
+
+        Console::SetCursorPosition(35, 5);
+        asignarcolor(14); cout << "| ";
+        asignarcolor(7);  cout << contenido;
+
+        // Imprimimos los espacios para que el borde derecho quede alineado
+        for (int i = 0; i < espaciosNecesarios; i++) cout << " ";
+
+        asignarcolor(14); cout << "|";
+
+        // Fila inferior
+        Console::SetCursorPosition(35, 6);
+        cout << borde;
+
+        // Reset de color
+        asignarcolor(7);
     }
 
     void reproducirSiguiente() {
@@ -449,41 +464,109 @@ public:
         : lib(lib), userG(userG), repro(repro), actual(userG->getUsuarioLogueado()) {
     }
 
-    void ejecutar() {
-        int op = 0;
-        while (op != 8) {
-            mostrarCabecera();
+    void dibujarNotaEnCuadrado(int x, int y, int color) {
+        // Definimos el marco exterior con un poco de margen interno
+        asignarcolor(color);Console::SetCursorPosition(x, y);      cout << "+-----------------------------+";
+        asignarcolor(color);Console::SetCursorPosition(x, y + 1);  cout << "|                             |"; // Espacio superior
+        asignarcolor(color);Console::SetCursorPosition(x, y + 2);  cout << "|      ;;;;;;;;;;;;;;;;;;;    |";
+        asignarcolor(color);Console::SetCursorPosition(x, y + 3);  cout << "|      ;;;;;;;;;;;;;;;;;;;    |";
+        asignarcolor(color);Console::SetCursorPosition(x, y + 4);  cout << "|      ;                 ;    |";
+        asignarcolor(color);Console::SetCursorPosition(x, y + 5);  cout << "|      ;                 ;    |";
+        asignarcolor(color);Console::SetCursorPosition(x, y + 6);  cout << "|      ;                 ;    |";
+        asignarcolor(color);Console::SetCursorPosition(x, y + 7);  cout << "|      ;                 ;    |";
+        asignarcolor(color);Console::SetCursorPosition(x, y + 8);  cout << "|      ;                 ;    |";
+        asignarcolor(color);Console::SetCursorPosition(x, y + 9);  cout << "|      ;                 ;    |";
+        asignarcolor(color);Console::SetCursorPosition(x, y + 10); cout << "|      ;                 ;    |";
+        asignarcolor(color);Console::SetCursorPosition(x, y + 11); cout << "|  ,;;;;;             ,;;;;;  |";
+        asignarcolor(color);Console::SetCursorPosition(x, y + 12); cout << "|  ;;;;;;             ;;;;;;  |";
+        asignarcolor(color);Console::SetCursorPosition(x, y + 13); cout << "|  `;;;;'             `;;;;'  |";
+        asignarcolor(color);Console::SetCursorPosition(x, y + 14); cout << "|                             |"; // Espacio inferior
+        asignarcolor(color);Console::SetCursorPosition(x, y + 15); cout << "+-----------------------------+";
+    }
 
-            vector<string> opcionesMenuPrincipal = {
-                "Explorar Biblioteca y Catalogo",
-                "Agregar a la Cola",
-                "Reproducir cancion",
-                "Gestionar Cola (Ver / Mezclar)",
-                "Mis Playlists",
-                "Mis Favoritos",
-                "Mi Historial e Info Suscripcion",
-                "Cerrar Sesion",
-                "TOP MAS RECOMENDADAS PARA TI"
+    void ejecutar() {
+        bool salir = false;
+        while (!salir) {
+            mostrarCabecera();
+            Console::CursorVisible = false;
+            
+            dibujarNotaEnCuadrado(49, 10, 6);
+            
+            vector<vector<string>> opcionesMenuPrincipal = {
+                { "AJUSTES" , ""   , ""  , ""      , "PLAYLIST 1"  },
+                { ""        , ""   , ""  , ""      , "PLAYLIST 2"  },
+                { ""        , ""   , ""  , ""      , "PLAYLIST 3"  },
+                { ""        , ""   , ""  , ""      , "PLAYLIST 4"  },
+                { ""        , ""   , ""  , ""      , "PLAYLISTS +"  },
+                { "NOMBRECANCION"  , "|<" , "o" , ">|"    , "COLA"        },
             };
 
-            op = menuInteractivo(opcionesMenuPrincipal, 40, 9) + 1;
+            pair<int, int> sel = menuInteractivoGrid(opcionesMenuPrincipal, 14, 9, 23, 4);
+            int fila = sel.first, columna = sel.second;
 
-            switch (op) {
-            case 1: MenuExplorar(lib).ejecutar(); break;
-            case 2: MenuAgregarACola(lib, repro, actual).ejecutar(); break;
-            case 3: reproducirSiguiente(); break;
-            case 4: gestionarCola(); break;
-            case 5: MenuPlaylists(lib, actual).ejecutar(); break;
-            case 6: MenuFavoritos(lib, actual).ejecutar(); break;
-            case 7: mostrarHistorialYSuscripcion(); break;
-            case 9: mostrarRecomendaciones(); break;
+
+            // Acciones segun la fila seleccionada
+            if (fila == 0)      MenuExplorar(lib).ejecutar();
+            else if (fila == 1) MenuAgregarACola(lib, repro, actual).ejecutar();
+            else if (fila == 2) {
+                mostrarRecomendaciones();
+
             }
+            else if (fila == 3) gestionarCola();
+            else if (fila == 4) MenuPlaylists(lib, actual).ejecutar();
+            else if (fila == 5) MenuFavoritos(lib, actual).ejecutar();
+            else if (fila == 6) mostrarHistorialYSuscripcion();
+            else if (fila == 7) salir = true; // Cerrar Sesion
+            else if (fila == 8) {
+                if (columna == 0) {}   //reproducirAnterior();
+                else if (columna == 1) reproducirSiguiente(); // o tu logica de "reproducir/pausar"
+                else if (columna == 2)  reproducirSiguiente();
+                else if (columna == 3) gestionarCola(); //TODA LA LOGICA DE LA COLA AQUI
+            }
+
+
         }
         userG->cerrarSesion();
         cout << "  Sesion cerrada." << endl;
     }
 };
 
+//MENU PRINCIPAL: opciones en filas y columnas 
+            /*vector<vector<string>> opcionesMenuPrincipal = {
+                { "Explorar Biblioteca y Catalogo" },
+                {  "h"},
+                { "TOP MAS RECOMENDADAS PARA TI" },
+                { "Gestionar Cola (Ver / Mezclar)" },
+                { "Mis Playlists" },
+                { "Mis Favoritos" },
+                { "Mi Historial e Info Suscripcion" },
+                { "Cerrar Sesion" },
+                { "|<", "Reproducir", ">|", "Cola"}
+            };
+
+            pair<int, int> sel = menuInteractivoGrid(opcionesMenuPrincipal, 40, 9, 30,2);
+            int fila = sel.first, columna = sel.second;
+
+
+            // Acciones segun la fila seleccionada
+            if (fila == 0)      MenuExplorar(lib).ejecutar();
+            else if (fila == 1) MenuAgregarACola(lib, repro, actual).ejecutar();
+            else if (fila == 2) {
+                mostrarRecomendaciones();
+
+            }
+            else if (fila == 3) gestionarCola();
+            else if (fila == 4) MenuPlaylists(lib, actual).ejecutar();
+            else if (fila == 5) MenuFavoritos(lib, actual).ejecutar();
+            else if (fila == 6) mostrarHistorialYSuscripcion();
+            else if (fila == 7) salir = true; // Cerrar Sesion
+            else if (fila == 8) {
+                if (columna == 0) {}   //reproducirAnterior();
+                else if (columna == 1) reproducirSiguiente(); // o tu logica de "reproducir/pausar"
+                else if (columna == 2)  reproducirSiguiente();
+                else if (columna == 3) gestionarCola(); //TODA LA LOGICA DE LA COLA AQUI
+            }
+            */
 
 // ============================================================
 //  MENU: ACCESO (pantalla de entrada: login / registro)
@@ -608,7 +691,7 @@ public:
                 "Salir"
             };
 
-            opAcceso = menuInteractivo(opcionesAcceso, 70, 23) + 1;
+            opAcceso = menuInteractivo(opcionesAcceso, 55, 23) + 1;
 
             if (opAcceso == 1) flujoLogin();
             else if (opAcceso == 2) flujoRegistro();
