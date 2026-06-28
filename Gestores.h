@@ -72,10 +72,12 @@ public:
             const string& tag = campos[0];
 
             if (tag == "CANCION" && campos.size() >= 8) {
-                catalogoCanciones.insertarAlFinal(new Cancion(
+                Cancion* nuevaCancion = new Cancion(
                     stoi(campos[1]), campos[2], stoi(campos[3]), stoi(campos[4]),
                     stoi(campos[5]), stoi(campos[6]), stoi(campos[7])
-                ));
+                );
+                catalogoCanciones.insertarAlFinal(nuevaCancion);
+
             }
             else if (tag == "PODCAST" && campos.size() >= 4) {
                 catalogoPodcasts.insertarAlFinal(new Podcast(stoi(campos[1]), campos[2], campos[3], ""));
@@ -115,18 +117,14 @@ public:
 
         vector<Recomendacion> resultado;
         for (Recomendacion& r : listaDistancias) {
-            if (r.distancia <= 50 && !cancionEscuchada(r.cancion->getId(), idUsuario)) {
+            if (r.distancia <= 80 && !cancionEscuchada(r.cancion->getId(), idUsuario)) {
                 resultado.push_back(r);
             }
         }
         return resultado;
     }
 
-    Cancion* buscarCancionId(int id) {
-        vector<Cancion*> vista = catalogoCanciones.toVector();
-        for (Cancion* c : vista) { if (c->getId() == id) return c; }
-        return nullptr;
-    }
+
 
     // --- VISTAS PROCESADAS DEL CATALOGO (la UI solo imprime el resultado) ---
     vector<Cancion*> obtenerCancionesOrdenadasAZ() {
@@ -165,6 +163,12 @@ public:
 
     ListaDoble<Cancion*>& getListaCanciones() { return catalogoCanciones; }
     ListaDoble<Podcast*>& getListaPodcasts() { return catalogoPodcasts; }
+
+    Cancion* buscarCancionId(int id) {
+        vector<Cancion*> v = catalogoCanciones.toVector();
+        for (Cancion* c : v) { if (c->getId() == id) return c; }
+        return nullptr;
+    }
 };
 
 
@@ -176,6 +180,7 @@ private:
     ListaDoble<Usuario*> listaUsuarios;
     Usuario* usuarioLogueado;
     GestorBiblioteca* biblioteca; // necesario para resolver canciones en PLAYLIST_CANCION
+
 
     // --- Helpers de carga: uno por tipo de linea en usuarios.txt ---
 
@@ -219,6 +224,14 @@ private:
         if (pl && c) pl->agregarCancion(c);
     }
 
+    void procesarLineaFavorito(const vector<string>& campos) {
+        // FAVORITO, idUsuario, idCancion
+        if (campos.size() < 3 || !biblioteca) return;
+        Usuario* due = buscarPorId(stoi(campos[1]));
+        Cancion* c = biblioteca->buscarCancionId(stoi(campos[2]));
+        if (due && c) due->agregarFavorito(c);
+    }
+
 public:
     // Requiere la biblioteca para poder resolver las canciones de cada playlist al cargar.
     GestorUsuarios(GestorBiblioteca* biblioteca) : usuarioLogueado(nullptr), biblioteca(biblioteca) {
@@ -242,6 +255,7 @@ public:
             else if (tag == "SUSCRIPCION") procesarLineaSuscripcion(campos);
             else if (tag == "PLAYLIST") procesarLineaPlaylist(campos);
             else if (tag == "PLAYLIST_CANCION") procesarLineaPlaylistCancion(campos);
+            else if (tag == "FAVORITO") procesarLineaFavorito(campos);
         }
         archivo.close(); // IMPORTANTE: fuera del while. Antes se cerraba en cada
         // iteracion y solo se llegaba a leer la primera linea del archivo.
@@ -288,10 +302,14 @@ public:
         GestorPersistencia::guardarLinea("usuarios.txt", "SUSCRIPCION,999," + to_string(u->getId()) + ",PlanPremium,Premium,29.90,Hoy,2026-12-31,1");
     }
 
-    // Devuelve los favoritos de un usuario ordenados A-Z (Insertion Sort).
+    static bool compararPorNombre(Cancion* a, Cancion* b) {
+        return a->getNombre() < b->getNombre();
+    }
+
+    // Devuelve los favoritos de un usuario ordenados A-Z (QUICK SORT).
     static vector<Cancion*> obtenerFavoritosOrdenados(Usuario* usuario) {
         vector<Cancion*> favs = usuario->getFavoritos().toVector();
-        Algoritmos::insertionSortPorNombre(favs);
+        Algoritmos::quickSort(favs, 0, (int)favs.size() - 1, GestorUsuarios::compararPorNombre);
         return favs;
     }
 

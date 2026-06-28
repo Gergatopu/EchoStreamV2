@@ -57,7 +57,7 @@ private:
     int duracion;
     int reproducciones;
 
-	//El sistema de recomendacion usara los siguientes parámetros para sugerir canciones similares: 
+    //El sistema de recomendacion usara los siguientes parámetros para sugerir canciones similares: 
     // { artista, duracion, genero, album }
 
 public:
@@ -72,12 +72,12 @@ public:
     int getDuracion() const { return duracion; }
     int getReproducciones() const { return reproducciones; }
 
-    
+
     void reproducir() {
         reproducciones++;
         cout << "  >> Reproduciendo: \"" << nombre << "\" - " << obtenerNombreArtista(id_artista) << endl;
     }
-    
+
 
 
     void mostrarDetalles() const override {
@@ -87,7 +87,7 @@ public:
             << obtenerNombreGenero(id_genero) << " | "
             << "Duracion: " << duracion << "s | "
             << "Reprod: " << reproducciones << endl;
-	}
+    }
 
     vector<double> obtenerVectorComponentes() {
 
@@ -152,14 +152,96 @@ public:
     int getUsuarioId() const { return usuarioId; }
 
     void mostrarDetalles() const override {
-        cout << "  [ID:" << id << "] Playlist: \"" << nombre
-            << "\" | " << canciones.getTotal() << " canciones" << endl;
+        cout << '\n' << "Playlist: " << nombre << " | " << canciones.getTotal() << " canciones" << endl;
+        vector<Cancion*> cancionesVector = canciones.toVector();
+        for (Cancion* c : cancionesVector) {
+            cout << '\n' << "-------------------------------------";
+            cout << '\n' << '\t' << c->getNombre();
+            cout << '\n' << "-------------------------------------";
+
+        }
     }
 
     string toString() const override {
         stringstream ss;
         ss << "PLAYLIST," << id << "," << nombre << "," << descripcion << "," << usuarioId;
         return ss.str();
+    }
+
+    string getNombre() {
+        return nombre;
+    }
+};
+
+// ============================================================
+//  TABLA HASH DE PLAYLISTS (busqueda rapida por nombre)
+//  Va aqui, despues de Playlist, porque sus metodos llaman a
+//  pl->getNombre() y necesitan el tipo Playlist ya completo
+//  (no basta un forward-declare como en EstructurasDatos.h).
+// ============================================================
+class TablaHashPlaylist {
+private:
+    vector<Playlist*> tabla;
+    vector<bool> ocupado;
+    int tam;
+
+    int hashFunction(const string& clave) {
+        // unsigned para que el overflow este bien definido (da la vuelta,
+        // no es UB) y para que el modulo final NUNCA sea negativo. Con
+        // "long" con signo, nombres de mas de ~6-7 caracteres podian
+        // desbordar a un numero negativo y causar acceso fuera de rango
+        // en tabla[indice]/ocupado[indice].
+        unsigned long h = 0;
+        for (unsigned char c : clave) h = h * 31 + c;
+        return static_cast<int>(h % tam);
+    }
+
+public:
+
+    TablaHashPlaylist(int tam) : tam(tam) {
+        tabla = vector<Playlist*>(tam, nullptr);
+        ocupado.resize(tam, false);
+    }
+
+    void insertar(Playlist* pl) {
+        int indice = hashFunction(pl->getNombre());
+        int inicio = indice;
+        while (ocupado[indice]) {
+            if (tabla[indice]->getNombre() == pl->getNombre()) {
+                tabla[indice] = pl;
+                return;
+            }
+            indice = (indice + 1) % tam;
+            if (indice == inicio) {
+                cout << "Error: tabla llena" << '\n';
+                return;
+            }
+        }
+        tabla[indice] = pl;
+        ocupado[indice] = true;
+    }
+
+    Playlist* buscar(string& nombre) {
+        int indice = hashFunction(nombre);
+        int inicio = indice;
+
+        while (ocupado[indice]) {
+            if (tabla[indice]->getNombre() == nombre) return tabla[indice];
+            indice = (indice + 1) % tam;
+            if (indice == inicio) break;
+        }
+        return nullptr;
+    }
+
+    void mostrar() {
+        for (int i = 0; i < tam; i++) {
+            if (ocupado[i]) {
+                cout << i << ": " << tabla[i]->getNombre() << endl;
+            }
+            else {
+                cout << i << ": [vacío]\n";
+            }
+        }
     }
 };
 
@@ -173,13 +255,22 @@ private:
     ListaDoble<Cancion*> misFavoritos;
     ListaDoble<Playlist*> misPlaylists;
     Pila<EntradaHistorial> miHistorial;
-    
+
+    TablaHashPlaylist* playlistHash; // Para busqueda rapida de playlists por ID
+
     int nextPlaylistId;
 
 public:
     Usuario(int id, string nombre, string email, string contrasena)
         : EntidadBase(id, nombre), email(email), contrasena(contrasena),
-        tienePremium(false), nextPlaylistId(1) {
+        tienePremium(false), playlistHash(new TablaHashPlaylist(50)), nextPlaylistId(1) {
+
+
+    }
+
+    ~Usuario() {
+        for (Playlist* p : misPlaylists.toVector()) delete p;
+        delete playlistHash;
     }
 
     void recalcularNextPlaylistId() {
@@ -187,6 +278,7 @@ public:
         for (Playlist* p : v) {
             int idLocal = p->getId() % 100;
             if (idLocal >= nextPlaylistId) nextPlaylistId = idLocal + 1;
+
         }
     }
 
@@ -231,16 +323,23 @@ public:
         int pid = (id * 100) + nextPlaylistId++;
         Playlist* p = new Playlist(pid, nombrePL, descPL, id);
         misPlaylists.insertarAlFinal(p);
+        playlistHash->insertar(p);
+
         return p;
     }
 
-    void agregarPlaylist(Playlist* p) { misPlaylists.insertarAlFinal(p); }
+    void agregarPlaylist(Playlist* p) { misPlaylists.insertarAlFinal(p); playlistHash->insertar(p); }
+
     ListaDoble<Playlist*>& getPlaylists() { return misPlaylists; }
 
-    Playlist* buscarPlaylistPorId(int pid) const {
+    Playlist* buscarPlaylistPorNombre(string nombre) const {
+        return playlistHash->buscar(nombre);
+    }
+
+    Playlist* buscarPlaylistPorId(int idPlaylist) const {
         vector<Playlist*> v = misPlaylists.toVector();
         for (Playlist* p : v) {
-            if (p->getId() == pid) return p;
+            if (p->getId() == idPlaylist) return p;
         }
         return nullptr;
     }
@@ -258,6 +357,7 @@ public:
         return ss.str();
     }
 
-    
-	
+
+
+
 };

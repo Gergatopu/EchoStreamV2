@@ -22,6 +22,8 @@ public:
             }
             arr[j + 1] = key;
         }
+
+
     }
 
     // SHELL SORT
@@ -97,5 +99,91 @@ public:
             intercambiar(arr[0], arr[i]);
             heapify(arr, i, 0);
         }
+    }
+
+    
+
+	// QUICK SORT
+    template <typename T>
+    static int partition(vector<T>& arr, int low, int high, bool (*comparar)(T, T))
+    {
+        T pivot = arr[high];
+        int i = (low - 1);
+
+        for (int j = low; j <= high - 1; j++)
+        {
+            if (comparar(arr[j], pivot))
+            {
+                i++;
+                swap(arr[i], arr[j]);
+            }
+        }
+        swap(arr[i + 1], arr[high]);
+        return (i + 1);
+    }
+
+    template <typename T>
+    static void quickSort(vector<T>& arr, int low, int high, bool (*comparar)(T, T)) {
+        if (low < high)
+        {
+            int pi = partition(arr, low, high, comparar);
+
+            quickSort(arr, low, pi - 1, comparar);
+            quickSort(arr, pi + 1, high, comparar);
+        }
+    }
+
+    // MERGE SORT
+    template<typename T>
+    void merge(vector<T>& A, int left, int mid, int right) {
+        int n1 = mid - left + 1;
+        int n2 = right - mid;
+
+        // Crear vectores temporales con el tipo T
+        vector<T> L(n1), R(n2);
+
+        for (int i = 0; i < n1; i++)
+            L[i] = A[left + i];
+        for (int j = 0; j < n2; j++)
+            R[j] = A[mid + 1 + j];
+
+        int i = 0, j = 0, k = left;
+
+        // Comparar y fusionar
+        while (i < n1 && j < n2) {
+            if (L[i] <= R[j]) {
+                A[k] = L[i];
+                i++;
+            }
+            else {
+                A[k] = R[j];
+                j++;
+            }
+            k++;
+        }
+
+        // Copiar elementos restantes de L, si hay
+        while (i < n1) {
+            A[k] = L[i];
+            i++; k++;
+        }
+
+        // Copiar elementos restantes de R, si hay
+        while (j < n2) {
+            A[k] = R[j];
+            j++; k++;
+        }
+    }
+
+    template<typename T>
+    void mergeSort(vector<T>& A, int left, int right) {
+        if (left >= right) return;
+
+        int mid = left + (right - left) / 2;
+
+        mergeSort(A, left, mid);
+        mergeSort(A, mid + 1, right);
+
+        merge(A, left, mid, right);
     }
 };

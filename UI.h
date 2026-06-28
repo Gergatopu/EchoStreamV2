@@ -167,13 +167,11 @@ private:
     Usuario* usuario;
 
 
-    void verPlaylists() {
-        cout << "\n--- Mis Playlists ---" << endl;
-        vector<Playlist*> misPLs = usuario->getPlaylists().toVector();
-        if (misPLs.empty()) cout << "  (Sin playlists creadas)" << endl;
-        else for (Playlist* p : misPLs) p->mostrarDetalles();
-        pausar();
-    }
+public:
+    MenuPlaylists(GestorBiblioteca* lib, Usuario* usuario) : lib(lib), usuario(usuario) {}
+
+
+
 
     void crearPlaylist() {
         string nom, desc;
@@ -208,7 +206,10 @@ private:
     }
 
     void verCancionesDePlaylist() {
-        cout << "\n--- Mis Playlists ---" << endl;
+
+
+
+
         vector<Playlist*> misPLs = usuario->getPlaylists().toVector();
         if (misPLs.empty()) { cout << "  No tienes playlists."; pausar(); return; }
         for (Playlist* p : misPLs) p->mostrarDetalles();
@@ -226,29 +227,6 @@ private:
         }
         else { cout << "  Playlist no encontrada." << endl; }
         pausar();
-    }
-
-public:
-    MenuPlaylists(GestorBiblioteca* lib, Usuario* usuario) : lib(lib), usuario(usuario) {}
-
-    void ejecutar() {
-        int op = 0;
-        while (op != 5) {
-            cabecera("MIS PLAYLISTS");
-            vector<string> opciones = {
-                "Ver mis playlists",
-                "Crear nueva playlist",
-                "Agregar cancion a una playlist",
-                "Ver canciones de una playlist",
-                "Volver"
-            };
-            op = menuInteractivo(opciones, 5, 4) + 1;
-
-            if (op == 1) verPlaylists();
-            else if (op == 2) crearPlaylist();
-            else if (op == 3) agregarCancionAPlaylist();
-            else if (op == 4) verCancionesDePlaylist();
-        }
     }
 };
 
@@ -274,6 +252,7 @@ private:
         Cancion* c = lib->buscarCancionId(idC);
         if (c) {
             usuario->agregarFavorito(c);
+            GestorPersistencia::guardarLinea("usuarios.txt", "FAVORITO," + to_string(usuario->getId()) + "," + to_string(c->getId()));
             cout << "  Agregado a favoritos." << endl;
         }
         else cout << "  Cancion no encontrada." << endl;
@@ -298,7 +277,7 @@ public:
             vector<string> opciones = {
                 "Ver canciones favoritas",
                 "Agregar cancion a favoritos",
-                "Ver favoritos ordenados A-Z (Insercion)",
+                "Ver favoritos ordenados A-Z (Quick Sort)",
                 "Volver"
             };
             op = menuInteractivo(opciones, 5, 4) + 1;
@@ -434,11 +413,10 @@ private:
         pausar();
     }
 
-    void mostrarHistorialYSuscripcion() {
+    void mostrarHistorial() {
         cabecera("MI HISTORIAL");
         actual->mostrarHistorial();
         pausar();
-        MenuSuscripcion(userG).ejecutar();
     }
 
     void mostrarRecomendaciones() {
@@ -466,22 +444,40 @@ public:
 
     void dibujarNotaEnCuadrado(int x, int y, int color) {
         // Definimos el marco exterior con un poco de margen interno
-        asignarcolor(color);Console::SetCursorPosition(x, y);      cout << "+-----------------------------+";
-        asignarcolor(color);Console::SetCursorPosition(x, y + 1);  cout << "|                             |"; // Espacio superior
-        asignarcolor(color);Console::SetCursorPosition(x, y + 2);  cout << "|      ;;;;;;;;;;;;;;;;;;;    |";
-        asignarcolor(color);Console::SetCursorPosition(x, y + 3);  cout << "|      ;;;;;;;;;;;;;;;;;;;    |";
-        asignarcolor(color);Console::SetCursorPosition(x, y + 4);  cout << "|      ;                 ;    |";
-        asignarcolor(color);Console::SetCursorPosition(x, y + 5);  cout << "|      ;                 ;    |";
-        asignarcolor(color);Console::SetCursorPosition(x, y + 6);  cout << "|      ;                 ;    |";
-        asignarcolor(color);Console::SetCursorPosition(x, y + 7);  cout << "|      ;                 ;    |";
-        asignarcolor(color);Console::SetCursorPosition(x, y + 8);  cout << "|      ;                 ;    |";
-        asignarcolor(color);Console::SetCursorPosition(x, y + 9);  cout << "|      ;                 ;    |";
-        asignarcolor(color);Console::SetCursorPosition(x, y + 10); cout << "|      ;                 ;    |";
-        asignarcolor(color);Console::SetCursorPosition(x, y + 11); cout << "|  ,;;;;;             ,;;;;;  |";
-        asignarcolor(color);Console::SetCursorPosition(x, y + 12); cout << "|  ;;;;;;             ;;;;;;  |";
-        asignarcolor(color);Console::SetCursorPosition(x, y + 13); cout << "|  `;;;;'             `;;;;'  |";
-        asignarcolor(color);Console::SetCursorPosition(x, y + 14); cout << "|                             |"; // Espacio inferior
-        asignarcolor(color);Console::SetCursorPosition(x, y + 15); cout << "+-----------------------------+";
+        asignarcolor(color); Console::SetCursorPosition(x, y);      cout << "+------------------------------+";
+        asignarcolor(color); Console::SetCursorPosition(x, y + 1);  cout << "|                              |"; // Espacio superior
+        asignarcolor(color); Console::SetCursorPosition(x, y + 2);  cout << "|       ;;;;;;;;;;;;;;;;;;;;   |";
+        asignarcolor(color); Console::SetCursorPosition(x, y + 3);  cout << "|       ;;;;;;;;;;;;;;;;;;;;   |";
+        asignarcolor(color); Console::SetCursorPosition(x, y + 4);  cout << "|       ;                  ;   |";
+        asignarcolor(color); Console::SetCursorPosition(x, y + 5);  cout << "|       ;                  ;   |";
+        asignarcolor(color); Console::SetCursorPosition(x, y + 6);  cout << "|       ;                  ;   |";
+        asignarcolor(color); Console::SetCursorPosition(x, y + 7);  cout << "|       ;                  ;   |";
+        asignarcolor(color); Console::SetCursorPosition(x, y + 8);  cout << "|       ;                  ;   |";
+        asignarcolor(color); Console::SetCursorPosition(x, y + 9);  cout << "|       ;                  ;   |";
+        asignarcolor(color); Console::SetCursorPosition(x, y + 10); cout << "|       ;                  ;   |";
+        asignarcolor(color); Console::SetCursorPosition(x, y + 11); cout << "|  ,;;;;;             ,;;;;;   |";
+        asignarcolor(color); Console::SetCursorPosition(x, y + 12); cout << "|  ;;;;;;             ;;;;;;   |";
+        asignarcolor(color); Console::SetCursorPosition(x, y + 13); cout << "|  `;;;;'             `;;;;'   |";
+        asignarcolor(color); Console::SetCursorPosition(x, y + 14); cout << "|                              |"; // Espacio inferior
+        asignarcolor(color); Console::SetCursorPosition(x, y + 15); cout << "+------------------------------+";
+    }
+
+    void verPlaylist(string playlistNombre) {
+        ubicar(5, 8);
+        Playlist* pl = actual->buscarPlaylistPorNombre(playlistNombre);
+        if (!pl) {
+            cabecera("PLAYLIST");
+            cout << "  Playlist \"" << playlistNombre << "\" no encontrada." << endl;
+            pausar();
+            return;
+        }
+
+        cout << '\t' << '\t' << "PLAYLIST: " << pl->getNombre() << endl << endl << endl;
+        for (Cancion* c : pl->getCanciones().toVector()) {
+            cout << '\t' << '\t' << "---------------------------------------" << endl;
+            cout << '\t' << '\t' << c->getNombre() << endl;
+            cout << '\t' << '\t' << "---------------------------------------" << endl;
+        }
     }
 
     void ejecutar() {
@@ -489,16 +485,16 @@ public:
         while (!salir) {
             mostrarCabecera();
             Console::CursorVisible = false;
-            
+
             dibujarNotaEnCuadrado(49, 10, 6);
-            
+
             vector<vector<string>> opcionesMenuPrincipal = {
-                { "AJUSTES" , ""   , ""  , ""      , "PLAYLIST 1"  },
-                { ""        , ""   , ""  , ""      , "PLAYLIST 2"  },
-                { ""        , ""   , ""  , ""      , "PLAYLIST 3"  },
+                { "Cerrar Sesion" , ""   , ""  , ""      , "MIX/Essentials",     },
+                { ""        , ""   , ""  , ""      , "Tus Me Gusta"  },
+                { ""        , ""   , ""  , ""      , "Recomendacion Semanal"  },
                 { ""        , ""   , ""  , ""      , "PLAYLIST 4"  },
                 { ""        , ""   , ""  , ""      , "PLAYLISTS +"  },
-                { "NOMBRECANCION"  , "|<" , "o" , ">|"    , "COLA"        },
+                { "Historial"  , "|<" , "o" , ">|"    , "COLA"        },
             };
 
             pair<int, int> sel = menuInteractivoGrid(opcionesMenuPrincipal, 14, 9, 23, 4);
@@ -506,24 +502,44 @@ public:
 
 
             // Acciones segun la fila seleccionada
-            if (fila == 0)      MenuExplorar(lib).ejecutar();
-            else if (fila == 1) MenuAgregarACola(lib, repro, actual).ejecutar();
+            if (fila == 0) {
+                if (columna == 0) {
+                    salir = true;
+                }
+                else if (columna == 4) {
+                    system("cls");
+                    verPlaylist(opcionesMenuPrincipal[0][4]);
+
+                    pausar();
+                }
+            }
+            else if (fila == 1) {
+                if (columna == 4) {
+
+                    MenuFavoritos(lib, actual).ejecutar();
+
+                }
+            }
             else if (fila == 2) {
-                mostrarRecomendaciones();
-
+                if (columna == 4) {
+                    system("cls");
+                    mostrarRecomendaciones();
+                };
             }
-            else if (fila == 3) gestionarCola();
-            else if (fila == 4) MenuPlaylists(lib, actual).ejecutar();
-            else if (fila == 5) MenuFavoritos(lib, actual).ejecutar();
-            else if (fila == 6) mostrarHistorialYSuscripcion();
-            else if (fila == 7) salir = true; // Cerrar Sesion
-            else if (fila == 8) {
-                if (columna == 0) {}   //reproducirAnterior();
-                else if (columna == 1) reproducirSiguiente(); // o tu logica de "reproducir/pausar"
-                else if (columna == 2)  reproducirSiguiente();
-                else if (columna == 3) gestionarCola(); //TODA LA LOGICA DE LA COLA AQUI
+            else if (fila == 3) {
+                if (columna == 4);
             }
+            else if (fila == 4) {
+                if (columna == 4);
+            }
+            else if (fila == 5) {
 
+                if (columna == 0) { mostrarHistorial(); }
+                else if (columna == 1) {/*reproducirAnterior(); */ }
+                else if (columna == 2) {/*reproducirPausar();*/ }
+                else if (columna == 3) { /*reproducirSiguiente(); */ }
+                else if (columna == 4) { /*gestionarCola();*/ }
+            }
 
         }
         userG->cerrarSesion();
@@ -568,9 +584,9 @@ public:
             }
             */
 
-// ============================================================
-//  MENU: ACCESO (pantalla de entrada: login / registro)
-// ============================================================
+            // ============================================================
+            //  MENU: ACCESO (pantalla de entrada: login / registro)
+            // ============================================================
 class MenuAcceso {
 private:
     GestorBiblioteca* biblioteca;
