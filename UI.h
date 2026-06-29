@@ -3,16 +3,12 @@
 #include <vector>
 #include <string>
 #include "Gestores.h"
+#include "chrono"
 
 using namespace std;
 using namespace System;
 
-// ============================================================
-//  UTILIDADES DE PRESENTACION
-//  Compartidas por todas las clases de menu de este archivo.
-//  IMPORTANTE: aqui solo se imprime. Toda la logica (ordenar,
-//  buscar, filtrar, calcular) vive en Gestores.h.
-// ============================================================
+
 
 void pausar() {
     asignarcolor(8);
@@ -35,39 +31,351 @@ void imprimirCanciones(const vector<Cancion*>& canciones, string mensajeVacio = 
     for (Cancion* c : canciones) c->mostrarDetalles();
 }
 
-void mostrarCancionesOrdenadasA_Z(GestorBiblioteca* lib) {
+void mostrarCancionesOrdenadasA_Z(Gestor* lib) {
     cout << "\n  [Insercion] Canciones (A-Z):" << endl;
     imprimirCanciones(lib->obtenerCancionesOrdenadasAZ());
 }
 
-void mostrarTopReproducciones(GestorBiblioteca* lib) {
+void mostrarTopReproducciones(Gestor* lib) {
     cout << "\n  [Shell Sort] Top Reproducciones:" << endl;
     imprimirCanciones(lib->obtenerTopReproducciones());
 }
 
-void mostrarSoloCanciones(GestorBiblioteca* lib) {
+void mostrarSoloCanciones(Gestor* lib) {
     cout << "\n--- CANCIONES DISPONIBLES ---" << endl;
     imprimirCanciones(lib->getCatalogoCanciones());
 }
 
 // --- IMPRESION DE LA COLA DE REPRODUCCION ---
-void mostrarCola(GestorReproduccion* repro) {
+void mostrarCola(Gestor* repro) {
     vector<Cancion*> vista = repro->obtenerCola();
     cout << "\n--- Cola (" << vista.size() << ") ---" << endl;
     for (Cancion* c : vista) cout << "  -> " << c->getNombre() << endl;
 }
 
 // ============================================================
-//  MENU: EXPLORAR BIBLIOTECA
+//  AppUI
+//  Una sola clase para todos los menus de la aplicacion.
+//
+//  Por que una sola clase y no una por menu:
+//  - Todos los metodos quedan privados DE LA MISMA clase, asi que
+//    se llaman libremente entre si sin importar el orden en que
+//    estan escritos en el archivo (el orden de declaracion dentro
+//    de una clase no afecta la visibilidad de sus propios metodos).
+//  - gestor / actual se guardan una sola vez como atributos, en vez
+//    de pasarlos por constructor cada vez que se "entra" a un
+//    submenu (que antes era literalmente instanciar una clase nueva).
+//  - "gestor" reemplaza a lo que antes eran tres punteros distintos
+//    (lib / userG / repro): ahora toda esa logica vive en una sola
+//    clase Gestor, asi que un solo puntero alcanza. Ya no hace falta
+//    crear y destruir un GestorReproduccion en cada login/logout: la
+//    cola vive dentro de "gestor" y se vacia sola en cerrarSesion().
+//  - actual solo es valido mientras hay sesion iniciada: se asigna
+//    en flujoLogin() y se libera al cerrar sesion.
+//
+//  ORDEN DE LOS GRUPOS (de mas a menos relevante en el programa):
+//    1. STREAMING (pantalla principal, reproduccion)
+//    2. PLAYLISTS
+//    3. EXPLORAR BIBLIOTECA
+//    4. AGREGAR A COLA
+//    5. FAVORITOS
+//    6. SUSCRIPCION
+//    7. ACCESO (login / registro)
 // ============================================================
-class MenuExplorar {
+class AppUI {
 private:
-    GestorBiblioteca* lib;
+    Gestor* gestor;
 
-public:
-    MenuExplorar(GestorBiblioteca* lib) : lib(lib) {}
+    Usuario* actual = nullptr; // valido solo durante una sesion
 
-    void ejecutar() {
+    // ============================================================
+    //  STREAMING (pantalla principal tras iniciar sesion)
+    // ============================================================
+    void mostrarCabeceraStreaming() {
+        system("cls");
+
+        // Ancho total del marco (58 caracteres)
+        string borde = "==========================================================";
+
+        asignarcolor(14);
+        Console::SetCursorPosition(35, 3);  cout << borde;
+
+        // Fila del Titulo
+        Console::SetCursorPosition(35, 4);
+        asignarcolor(14); cout << "| ";
+        asignarcolor(7);  cout << "               ECHOSTREAM PLAYER                ";
+        asignarcolor(14); cout << " |";
+
+        // Fila de Usuario y Estado
+        string nombre = actual->getNombre();
+        string tipo = actual->esPremium() ? "Premium" : "Gratuito";
+
+        // Formateamos el texto central: " Usuario: NOMBRE | Estado: TIPO"
+        string contenido = " Usuario: " + nombre + " | Estado: " + tipo;
+
+        // El marco interno mide 54 caracteres (58 total - 2 bordes laterales "| " - 2 bordes laterales " |")
+        int anchoInterior = 54;
+        int espaciosNecesarios = anchoInterior - contenido.length();
+
+        Console::SetCursorPosition(35, 5);
+        asignarcolor(14); cout << "| ";
+        asignarcolor(7);  cout << contenido;
+
+        for (int i = 0; i < espaciosNecesarios; i++) cout << " ";
+
+        asignarcolor(14); cout << "|";
+
+        Console::SetCursorPosition(35, 6);
+        cout << borde;
+
+        asignarcolor(7);
+    }
+
+    void dibujarNotaEnCuadrado(int x, int y, int color) {
+        asignarcolor(color); Console::SetCursorPosition(x, y);      cout << "+------------------------------+";
+        asignarcolor(color); Console::SetCursorPosition(x, y + 1);  cout << "|                              |";
+        asignarcolor(color); Console::SetCursorPosition(x, y + 2);  cout << "|       ;;;;;;;;;;;;;;;;;;;;   |";
+        asignarcolor(color); Console::SetCursorPosition(x, y + 3);  cout << "|       ;;;;;;;;;;;;;;;;;;;;   |";
+        asignarcolor(color); Console::SetCursorPosition(x, y + 4);  cout << "|       ;                  ;   |";
+        asignarcolor(color); Console::SetCursorPosition(x, y + 5);  cout << "|       ;                  ;   |";
+        asignarcolor(color); Console::SetCursorPosition(x, y + 6);  cout << "|       ;                  ;   |";
+        asignarcolor(color); Console::SetCursorPosition(x, y + 7);  cout << "|       ;                  ;   |";
+        asignarcolor(color); Console::SetCursorPosition(x, y + 8);  cout << "|       ;                  ;   |";
+        asignarcolor(color); Console::SetCursorPosition(x, y + 9);  cout << "|       ;                  ;   |";
+        asignarcolor(color); Console::SetCursorPosition(x, y + 10); cout << "|       ;                  ;   |";
+        asignarcolor(color); Console::SetCursorPosition(x, y + 11); cout << "|  ,;;;;;             ,;;;;;   |";
+        asignarcolor(color); Console::SetCursorPosition(x, y + 12); cout << "|  ;;;;;;             ;;;;;;   |";
+        asignarcolor(color); Console::SetCursorPosition(x, y + 13); cout << "|  `;;;;'             `;;;;'   |";
+        asignarcolor(color); Console::SetCursorPosition(x, y + 14); cout << "|                              |";
+        asignarcolor(color); Console::SetCursorPosition(x, y + 15); cout << "+------------------------------+";
+    }
+
+    void verCancionActual(int x, int y, int color) {
+        ubicar(x, y); asignarcolor(color); gestor->reproducirCancionActual();
+
+    }
+
+    void reproducirSiguienteUI() {
+        gestor->reproducirSiguiente();
+        if (gestor->getCancionActual() == nullptr) cout << "  La cola esta vacia." << endl;
+    }
+
+    void gestionarCola() {
+        cabecera("GESTIONAR COLA");
+        mostrarCola(gestor);
+
+        // Calculamos la posicion Y dinamicamente debajo de la cola actual impresa
+        cout << "\n";
+        int currentY = Console::CursorTop;
+
+        vector<string> opcionesCola = {
+            "Mezclar aleatoriamente (Shuffle recursivo)",
+            "Volver",
+            "Agregar cancion a la cola"
+        };
+        int sub = menuInteractivo(opcionesCola, 5, currentY + 1) + 1;
+
+        if (sub == 1) {
+            if (gestor->modoAleatorio()) {
+                cout << '\n' << '\n' << "--- Cola mezclada aleatoriamente ---" << endl;
+                mostrarCola(gestor);
+            }
+        }
+        else if (sub == 3) {
+            menuAgregarACola();
+            return; // menuAgregarACola ya hace su propio pausar() en cada accion
+        }
+        pausar();
+    }
+
+    void mostrarHistorialUI() {
+        cabecera("MI HISTORIAL");
+        actual->mostrarHistorial();
+        pausar();
+    }
+
+    void mostrarRecomendaciones() {
+        int idUsu = actual->getId();
+        vector<double> perfilUsuario = gestor->calcularPreferencias(idUsu);
+        vector<Gestor::Recomendacion> recomendaciones = gestor->obtenerRecomendaciones(perfilUsuario, idUsu);
+
+        cout << "\n--- TUS RECOMENDACIONES ---" << endl;
+        if (recomendaciones.empty()) {
+            cout << "  (Sin recomendaciones disponibles por ahora)" << endl;
+        }
+        else {
+            for (Gestor::Recomendacion& r : recomendaciones) {
+                cout << " [Distancia: " << r.distancia << "] ";
+                r.cancion->mostrarDetalles();
+            }
+        }
+        pausar();
+    }
+
+    void verPlaylist(string playlistNombre) {
+        ubicar(5, 8);
+        Playlist* pl = actual->buscarPlaylistPorNombre(playlistNombre);
+        if (!pl) {
+            cabecera("PLAYLIST");
+            cout << "  Playlist \"" << playlistNombre << "\" no encontrada." << endl;
+            pausar();
+            return;
+        }
+
+        cout << '\t' << '\t' << "PLAYLIST: " << pl->getNombre() << endl << endl << endl;
+        for (Cancion* c : pl->getCanciones().toVector()) {
+            c->mostrarDetalles();
+        }
+    }
+
+    void menuStreaming() {
+        bool salir = false;
+        while (!salir) {
+            mostrarCabeceraStreaming();
+            Console::CursorVisible = false;
+
+            dibujarNotaEnCuadrado(49, 8, 6);
+            if (gestor->getCancionActual() != nullptr) {
+                if (gestor->getCancionActual()->getEnReproduccion()) {
+                    ubicar(50, 25); asignarcolor(5); cout << "Reproduciendo: " << gestor->getCancionActual()->getNombre(); asignarcolor(7);
+                }
+                else if (gestor->getCancionActual()->getEnReproduccion() == false || gestor->getCancionActual() == nullptr) {
+                    ubicar(50, 25); asignarcolor(5); cout << "  (No hay cancion en reproduccion)"; asignarcolor(7);
+                }
+            }
+
+            vector<vector<string>> opcionesMenuPrincipal = {
+                { "Cerrar Sesion" , ""   , ""  , ""      , "MIX/Essentials",     },
+                { ""        , ""   , ""  , ""      , "Tus Me Gusta"  },
+                { ""        , ""   , ""  , ""      , "Recomendacion Semanal"  },
+                { ""        , ""   , ""  , ""      , "PLAYLIST 4"  },
+                { ""        , ""   , ""  , ""      , "PLAYLISTS +"  },
+                { "Historial"  , "|<" , "o" , ">|"    , "COLA"        },
+            };
+
+            pair<int, int> sel = menuInteractivoGrid(opcionesMenuPrincipal, 14, 9, 23, 4);
+            int fila = sel.first, columna = sel.second;
+
+            // Acciones segun la fila seleccionada
+            if (fila == 0) {
+                if (columna == 0) {
+                    salir = true;
+                }
+                else if (columna == 4) {
+                    system("cls");
+                    verPlaylist(opcionesMenuPrincipal[0][4]);
+                    pausar();
+                }
+            }
+            else if (fila == 1) {
+                if (columna == 4) {
+                    menuFavoritos();
+                }
+            }
+            else if (fila == 2) {
+                if (columna == 4) {
+                    system("cls");
+                    mostrarRecomendaciones();
+                };
+            }
+            else if (fila == 3) {
+                if (columna == 4);
+            }
+            else if (fila == 4) {
+                if (columna == 4);
+            }
+            else if (fila == 5) {
+                if (columna == 0) { mostrarHistorialUI(); }
+                else if (columna == 1) {/*reproducirAnterior(); */ }
+                else if (columna == 2) {
+                    if (gestor->getCancionActual() == nullptr) return;
+                    verCancionActual(25, 25, 6);
+                }
+                else if (columna == 3) { reproducirSiguienteUI(); }
+                else if (columna == 4) { gestionarCola(); }
+            }
+        }
+        gestor->cerrarSesion();
+        cout << "  Sesion cerrada." << endl;
+    }
+
+    // ============================================================
+    //  MIS PLAYLISTS  
+    // ============================================================
+    void crearPlaylist() {
+        string nom, desc;
+        cout << "\nNombre de la playlist: "; cin.ignore(); asignarcolor(14); getline(cin, nom); asignarcolor(7);
+        cout << "Descripcion: "; asignarcolor(14); getline(cin, desc); asignarcolor(7);
+        Playlist* pl = actual->crearPlaylist(nom, desc);
+        guardarLinea("usuarios.txt", pl->toString());
+        cout << "  Playlist \"" << nom << "\" creada (ID:" << pl->getId() << ")." << endl;
+        pausar();
+    }
+
+    void agregarCancionAPlaylist() {
+        cout << "\n--- Mis Playlists ---" << endl;
+        vector<Playlist*> misPLs = actual->getPlaylists().toVector();
+        if (misPLs.empty()) { cout << "  No tienes playlists."; pausar(); return; }
+        for (Playlist* p : misPLs) p->mostrarDetalles();
+
+        int idPL; cout << "ID de la playlist: "; asignarcolor(14); cin >> idPL; asignarcolor(7);
+        Playlist* pl = actual->buscarPlaylistPorId(idPL);
+        if (!pl) { cout << "  Playlist no encontrada." << endl; pausar(); return; }
+
+        mostrarSoloCanciones(gestor);
+        int idC; cout << "\nID de la cancion a agregar: "; asignarcolor(14); cin >> idC; asignarcolor(7);
+        Cancion* c = gestor->buscarCancionId(idC);
+        if (c) {
+            pl->agregarCancion(c);
+            guardarLinea("usuarios.txt", "PLAYLIST_CANCION," + to_string(pl->getId()) + "," + to_string(idC));
+            cout << "  \"" << c->getNombre() << "\" agregada a \"" << pl->getNombre() << "\"." << endl;
+        }
+        else { cout << "  Cancion no encontrada." << endl; }
+        pausar();
+    }
+
+    void verCancionesDePlaylist() {
+        vector<Playlist*> misPLs = actual->getPlaylists().toVector();
+        if (misPLs.empty()) { cout << "  No tienes playlists."; pausar(); return; }
+        for (Playlist* p : misPLs) p->mostrarDetalles();
+
+        int idPL; cout << "ID de la playlist: "; asignarcolor(14); cin >> idPL; asignarcolor(7);
+        Playlist* pl = actual->buscarPlaylistPorId(idPL);
+        if (pl) {
+            cout << "\n--- Canciones de \"" << pl->getNombre() << "\" ---" << endl;
+            vector<Cancion*> cans = pl->getCanciones().toVector();
+            if (cans.empty()) { cout << "  (Playlist vacia)" << endl; }
+            else {
+                int i = 1;
+                for (Cancion* c : cans) { cout << "  " << i++ << ". "; c->mostrarDetalles(); }
+            }
+        }
+        else { cout << "  Playlist no encontrada." << endl; }
+        pausar();
+    }
+
+    void menuPlaylists() {
+        int op = 0;
+        while (op != 4) {
+            cabecera("MIS PLAYLISTS");
+            vector<string> opciones = {
+                "Crear nueva playlist",
+                "Agregar cancion a una playlist",
+                "Ver canciones de una playlist",
+                "Volver"
+            };
+            op = menuInteractivo(opciones, 5, 4) + 1;
+
+            if (op == 1) crearPlaylist();
+            else if (op == 2) agregarCancionAPlaylist();
+            else if (op == 3) verCancionesDePlaylist();
+        }
+    }
+
+    // ============================================================
+    //  EXPLORAR BIBLIOTECA  
+    // ============================================================
+    void menuExplorar() {
         int op = 0;
         while (op != 4) {
             cabecera("EXPLORAR BIBLIOTECA");
@@ -79,30 +387,21 @@ public:
             };
             op = menuInteractivo(opciones, 5, 4) + 1;
 
-            if (op == 1) { mostrarSoloCanciones(lib); pausar(); }
-            else if (op == 2) { mostrarCancionesOrdenadasA_Z(lib); pausar(); }
-            else if (op == 3) { mostrarTopReproducciones(lib); pausar(); }
+            if (op == 1) { mostrarSoloCanciones(gestor); pausar(); }
+            else if (op == 2) { mostrarCancionesOrdenadasA_Z(gestor); pausar(); }
+            else if (op == 3) { mostrarTopReproducciones(gestor); pausar(); }
         }
     }
-};
 
-
-// ============================================================
-//  MENU: AGREGAR A LA COLA
-// ============================================================
-class MenuAgregarACola {
-private:
-    GestorBiblioteca* lib;
-    GestorReproduccion* repro;
-    Usuario* usuario;
-    MenuExplorar* menuExplorar;
-
+    // ============================================================
+    //  AGREGAR A LA COLA  
+    // ============================================================
     void agregarCancionIndividual() {
-        mostrarSoloCanciones(lib);
+        mostrarSoloCanciones(gestor);
         int idC;
         cout << "\nID de la cancion: "; asignarcolor(14); cin >> idC; asignarcolor(7);
 
-        Cancion* c = repro->agregarCancionAFila(idC);
+        Cancion* c = gestor->agregarCancionAFila(idC);
         if (c) cout << "  Cancion encolada: " << c->getNombre() << endl;
         else cout << "  Cancion no encontrada." << endl;
         pausar();
@@ -110,7 +409,7 @@ private:
 
     void agregarPlaylistCompleta() {
         cout << "\n--- Mis Playlists ---" << endl;
-        vector<Playlist*> misPLs = usuario->getPlaylists().toVector();
+        vector<Playlist*> misPLs = actual->getPlaylists().toVector();
         if (misPLs.empty()) {
             cout << "  Crea una playlist primero desde el menu de Playlists." << endl;
             pausar(); return;
@@ -120,12 +419,12 @@ private:
         int idPL;
         cout << "\nID de la playlist: "; asignarcolor(14); cin >> idPL; asignarcolor(7);
 
-        Playlist* pl = usuario->buscarPlaylistPorId(idPL);
+        Playlist* pl = actual->buscarPlaylistPorId(idPL);
         if (pl) {
             vector<Cancion*> cans = pl->getCanciones().toVector();
             if (cans.empty()) { cout << "  La playlist esta vacia." << endl; }
             else {
-                for (Cancion* c : cans) repro->agregarCancionAFila(c->getId());
+                for (Cancion* c : cans) gestor->agregarCancionAFila(c->getId());
                 cout << "  " << cans.size() << " cancion(es) agregadas a la cola." << endl;
             }
         }
@@ -133,12 +432,7 @@ private:
         pausar();
     }
 
-public:
-    MenuAgregarACola(GestorBiblioteca* lib, GestorReproduccion* repro, Usuario* usuario)
-        : lib(lib), repro(repro), usuario(usuario) {
-    }
-
-    void ejecutar() {
+    void menuAgregarACola() {
         int op = 0;
         while (op != 3) {
             cabecera("AGREGAR A COLA");
@@ -155,90 +449,10 @@ public:
             else if (op == 2) agregarPlaylistCompleta();
         }
     }
-};
 
-
-// ============================================================
-//  MENU: MIS PLAYLISTS
-// ============================================================
-class MenuPlaylists {
-private:
-    GestorBiblioteca* lib;
-    Usuario* usuario;
-
-
-public:
-    MenuPlaylists(GestorBiblioteca* lib, Usuario* usuario) : lib(lib), usuario(usuario) {}
-
-
-
-
-    void crearPlaylist() {
-        string nom, desc;
-        cout << "\nNombre de la playlist: "; cin.ignore(); asignarcolor(14); getline(cin, nom); asignarcolor(7);
-        cout << "Descripcion: "; asignarcolor(14); getline(cin, desc); asignarcolor(7);
-        Playlist* pl = usuario->crearPlaylist(nom, desc);
-        GestorPersistencia::guardarLinea("usuarios.txt", pl->toString());
-        cout << "  Playlist \"" << nom << "\" creada (ID:" << pl->getId() << ")." << endl;
-        pausar();
-    }
-
-    void agregarCancionAPlaylist() {
-        cout << "\n--- Mis Playlists ---" << endl;
-        vector<Playlist*> misPLs = usuario->getPlaylists().toVector();
-        if (misPLs.empty()) { cout << "  No tienes playlists."; pausar(); return; }
-        for (Playlist* p : misPLs) p->mostrarDetalles();
-
-        int idPL; cout << "ID de la playlist: "; asignarcolor(14); cin >> idPL; asignarcolor(7);
-        Playlist* pl = usuario->buscarPlaylistPorId(idPL);
-        if (!pl) { cout << "  Playlist no encontrada." << endl; pausar(); return; }
-
-        mostrarSoloCanciones(lib);
-        int idC; cout << "\nID de la cancion a agregar: "; asignarcolor(14); cin >> idC; asignarcolor(7);
-        Cancion* c = lib->buscarCancionId(idC);
-        if (c) {
-            pl->agregarCancion(c);
-            GestorPersistencia::guardarLinea("usuarios.txt", "PLAYLIST_CANCION," + to_string(pl->getId()) + "," + to_string(idC));
-            cout << "  \"" << c->getNombre() << "\" agregada a \"" << pl->getNombre() << "\"." << endl;
-        }
-        else { cout << "  Cancion no encontrada." << endl; }
-        pausar();
-    }
-
-    void verCancionesDePlaylist() {
-
-
-
-
-        vector<Playlist*> misPLs = usuario->getPlaylists().toVector();
-        if (misPLs.empty()) { cout << "  No tienes playlists."; pausar(); return; }
-        for (Playlist* p : misPLs) p->mostrarDetalles();
-
-        int idPL; cout << "ID de la playlist: "; asignarcolor(14); cin >> idPL; asignarcolor(7);
-        Playlist* pl = usuario->buscarPlaylistPorId(idPL);
-        if (pl) {
-            cout << "\n--- Canciones de \"" << pl->getNombre() << "\" ---" << endl;
-            vector<Cancion*> cans = pl->getCanciones().toVector();
-            if (cans.empty()) { cout << "  (Playlist vacia)" << endl; }
-            else {
-                int i = 1;
-                for (Cancion* c : cans) { cout << "  " << i++ << ". "; c->mostrarDetalles(); }
-            }
-        }
-        else { cout << "  Playlist no encontrada." << endl; }
-        pausar();
-    }
-};
-
-
-// ============================================================
-//  MENU: MIS FAVORITOS
-// ============================================================
-class MenuFavoritos {
-private:
-    GestorBiblioteca* lib;
-    Usuario* usuario;
-
+    // ============================================================
+    //  MIS FAVORITOS  
+    // ============================================================
     void verFavoritos(vector<Cancion*>& favs) {
         cout << "\n--- Canciones Favoritas ---" << endl;
         if (favs.empty()) cout << "  (Sin canciones favoritas)" << endl;
@@ -247,30 +461,26 @@ private:
     }
 
     void agregarFavorito() {
-        mostrarSoloCanciones(lib);
+        mostrarSoloCanciones(gestor);
         int idC; cout << "\nID de la cancion: "; asignarcolor(14); cin >> idC; asignarcolor(7);
-        Cancion* c = lib->buscarCancionId(idC);
+        Cancion* c = gestor->buscarCancionId(idC);
         if (c) {
-            usuario->agregarFavorito(c);
-            GestorPersistencia::guardarLinea("usuarios.txt", "FAVORITO," + to_string(usuario->getId()) + "," + to_string(c->getId()));
+            actual->agregarFavorito(c);
+            guardarLinea("usuarios.txt", "FAVORITO," + to_string(actual->getId()) + "," + to_string(c->getId()));
             cout << "  Agregado a favoritos." << endl;
         }
         else cout << "  Cancion no encontrada." << endl;
         pausar();
     }
 
-    // Solo impresion: el ordenamiento ya viene resuelto desde GestorUsuarios.
     void verFavoritosOrdenados() {
-        vector<Cancion*> favsOrdenados = GestorUsuarios::obtenerFavoritosOrdenados(usuario);
+        vector<Cancion*> favsOrdenados = Gestor::obtenerFavoritosOrdenados(actual);
         cout << "\n  Favoritos ordenados (A-Z):" << endl;
         imprimirCanciones(favsOrdenados, "  (Sin canciones favoritas)");
         pausar();
     }
 
-public:
-    MenuFavoritos(GestorBiblioteca* lib, Usuario* usuario) : lib(lib), usuario(usuario) {}
-
-    void ejecutar() {
+    void menuFavoritos() {
         int op = 0;
         while (op != 4) {
             cabecera("MIS FAVORITOS");
@@ -282,30 +492,20 @@ public:
             };
             op = menuInteractivo(opciones, 5, 4) + 1;
 
-            if (op == 1) { vector<Cancion*> favs = usuario->getFavoritos().toVector(); verFavoritos(favs); }
+            if (op == 1) { vector<Cancion*> favs = actual->getFavoritos().toVector(); verFavoritos(favs); }
             else if (op == 2) agregarFavorito();
             else if (op == 3) verFavoritosOrdenados();
         }
     }
-};
 
-
-// ============================================================
-//  MENU: MI SUSCRIPCION
-// ============================================================
-class MenuSuscripcion {
-private:
-    GestorUsuarios* userG;
-
-public:
-    MenuSuscripcion(GestorUsuarios* userG) : userG(userG) {}
-
-    void ejecutar() {
+    // ============================================================
+    //  MI SUSCRIPCION   
+    // ============================================================
+    void menuSuscripcion() {
         cabecera("MI SUSCRIPCION");
-        Usuario* u = userG->getUsuarioLogueado();
 
-        if (u->esPremium()) {
-            ubicar(5, 5); cout << "Plan actual: Premium | Vence: " << u->getSuscripcion().fechaVencimiento;
+        if (actual->esPremium()) {
+            ubicar(5, 5); cout << "Plan actual: Premium | Vence: " << actual->getSuscripcion().fechaVencimiento;
             ubicar(5, 7); cout << "Ya disfrutas de todos los beneficios de EchoStream.";
             cout << endl;
             pausar();
@@ -320,288 +520,24 @@ public:
         int op = menuInteractivo(opciones, 5, 6) + 1;
 
         if (op == 1) {
-            userG->activarPlanPremium(u);
+            gestor->activarPlanPremium(actual);
             cout << "\n  Plan Premium activado exitosamente." << endl;
         }
         pausar();
     }
-};
 
-
-// ============================================================
-//  MENU: STREAMING (pantalla principal tras iniciar sesion)
-// ============================================================
-class MenuStreaming {
-private:
-    GestorBiblioteca* lib;
-    GestorUsuarios* userG;
-    GestorReproduccion* repro;
-    Usuario* actual;
-
-    void mostrarCabecera() {
-        system("cls");
-
-        // Ancho total del marco (58 caracteres)
-        string borde = "==========================================================";
-
-        asignarcolor(14);
-        Console::SetCursorPosition(35, 3);  cout << borde;
-
-        // Fila del Título
-        Console::SetCursorPosition(35, 4);
-        asignarcolor(14); cout << "| ";
-        asignarcolor(7);  cout << "               ECHOSTREAM PLAYER                ";
-        asignarcolor(14); cout << " |";
-
-        // Fila de Usuario y Estado
-        string nombre = actual->getNombre();
-        string tipo = actual->esPremium() ? "Premium" : "Gratuito";
-
-        // Formateamos el texto central: " Usuario: NOMBRE | Estado: TIPO"
-        // Usamos un buffer para calcular la longitud exacta del texto interior
-        string contenido = " Usuario: " + nombre + " | Estado: " + tipo;
-
-        // Calculamos cuánto espacio sobra para rellenar
-        // El marco interno mide 54 caracteres (58 total - 2 de los bordes laterales "| " - 2 de los bordes laterales " |")
-        int anchoInterior = 54;
-        int espaciosNecesarios = anchoInterior - contenido.length();
-
-        Console::SetCursorPosition(35, 5);
-        asignarcolor(14); cout << "| ";
-        asignarcolor(7);  cout << contenido;
-
-        // Imprimimos los espacios para que el borde derecho quede alineado
-        for (int i = 0; i < espaciosNecesarios; i++) cout << " ";
-
-        asignarcolor(14); cout << "|";
-
-        // Fila inferior
-        Console::SetCursorPosition(35, 6);
-        cout << borde;
-
-        // Reset de color
-        asignarcolor(7);
-    }
-
-    void reproducirSiguiente() {
-        cabecera("REPRODUCIENDO");
-        Cancion* c = repro->reproducirSiguiente();
-        if (!c) cout << "  La cola esta vacia." << endl;
-        pausar();
-    }
-
-    void gestionarCola() {
-        cabecera("GESTIONAR COLA");
-        mostrarCola(repro);
-
-        // Calculamos la posicion Y dinamicamente debajo de la cola actual impresa
-        cout << "\n";
-        int currentY = Console::CursorTop;
-
-        vector<string> opcionesCola = {
-            "Mezclar aleatoriamente (Shuffle recursivo)",
-            "Volver"
-        };
-        int sub = menuInteractivo(opcionesCola, 5, currentY + 1) + 1;
-
-        if (sub == 1) {
-            if (repro->modoAleatorio()) {
-                cout << '\n' << '\n' << "--- Cola mezclada aleatoriamente ---" << endl;
-                mostrarCola(repro);
-            }
-        }
-        pausar();
-    }
-
-    void mostrarHistorial() {
-        cabecera("MI HISTORIAL");
-        actual->mostrarHistorial();
-        pausar();
-    }
-
-    void mostrarRecomendaciones() {
-        int idUsu = actual->getId();
-        vector<double> perfilUsuario = lib->calcularPreferencias(idUsu);
-        vector<GestorBiblioteca::Recomendacion> recomendaciones = lib->obtenerRecomendaciones(perfilUsuario, idUsu);
-
-        cout << "\n--- TUS RECOMENDACIONES ---" << endl;
-        if (recomendaciones.empty()) {
-            cout << "  (Sin recomendaciones disponibles por ahora)" << endl;
-        }
-        else {
-            for (GestorBiblioteca::Recomendacion& r : recomendaciones) {
-                cout << " [Distancia: " << r.distancia << "] ";
-                r.cancion->mostrarDetalles();
-            }
-        }
-        pausar();
-    }
-
-public:
-    MenuStreaming(GestorBiblioteca* lib, GestorUsuarios* userG, GestorReproduccion* repro)
-        : lib(lib), userG(userG), repro(repro), actual(userG->getUsuarioLogueado()) {
-    }
-
-    void dibujarNotaEnCuadrado(int x, int y, int color) {
-        // Definimos el marco exterior con un poco de margen interno
-        asignarcolor(color); Console::SetCursorPosition(x, y);      cout << "+------------------------------+";
-        asignarcolor(color); Console::SetCursorPosition(x, y + 1);  cout << "|                              |"; // Espacio superior
-        asignarcolor(color); Console::SetCursorPosition(x, y + 2);  cout << "|       ;;;;;;;;;;;;;;;;;;;;   |";
-        asignarcolor(color); Console::SetCursorPosition(x, y + 3);  cout << "|       ;;;;;;;;;;;;;;;;;;;;   |";
-        asignarcolor(color); Console::SetCursorPosition(x, y + 4);  cout << "|       ;                  ;   |";
-        asignarcolor(color); Console::SetCursorPosition(x, y + 5);  cout << "|       ;                  ;   |";
-        asignarcolor(color); Console::SetCursorPosition(x, y + 6);  cout << "|       ;                  ;   |";
-        asignarcolor(color); Console::SetCursorPosition(x, y + 7);  cout << "|       ;                  ;   |";
-        asignarcolor(color); Console::SetCursorPosition(x, y + 8);  cout << "|       ;                  ;   |";
-        asignarcolor(color); Console::SetCursorPosition(x, y + 9);  cout << "|       ;                  ;   |";
-        asignarcolor(color); Console::SetCursorPosition(x, y + 10); cout << "|       ;                  ;   |";
-        asignarcolor(color); Console::SetCursorPosition(x, y + 11); cout << "|  ,;;;;;             ,;;;;;   |";
-        asignarcolor(color); Console::SetCursorPosition(x, y + 12); cout << "|  ;;;;;;             ;;;;;;   |";
-        asignarcolor(color); Console::SetCursorPosition(x, y + 13); cout << "|  `;;;;'             `;;;;'   |";
-        asignarcolor(color); Console::SetCursorPosition(x, y + 14); cout << "|                              |"; // Espacio inferior
-        asignarcolor(color); Console::SetCursorPosition(x, y + 15); cout << "+------------------------------+";
-    }
-
-    void verPlaylist(string playlistNombre) {
-        ubicar(5, 8);
-        Playlist* pl = actual->buscarPlaylistPorNombre(playlistNombre);
-        if (!pl) {
-            cabecera("PLAYLIST");
-            cout << "  Playlist \"" << playlistNombre << "\" no encontrada." << endl;
-            pausar();
-            return;
-        }
-
-        cout << '\t' << '\t' << "PLAYLIST: " << pl->getNombre() << endl << endl << endl;
-        for (Cancion* c : pl->getCanciones().toVector()) {
-            cout << '\t' << '\t' << "---------------------------------------" << endl;
-            cout << '\t' << '\t' << c->getNombre() << endl;
-            cout << '\t' << '\t' << "---------------------------------------" << endl;
-        }
-    }
-
-    void ejecutar() {
-        bool salir = false;
-        while (!salir) {
-            mostrarCabecera();
-            Console::CursorVisible = false;
-
-            dibujarNotaEnCuadrado(49, 10, 6);
-
-            vector<vector<string>> opcionesMenuPrincipal = {
-                { "Cerrar Sesion" , ""   , ""  , ""      , "MIX/Essentials",     },
-                { ""        , ""   , ""  , ""      , "Tus Me Gusta"  },
-                { ""        , ""   , ""  , ""      , "Recomendacion Semanal"  },
-                { ""        , ""   , ""  , ""      , "PLAYLIST 4"  },
-                { ""        , ""   , ""  , ""      , "PLAYLISTS +"  },
-                { "Historial"  , "|<" , "o" , ">|"    , "COLA"        },
-            };
-
-            pair<int, int> sel = menuInteractivoGrid(opcionesMenuPrincipal, 14, 9, 23, 4);
-            int fila = sel.first, columna = sel.second;
-
-
-            // Acciones segun la fila seleccionada
-            if (fila == 0) {
-                if (columna == 0) {
-                    salir = true;
-                }
-                else if (columna == 4) {
-                    system("cls");
-                    verPlaylist(opcionesMenuPrincipal[0][4]);
-
-                    pausar();
-                }
-            }
-            else if (fila == 1) {
-                if (columna == 4) {
-
-                    MenuFavoritos(lib, actual).ejecutar();
-
-                }
-            }
-            else if (fila == 2) {
-                if (columna == 4) {
-                    system("cls");
-                    mostrarRecomendaciones();
-                };
-            }
-            else if (fila == 3) {
-                if (columna == 4);
-            }
-            else if (fila == 4) {
-                if (columna == 4);
-            }
-            else if (fila == 5) {
-
-                if (columna == 0) { mostrarHistorial(); }
-                else if (columna == 1) {/*reproducirAnterior(); */ }
-                else if (columna == 2) {/*reproducirPausar();*/ }
-                else if (columna == 3) { /*reproducirSiguiente(); */ }
-                else if (columna == 4) { /*gestionarCola();*/ }
-            }
-
-        }
-        userG->cerrarSesion();
-        cout << "  Sesion cerrada." << endl;
-    }
-};
-
-//MENU PRINCIPAL: opciones en filas y columnas 
-            /*vector<vector<string>> opcionesMenuPrincipal = {
-                { "Explorar Biblioteca y Catalogo" },
-                {  "h"},
-                { "TOP MAS RECOMENDADAS PARA TI" },
-                { "Gestionar Cola (Ver / Mezclar)" },
-                { "Mis Playlists" },
-                { "Mis Favoritos" },
-                { "Mi Historial e Info Suscripcion" },
-                { "Cerrar Sesion" },
-                { "|<", "Reproducir", ">|", "Cola"}
-            };
-
-            pair<int, int> sel = menuInteractivoGrid(opcionesMenuPrincipal, 40, 9, 30,2);
-            int fila = sel.first, columna = sel.second;
-
-
-            // Acciones segun la fila seleccionada
-            if (fila == 0)      MenuExplorar(lib).ejecutar();
-            else if (fila == 1) MenuAgregarACola(lib, repro, actual).ejecutar();
-            else if (fila == 2) {
-                mostrarRecomendaciones();
-
-            }
-            else if (fila == 3) gestionarCola();
-            else if (fila == 4) MenuPlaylists(lib, actual).ejecutar();
-            else if (fila == 5) MenuFavoritos(lib, actual).ejecutar();
-            else if (fila == 6) mostrarHistorialYSuscripcion();
-            else if (fila == 7) salir = true; // Cerrar Sesion
-            else if (fila == 8) {
-                if (columna == 0) {}   //reproducirAnterior();
-                else if (columna == 1) reproducirSiguiente(); // o tu logica de "reproducir/pausar"
-                else if (columna == 2)  reproducirSiguiente();
-                else if (columna == 3) gestionarCola(); //TODA LA LOGICA DE LA COLA AQUI
-            }
-            */
-
-            // ============================================================
-            //  MENU: ACCESO (pantalla de entrada: login / registro)
-            // ============================================================
-class MenuAcceso {
-private:
-    GestorBiblioteca* biblioteca;
-    GestorUsuarios* usuarios;
-
+    // ============================================================
+    //  ACCESO (pantalla de entrada: login / registro)
+    //  (antes: MenuAcceso)
+    // ============================================================
     void mostrarLogo(int x, int y) {
-        int ancho = 105; // Ancho total del recuadro
+        int ancho = 105;
 
         asignarcolor(14);
 
-        // Borde superior
         Console::SetCursorPosition(x, y - 1);
         for (int i = 0; i <= ancho; i++) { cout << "="; }
 
-        // Arte ASCII y columnas laterales
         string logo[] = {
             " $$$$$$$$\\  $$$$$$\\  $$\\   $$\\  $$$$$$\\   $$$$$$\\ $$$$$$$$\\ $$$$$$$\\  $$$$$$$$\\  $$$$$$\\  $$\\      $$\\ ",
             " $$  _____|$$  __$$\\ $$ |  $$ |$$  __$$\\ $$  __$$\\\\\\__$$  __|$$  __$$\\ $$  _____|$$  __$$\\ $$$\\    $$$ |",
@@ -619,7 +555,6 @@ private:
             Console::SetCursorPosition(x + ancho, y + i); cout << "|";
         }
 
-        // Borde inferior
         Console::SetCursorPosition(x, y + 8);
         for (int i = 0; i <= ancho; i++) { cout << "="; }
     }
@@ -639,13 +574,14 @@ private:
         asignarcolor(14); cin >> pass;
 
         Console::SetCursorPosition(55, 18); asignarcolor(7);
-        if (usuarios->iniciarSesion(email, pass)) {
-            cout << "\n  Bienvenido/a, " << usuarios->getUsuarioLogueado()->getNombre() << "!" << endl;
+        if (gestor->iniciarSesion(email, pass)) {
+            actual = gestor->getUsuarioLogueado();
+            cout << "\n  Bienvenido/a, " << actual->getNombre() << "!" << endl;
 
-            GestorReproduccion* reproduccion = new GestorReproduccion(biblioteca, usuarios->getUsuarioLogueado());
             pausar();
-            MenuStreaming(biblioteca, usuarios, reproduccion).ejecutar();
-            delete reproduccion;
+            menuStreaming();
+
+            actual = nullptr;
         }
         else {
             cout << "  Error: Credenciales incorrectas." << endl;
@@ -681,7 +617,7 @@ private:
         if (plan < 1 || plan > 2) plan = 1;
 
         Console::SetCursorPosition(55, 23); asignarcolor(7);
-        usuarios->registrarNuevoUsuario(id, nom, email, pass, plan);
+        gestor->registrarNuevoUsuario(id, nom, email, pass, plan);
 
         cout << "  Usuario registrado." << endl;
         if (plan == 2) cout << "  Plan Premium activado." << endl;
@@ -691,9 +627,7 @@ private:
     }
 
 public:
-    MenuAcceso(GestorBiblioteca* biblioteca, GestorUsuarios* usuarios)
-        : biblioteca(biblioteca), usuarios(usuarios) {
-    }
+    AppUI(Gestor* gestor) : gestor(gestor) {}
 
     void ejecutar() {
         int opAcceso = 0;
@@ -714,6 +648,6 @@ public:
         }
 
         asignarcolor(7);
-        cout << "\n  Hasta pronto! ECHOSTREAM v4.0 (Refactored)" << endl;
+        cout << "\n  Hasta pronto! ECHOSTREAM v4.0 " << endl;
     }
 };

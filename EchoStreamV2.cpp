@@ -8,10 +8,8 @@ using namespace std;
 int main() {
     srand((unsigned)time(nullptr));
 
-    GestorBiblioteca biblioteca;
-    GestorUsuarios usuarios(&biblioteca);
-
-    MenuAcceso app(&biblioteca, &usuarios);
+    Gestor gestor;
+    AppUI app(&gestor);
     app.ejecutar();
 
     return 0;

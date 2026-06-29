@@ -30,3 +30,19 @@ HIST,99,999,Master of Puppets,Cancion,Metallica,2026-06-15 21:10:44
 HIST,99,999,About A Girl,Cancion,Nirvana,2026-06-15 21:10:45
 HIST,99,999,Master of Puppets,Cancion,Metallica,2026-06-21 21:16:11
 HIST,99,999,Scared to Be Lonely,Cancion,Martin Garrix,2026-06-21 21:17:09
+HIST,99,999,Master of Puppets,Cancion,Metallica,2026-06-29 14:19:54
+HIST,99,999,Master of Puppets,Cancion,Metallica,2026-06-29 14:20:05
+HIST,99,999,Master of Puppets,Cancion,Metallica,2026-06-29 14:20:07
+HIST,99,999,Master of Puppets,Cancion,Metallica,2026-06-29 14:20:08
+HIST,99,999,Master of Puppets,Cancion,Metallica,2026-06-29 14:28:34
+HIST,99,999,Enter Sandman,Cancion,Metallica,2026-06-29 14:45:25
+HIST,99,999,Creeping Death,Cancion,Metallica,2026-06-29 14:45:43
+HIST,99,999,Holy Wars,Cancion,Megadeth,2026-06-29 14:46:28
+HIST,99,999,Peace Sells,Cancion,Megadeth,2026-06-29 14:46:32
+HIST,99,999,Fear of the Dark,Cancion,Iron Maiden,2026-06-29 14:48:17
+HIST,99,999,War Pigs,Cancion,Black Sabbath,2026-06-29 14:48:19
+HIST,99,999,Master of Puppets,Cancion,Metallica,2026-06-29 16:26:49
+HIST,99,999,Master of Puppets,Cancion,Metallica,2026-06-29 16:27:15
+HIST,99,999,Let It Be,Cancion,The Beatles,2026-06-29 16:27:19
+HIST,99,999,Master of Puppets,Cancion,Metallica,2026-06-29 16:42:10
+HIST,99,999,Master of Puppets,Cancion,Metallica,2026-06-29 18:43:20
