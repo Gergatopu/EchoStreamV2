@@ -5,6 +5,7 @@
 #include <ctime>
 #include <cstdlib>
 #include <conio.h>
+#include <windows.h>
 
 using namespace std;
 using namespace System;
@@ -94,6 +95,171 @@ int menuInteractivo(const vector<string>& opciones, int posX, int posY) {
     }
 
     return seleccion;
+}
+vector<string> asciiLogoSpotify = {
+    "⠀⠀⠀⠀⣠⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣴⡇⠀⠀⠀⠘⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+    "⠀⠀⠀⣼⣿⣿⣿⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡼⣡⣇⠀⠀⠀⠀⣧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+    "⠀⠀⢠⣿⣿⠟⢻⣿⠤⠖⠒⠚⠉⠉⠉⠉⠉⠉⢩⡟⣹⠋⣿⠉⠉⠛⠒⣺⡤⢄⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+    "⠀⠀⢸⣿⡟⠀⢠⣿⡇⠀⢀⡄⠀⠀⠀⠀⠀⠀⣏⣼⣃⣠⣽⡤⠤⢴⠯⣭⠧⢼⣎⡳⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+    "⠀⠀⠈⣿⡇⠀⣼⣿⡇⠀⠰⣇⣠⡤⠴⠒⠚⠉⣿⠁⣤⣾⣿⡇⢀⣈⣉⣥⡤⢼⠬⣯⣛⣆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡄⠀⠀⠀⠀⠀",
+    "⠀⠀⠀⢻⣧⣼⣿⣿⠧⠒⠋⣏⣄⠀⠀⠀⠀⠀⢹⣀⡿⠿⠛⠉⠉⠁⠀⣀⣴⣾⠾⠓⠲⡯⣧⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣞⣇⠀⠀⠀⠀⠀",
+    "⠀⠀⠀⣠⣿⣿⣿⡟⠀⠀⠀⣇⡿⠃⣀⡤⠴⠚⢹⡇⠀⠀⣀⡠⠖⠚⠉⣀⠤⠖⠚⣹⣋⣏⡟⣦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⢯⠏⢿⠀⠀⣄⠀⠀",
+    "⠀⠀⣴⣿⣿⣿⡟⠀⠀⠀⢀⡫⠖⠋⠁⠀⠀⣠⣤⣧⠴⠋⠁⠀⣀⡤⠚⠉⠀⠀⠀⣰⠃⡽⠣⣏⡧⢧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣀⠀⢸⣧⣴⣾⣀⠀⢸⡀⠀",
+    "⢀⣾⣿⣿⡿⢻⣷⢀⡤⠞⠉⠀⠀⠀⠀⢀⣼⣿⡿⠏⠀⣀⡴⠛⠁⠀⠀⠀⠀⢀⡴⠁⡴⠁⡼⢸⣷⢸⠀⠀⠀⠀⠈⣧⠀⠀⠀⣀⡠⠔⠚⠉⠁⠀⠀⠀⠈⡇⠉⠁⠀⠉⣑⣧⢄",
+    "⣼⣿⣿⠟⠀⣨⣿⣿⣿⣷⣦⡀⢀⣠⠖⠋⠀⠀⢀⣤⠞⠁⠀⠀⠀⠀⠀⣦⣠⠞⢶⡞⠣⣼⢁⡼⢁⡏⠀⠀⠀⠀⠀⢘⣧⠔⠋⠁⢀⡀⣀⡠⠴⠒⠚⢩⣽⡯⠉⠉⠉⠙⠷⠞⠤",
+    "⣿⣿⡏⠀⣾⣿⣿⣿⡿⢿⣿⣿⣏⠁⠀⠀⢠⡴⠋⠀⠀⠀⠀⠀⠀⠀⠀⢰⠛⢦⠎⢉⠿⣌⡞⢀⡞⠀⠀⠀⢀⡤⠚⠉⠘⣇⣀⠤⠚⣯⠁⠀⠀⣀⣤⠼⠟⠓⠒⠒⠒⠒⢓⠒⠒",
+    "⣿⣿⡇⠰⣿⣿⠁⢻⣧⠀⠹⣿⣿⠀⣠⠞⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡇⢠⢯⣷⡏⢰⢿⢇⠞⠀⣀⠴⠚⠁⠀⢀⣠⡶⢻⡇⠀⢀⡸⡶⠚⠉⠀⢸⡓⣦⣠⠤⠤⠒⠒⢺⡂⢉",
+    "⠘⣿⣇⠀⢻⣿⣄⠈⣿⡆⠀⣿⣿⠞⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠱⣮⣸⣋⣰⣋⣤⠾⠒⠉⠀⣠⣆⡠⠖⠋⠹⠤⣞⠴⠚⠁⠀⢻⣀⡤⠖⠊⡏⢸⠇⠀⣀⠤⠔⠺⠟⠈",
+    "⠀⠘⢿⣷⣄⡈⠛⠛⢸⣿⣾⡿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⢾⣠⠇⢠⠋⠀⣀⣠⣾⡟⡏⠀⠀⣀⠴⠊⠁⠀⢀⡠⣶⣿⡇⠀⢀⣴⣾⠼⠚⠉⠀⠀⠀⠀⠀⠀",
+    "⠀⠀⠀⠈⠙⠛⠿⠿⠟⢻⣯⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⢾⢉⠏⠉⠉⠁⣻⢋⣤⡧⠴⠋⢷⡀⢀⡤⠚⠉⠀⠿⠿⣃⠴⠚⠛⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+    "⠀⠀⠀⠀⠀⢀⣀⡀⠀⠈⣿⣇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⣽⠒⠠⠤⠔⣿⠛⠛⠁⠀⣀⡬⢿⠁⠀⠀⠀⣀⡴⠚⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+    "⠀⠀⠀⠀⣰⣿⣿⣿⣆⠀⢸⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢹⠦⣀⣀⣤⣿⣀⡠⠴⠊⠁⠀⢈⣧⣀⠴⠚⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+    "⠀⠀⠀⠀⢻⣿⣿⣿⠟⢀⣼⡿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢧⡀⠈⠉⠁⠀⠀⠀⠀⢀⣠⡿⣻⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+    "⠀⠀⠀⠀⠈⠛⠿⠿⠿⠿⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠒⠲⠦⠶⠒⠚⠉⠁⠀⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
+};
+
+void mostrarLogoMulticolor(int posX, int posY) {
+    for (size_t i = 0; i < asciiLogoSpotify.size(); i++) {
+        // Colocamos el cursor en la posición correspondiente para que no salga movido
+        Console::SetCursorPosition(posX, posY + static_cast<int>(i));
+
+        // Cambiamos el color dinámicamente según el bloque de filas
+        if (i < 4) {
+            asignarcolor(10); // Verde oscuro para la parte superior
+        }
+        else if (i < 9) {
+            asignarcolor(2);  // Verde brillante para el cuerpo central
+        }
+        else if (i < 14) {
+            asignarcolor(11); // Cyan para las conexiones bajas
+        }
+        else {
+            asignarcolor(3);  // Cyan oscuro para la base
+        }
+
+        // Imprimimos la línea completa sin alterar sus bytes internos
+        std::cout << asciiLogoSpotify[i] << std::endl;
+    }
+    asignarcolor(7); // Restauramos al color blanco estándar
+}
+
+const vector<string> asciiNotaMusical = {
+    "              .,,,.",
+    "           .;;;;;;;;;,",
+    "          ;;;'    `;;;,",
+    "          ;;;'      `;;;",
+    "          ;;;        ;;;",
+    "          ;;;.      ;;;'",
+    "          `;;;.    ;;;;;'",
+    "           `;;;.  ;;;'",
+    "            `;;',;;'",
+    "             ,;;;'",
+    "          ,;;;',;' ...,,,,...",
+    "       ,;;;'    ,;;;;;;;;;;;;;;,",
+    "    ,;;;'     ,;;;;;;;;;;;;;;;;;;,",
+    "   ;;;;'     ;;;',,,    `';;;;;;;;;;",
+    "  ;;;;,      ;;   ;;;     ';;;;;;;;;",
+    " ;;;;;;        '    ;;;      ';;;;;;;",
+    " ;;;;;;             .;;;      ;;;;;;;",
+    " ;;;;;;,            ;;;;     ;;;;;;'",
+    "  ;;;;;;,            ;;;;   .;;;;;'",
+    "   `;;;;;;,            ;;;; ,;;;;;'",
+    "    `;;;;;;;,,,,,,,,,, ;;;; ;;;'",
+    "       `;;;;;;;;;;;;;;; ;;;; '",
+    "           ''''''''''''' ;;;.",
+    "                .;;;.    `;;;.",
+    "               ;;;; '     ;;;;",
+    "               ;;;;,,,..,;;;;;",
+    "               `;;;;;;;;;;;;;'",
+    "                `;;;;;;;;;'"
+};
+
+void mostrarNotaMulticolor(int posX, int posY) {
+    int totalLineas = static_cast<int>(asciiNotaMusical.size());
+
+    for (int i = 0; i < totalLineas; i++) {
+        // Posicionar el cursor aplicando el desfase X e Y
+        Console::SetCursorPosition(posX, posY + i);
+
+        // Control dinámico de color por bloques de líneas
+        if (i < 10) {
+            asignarcolor(13); // Magenta oscuro para la parte superior del gancho
+        }
+        else if (i < 18) {
+            asignarcolor(5);  // Magenta brillante para el cuerpo central de la nota
+        }
+        else if (i < 23) {
+            asignarcolor(3);  // Cyan para la base del óvalo de la nota
+        }
+        else {
+            asignarcolor(11); // Cyan oscuro para el reflejo final inferior
+        }
+
+        // Imprimir la línea actual del vector
+        cout << asciiNotaMusical[i] << endl;
+    }
+    asignarcolor(7); // Restaurar el color a blanco estándar
+}
+
+const vector<string> asciiGuitarra = {
+    "⠀⠀⠀⠀⠀⠀⢀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+    "⠀⠀⠀⠀⠀⠀⢸⠧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+    "⠀⠀⠀⢠⣀⡤⠏⠈⠶⠤⢤⡤⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+    "⠀⠀⠀⠘⠻⣤⠀⠀⠀⣴⣁⣤⣤⡤⢤⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+    "⠀⠀⠀⠀⠀⣾⢀⣶⣀⣹⡏⠁⠀⠀⠀⠀⠈⢲⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+    "⠀⠀⠀⠀⠀⡿⠋⣸⠏⠙⠃⠀⠀⠀⠀⠀⠀⠀⠀⠄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+    "⠀⠀⠀⠀⠀⠀⣸⡏⠀⠀⠀⠀⠀⠀⠀⣷⡀⠀⠀⢸⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+    "⠀⠀⠀⠀⢀⡆⣿⠀⠀⠀⠀⠀⠀⢣⣼⠟⢷⡀⣠⠎⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+    "⠀⠀⠀⠀⣸⣧⣿⡄⠀⠀⠀⠀⠀⢀⡟⠀⠘⣏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+    "⠀⠀⠀⢀⣿⣿⣿⣇⣀⣀⣀⣀⣠⣼⠇⠀⠀⠸⣧⣤⣤⣤⣤⣄⣤⡀⠄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+    "⠀⠀⠀⢸⡏⣽⡟⣿⣿⣟⠉⠉⠉⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⣤⠞⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+    "⠀⣠⣤⣿⢱⡿⠀⠈⢿⣿⢷⣦⡀⠀⠀⠀⠀⠀⠀⠀⣀⡴⠟⠁⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+    "⢸⣿⣿⠇⠈⠀⠀⠀⠀⠙⢷⣼⣿⠂⠀⠀⠀⠀⠀⠀⢻⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣼⠋⠙⠛⠛⠻⡖⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+    "⠀Deep⠋⠀⠀⠀⠀⠀⠀⠀⠀⢻⣿⠀⠀⣀⣤⣄⡀⠀⠀⢻⡀⠀⠀⠀⠀⠀⠀⠀⠀⢠⡇⠀⠀⠀⠀⢠⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+    "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣾⣿⣴⣾⡿⠿⠿⣿⣶⣤⣘⣷⡀⣠⣤⣶⠶⢤⣤⣀⣸⠀⠀⠀⠀⠀⣸⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+    "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣿⣿⠟⠋⠛⠶⣦⣄⣉⠉⠛⠿⣿⣿⣇⡀⠀⣠⣶⣾⡟⠂⠀⣠⣶⣤⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+    "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⠿⠋⠀⠀⠀⠀⠉⠉⠙⠒⠢⢶⣿⣏⡉⠓⠶⣿⣿⡿⠃⠀⠀⢿⣿⡿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+    "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⣯⠉⠓⠶⣦⣌⡁⠀⠀⠀⠀⠙⢄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+    "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢄⠀⠀⠀⠙⠻⣆⠈⠂⡄⠀⠈⢂⠀⠀⠀⠀⡼⠄⠀⠀⠀⠀⠀",
+    "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⣎⠃⠀⠀⠀⠀⠈⠁⠀⢹⣦⠀⠈⡆⠀⢀⠠⠇⠀⠆⠀⢀⡴⠂",
+    "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣾⠘⢤⣀⣀⣀⣀⣤⡀⠀⠈⣿⡆⠀⢿⢷⠄⡀⠀⠀⠀⣠⠈⠀⠀",
+    "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⢷⣏⠀⠀⠀⢰⡞⠹⣿⠟⠁⠀⢠⣿⡇⠀⡟⠀⢸⡇⠀⣠⠀⣸⣆⠀⠀",
+    "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⡇⣠⣤⣸⡇⠀⠙⢦⣤⣤⣾⠟⠀⢀⡇⠀⣼⠔⠃⠀⠀⠙⠻⠀⠀",
+    "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢺⠟⠁⠀⠉⠛⠀⠀⠀⠉⠉⠁⠀⠀⢸⠟⠀⠉⠀⠀⠀⠀⠀⠀⠀⠀",
+    "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⠀⣿⠀⠀⠀⠀⠀⠀⠀⠀",
+    "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⢸⢿⡄⠀⠀⢇⠀⠀⠀⠀",
+    "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⢆⡯⠀⣷⠀⢀⡿⠀⠀⠀⠀",
+    "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⡇⢀⡟⣠⠿⠀⠀⠀⠀⠀",
+    "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⣼⠁⠾⠁⠀⠀⠀⠀⠀⠀⠀",
+    "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠐⣿⣿⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+    "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
+};
+void mostrarGuitarraMulticolor(int posX, int posY) {
+    int totalLineas = static_cast<int>(asciiGuitarra.size());
+
+    for (int i = 0; i < totalLineas; i++) {
+        Console::SetCursorPosition(posX, posY + i);
+
+        // Control de color por zonas estructurales de la guitarra
+        if (i < 6) {
+            asignarcolor(14); // Amarillo para el Clavijero superior
+        }
+        else if (i < 11) {
+            asignarcolor(6);  // Amarillo oscuro / Dorado para el Mástil
+        }
+        else if (i < 18) {
+            asignarcolor(12); // Rojo oscuro para el cuerpo superior y cuerdas centrales
+        }
+        else if (i < 24) {
+            asignarcolor(4);  // Rojo brillante para la base del cuerpo
+        }
+        else {
+            asignarcolor(8);  // Gris para las líneas de vibración y detalles del suelo
+        }
+
+        cout << asciiGuitarra[i] << endl;
+    }
+    asignarcolor(7); // Dejar la consola en blanco al terminar
 }
 
 string obtenerNombreGenero(int id) {

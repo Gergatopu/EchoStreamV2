@@ -324,9 +324,10 @@ void menuStreaming(GestorBiblioteca* lib, GestorUsuarios* userG, GestorReproducc
     userG->cerrarSesion();
 }
 
+
 int main() {
     srand((unsigned)time(nullptr));
-
+    SetConsoleOutputCP(CP_UTF8);
     GestorBiblioteca* biblioteca = new GestorBiblioteca();
     GestorUsuarios* usuarios = new GestorUsuarios();
     usuarios->cargarCancionesDePlaylists(biblioteca);
@@ -336,6 +337,8 @@ int main() {
     int opAcceso = 0;
     while (opAcceso != 3) {
         system("cls");
+        mostrarGuitarraMulticolor(10, 15);
+        mostrarNotaMulticolor(100, 20);
         asignarcolor(14); Console::SetCursorPosition(25, 6); for (int i = 0; i < 113; i++) { cout << "="; }
         for (int i = 0; i < 10; i++) { Console::SetCursorPosition(25, 7 + i); cout << "|"; Console::SetCursorPosition(137, 7 + i); cout << "|"; }
 
