@@ -54,26 +54,6 @@ void mostrarCola(Gestor* repro) {
 }
 
 // ============================================================
-//  AppUI
-//  Una sola clase para todos los menus de la aplicacion.
-//
-//  Por que una sola clase y no una por menu:
-//  - Todos los metodos quedan privados DE LA MISMA clase, asi que
-//    se llaman libremente entre si sin importar el orden en que
-//    estan escritos en el archivo (el orden de declaracion dentro
-//    de una clase no afecta la visibilidad de sus propios metodos).
-//  - gestor / actual se guardan una sola vez como atributos, en vez
-//    de pasarlos por constructor cada vez que se "entra" a un
-//    submenu (que antes era literalmente instanciar una clase nueva).
-//  - "gestor" reemplaza a lo que antes eran tres punteros distintos
-//    (lib / userG / repro): ahora toda esa logica vive en una sola
-//    clase Gestor, asi que un solo puntero alcanza. Ya no hace falta
-//    crear y destruir un GestorReproduccion en cada login/logout: la
-//    cola vive dentro de "gestor" y se vacia sola en cerrarSesion().
-//  - actual solo es valido mientras hay sesion iniciada: se asigna
-//    en flujoLogin() y se libera al cerrar sesion.
-//
-//  ORDEN DE LOS GRUPOS (de mas a menos relevante en el programa):
 //    1. STREAMING (pantalla principal, reproduccion)
 //    2. PLAYLISTS
 //    3. EXPLORAR BIBLIOTECA
@@ -86,10 +66,10 @@ class AppUI {
 private:
     Gestor* gestor;
 
-    Usuario* actual = nullptr; // valido solo durante una sesion
+    Usuario* actual = nullptr; 
 
     // ============================================================
-    //  STREAMING (pantalla principal tras iniciar sesion)
+    //  STREAMING 
     // ============================================================
     void mostrarCabeceraStreaming() {
         system("cls");
@@ -151,13 +131,18 @@ private:
     }
 
     void verCancionActual(int x, int y, int color) {
-        ubicar(x, y); asignarcolor(color); gestor->reproducirCancionActual();
+        ubicar(x, y); asignarcolor(color); gestor->togglePlayPause();
 
     }
 
     void reproducirSiguienteUI() {
         gestor->reproducirSiguiente();
-        if (gestor->getCancionActual() == nullptr) cout << "  La cola esta vacia." << endl;
+        if (gestor->getCancionActual() == nullptr) { ubicar(50, 25); asignarcolor(5); cout << "  La cola esta vacia." << endl; pausar(); }
+    }
+
+    void reproducirAnteriorUI() {
+        gestor->reproducirAnterior();
+        if (gestor->getCancionActual() == nullptr) { ubicar(50, 25); asignarcolor(5); cout << "Historial vacio. " << endl; pausar(); }
     }
 
     void gestionarCola() {
@@ -233,15 +218,17 @@ private:
         while (!salir) {
             mostrarCabeceraStreaming();
             Console::CursorVisible = false;
-
             dibujarNotaEnCuadrado(49, 8, 6);
             if (gestor->getCancionActual() != nullptr) {
                 if (gestor->getCancionActual()->getEnReproduccion()) {
                     ubicar(50, 25); asignarcolor(5); cout << "Reproduciendo: " << gestor->getCancionActual()->getNombre(); asignarcolor(7);
                 }
                 else if (gestor->getCancionActual()->getEnReproduccion() == false || gestor->getCancionActual() == nullptr) {
-                    ubicar(50, 25); asignarcolor(5); cout << "  (No hay cancion en reproduccion)"; asignarcolor(7);
+                    ubicar(50, 25); asignarcolor(5); cout << "PAUSA: " << gestor->getCancionActual()->getNombre(); asignarcolor(7);
                 }
+            }
+            else {
+                ubicar(50, 25); asignarcolor(5); cout << "Reproduce algo para empezar "; asignarcolor(7);
             }
 
             vector<vector<string>> opcionesMenuPrincipal = {
@@ -286,7 +273,7 @@ private:
             }
             else if (fila == 5) {
                 if (columna == 0) { mostrarHistorialUI(); }
-                else if (columna == 1) {/*reproducirAnterior(); */ }
+                else if (columna == 1) { reproducirAnteriorUI(); }
                 else if (columna == 2) {
                     if (gestor->getCancionActual() == nullptr) return;
                     verCancionActual(25, 25, 6);

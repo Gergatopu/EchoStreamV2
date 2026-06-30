@@ -11,6 +11,7 @@ struct Nodo {
     T dato;
     Nodo<T>* siguiente;
     Nodo<T>* anterior;
+
     Nodo(T valor) : dato(valor), siguiente(nullptr), anterior(nullptr) {}
 };
 
@@ -179,6 +180,16 @@ private:
 public:
     Pila() : tope(nullptr) {}
 
+    // La Pila es dueña de una cadena de Nodo<T>* (memoria propia).
+    // Copiarla por valor (constructor/operador= por defecto) copiaria
+    // solo el puntero 'tope', compartiendo los mismos nodos con el original.
+    // Al destruirse la copia, su destructor llamaria a vaciar() y borraria
+    // esos nodos, dejando al original con un puntero colgante (use-after-free).
+    // Por eso se prohibe copiar: cualquier intento de copia (ej. "Pila<T> x = obj.getPila();")
+    // sera ahora un error de compilacion en vez de un crash en tiempo de ejecucion.
+    Pila(const Pila&) = delete;
+    Pila& operator=(const Pila&) = delete;
+
     ~Pila() {
         vaciar();
     }
@@ -253,6 +264,22 @@ public:
         tamano++;
     }
 
+    // Inserta al frente de la cola (no es lo tipico en una FIFO, pero la
+    // necesitamos para "reproducir anterior": la cancion que estaba sonando
+    // debe volver a ser la proxima en reproducirse, no irse al final).
+    void encolarAlFrente(T valor) {
+        Nodo<T>* nuevo = new Nodo<T>(valor);
+        if (!frente) {
+            frente = fin = nuevo;
+        }
+        else {
+            nuevo->siguiente = frente;
+            frente->anterior = nuevo;
+            frente = nuevo;
+        }
+        tamano++;
+    }
+
     void desencolar() {
         if (!frente) return;
         Nodo<T>* temp = frente;
@@ -304,3 +331,186 @@ double DistanciaEuclidiana(const vector<double>& v1, const vector<double>& v2) {
     }
     return sqrt(sumaTotal);
 }
+
+template<typename T>
+struct NodoArbol {
+    T valor;
+    NodoArbol<T>* izq;
+    NodoArbol<T>* der;
+    int altura;
+
+    NodoArbol<T>(T v) : valor(v), izq(nullptr), der(nullptr), altura(1) {}
+};
+
+
+template<typename T>
+class AVL {
+private:
+
+    NodoArbol<T>* raiz;
+
+
+    int obtenerAltura(NodoArbol<T>* n) {
+        if (n == nullptr) return 0;
+        return n->altura;
+    }
+
+    // Función auxiliar para calcular el Factor de Balance (FB)
+    int obtenerBalance(NodoArbol<T>* n) {
+        if (n == nullptr) return 0;
+        return obtenerAltura(n->izq) - obtenerAltura(n->der);
+    }
+
+    // 1. ROTACIÓN SIMPLE A LA DERECHA (Corrige desbalance LL)
+    NodoArbol<T>* rotacionDerecha(NodoArbol<T>* y) {
+        NodoArbol<T>* x = y->izq;
+        NodoArbol<T>* T2 = x->der;
+
+        // Realizar rotación
+        x->der = y;
+        y->izq = T2;
+
+        // Actualizar alturas (usando std::max de <algorithm>)
+        y->altura = std::max(obtenerAltura(y->izq), obtenerAltura(y->der)) + 1;
+        x->altura = std::max(obtenerAltura(x->izq), obtenerAltura(x->der)) + 1;
+
+        // Retornar la nueva raíz del subárbol
+        return x;
+    }
+
+    // 2. ROTACIÓN SIMPLE A LA IZQUIERDA (Corrige desbalance RR)
+    NodoArbol<T>* rotacionIzquierda(NodoArbol<T>* x) {
+        NodoArbol<T>* y = x->der;
+        NodoArbol<T>* T2 = y->izq;
+
+        // Realizar rotación
+        y->izq = x;
+        x->der = T2;
+
+        // Actualizar alturas
+        x->altura = std::max(obtenerAltura(x->izq), obtenerAltura(x->der)) + 1;
+        y->altura = std::max(obtenerAltura(y->izq), obtenerAltura(y->der)) + 1;
+
+        // Retornar la nueva raíz del subárbol
+        return y;
+    }
+
+    void inorden(NodoArbol<T>* NodoArbol, vector<T>& resultado) const {
+        if (NodoArbol == nullptr) return;
+
+        inorden(NodoArbol->izq, resultado);
+        resultado.push_back(NodoArbol->valor);
+        inorden(NodoArbol->der, resultado);
+    }
+    void destruirArbol(NodoArbol<T>* NodoArbol) {
+        if (NodoArbol == nullptr) return;
+
+        destruirArbol(NodoArbol->izq);
+        destruirArbol(NodoArbol->der);
+        delete NodoArbol;
+    }
+
+
+public:
+
+    AVL() {
+        raiz = nullptr;
+    }
+
+    NodoArbol<T>* insertar(NodoArbol<T>* nodoArbol, T valor, bool (*comparar)(T, T)) {
+
+        if (nodoArbol == nullptr) {
+            return new NodoArbol<T>(valor);
+        }
+
+        if (comparar(valor, nodoArbol->valor)) {
+            nodoArbol->izq = insertar(nodoArbol->izq, valor, comparar);
+        }
+        // Usamos comparar al revés (dato < valor) para simular un "mayor que"
+        else if (comparar(nodoArbol->valor, valor)) {
+            nodoArbol->der = insertar(nodoArbol->der, valor, comparar);
+        }
+        else {
+            return nodoArbol; // No duplicados
+        }
+
+        nodoArbol->altura = max(obtenerAltura(nodoArbol->izq), obtenerAltura(nodoArbol->der)) + 1;
+        int balance = obtenerBalance(nodoArbol);
+
+        // Caso Izquierda-Izquierda (LL)
+        if (balance > 1 && comparar(valor, nodoArbol->izq->valor)) {
+            return rotacionDerecha(nodoArbol);
+        }
+
+        // Caso Derecha-Derecha (RR)
+        if (balance < -1 && comparar(nodoArbol->der->valor, valor)) {
+            return rotacionIzquierda(nodoArbol);
+        }
+
+        // Caso Izquierda-Derecha (LR)
+        if (balance > 1 && comparar(nodoArbol->izq->valor, valor)) {
+            nodoArbol->izq = rotacionIzquierda(nodoArbol->izq);
+            return rotacionDerecha(nodoArbol);
+        }
+
+        // Caso Derecha-Izquierda (RL)
+        if (balance < -1 && comparar(valor, nodoArbol->der->valor)) {
+            nodoArbol->der = rotacionDerecha(nodoArbol->der);
+            return rotacionIzquierda(nodoArbol);
+        }
+
+        return nodoArbol;
+    }
+
+    // Función visual para entender la estructura del árbol en consola
+    void mostrarArbol2D(NodoArbol<T>* raiz, int espacio = 0, int incremento = 5) {
+        if (raiz == nullptr) return;
+        espacio += incremento;
+
+        mostrarArbol2D(raiz->der, espacio);
+        std::cout << "\n";
+        for (int i = incremento; i < espacio; i++) std::cout << " ";
+        std::cout << raiz->valor << "\n";
+        mostrarArbol2D(raiz->izq, espacio);
+    }
+
+    NodoArbol<T>* getRaiz() {
+        return raiz;
+    }
+
+    void setRaiz(NodoArbol<T>* nuevo) {
+        raiz = nuevo;
+    }
+
+    vector<T> toVector() const {
+        vector<T> resultado;
+        inorden(raiz, resultado);
+        return resultado;
+    }
+
+    void vaciar() {
+        destruirArbol(raiz);
+        raiz = nullptr;
+    }
+
+
+    T binarySearchID(NodoArbol<T>* nodo, int id) {
+
+        if (nodo == nullptr) {
+            return nullptr;
+        }
+
+        int idActual = nodo->valor->getId();
+
+        if (idActual == id) {
+            return nodo->valor;
+        }
+
+        if (idActual < id) {
+            return binarySearchID(nodo->der, id);
+        }
+        else {
+            return binarySearchID(nodo->izq, id);
+        }
+    }
+};

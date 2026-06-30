@@ -34,8 +34,8 @@ vector<string> partirCSV(const string& linea) {
 class Gestor {
 private:
     // --- Biblioteca ---
-    ListaDoble<Cancion*> catalogoCanciones;
-    //AVL<Cancion*> catalogoCanciones;
+    //ListaDoble<Cancion*> catalogoCanciones;
+    AVL<Cancion*> catalogoCanciones;
 
     ListaDoble<Podcast*> catalogoPodcasts;
 
@@ -45,6 +45,14 @@ private:
 
     // --- Cola de reproduccion (valida solo durante una sesion activa) ---
     Cola<Cancion*> cancionesEspera;
+
+    // Cancion que esta sonando ahora mismo. Antes esto se inferia indirectamente
+    // del frente de la cola o del tope del historial (de ahi parte de la confusion
+    // entre Usuario y Gestor); ahora el Gestor es la unica fuente de verdad sobre
+    // "que se esta reproduciendo", y coordina la cola (siguientes) y la pila de
+    // historial del usuario (anteriores) alrededor de este puntero.
+    Cancion* cancionActual = nullptr;
+
 
     // ---------------- CARGA DESDE ARCHIVO ----------------
 
@@ -63,10 +71,20 @@ private:
             const string& tag = campos[0];
 
             if (tag == "CANCION" && campos.size() >= 8) {
-                catalogoCanciones.insertarAlFinal(new Cancion(
+
+                // 1. Creamos la canción
+                Cancion* nuevaCancion = new Cancion(
                     stoi(campos[1]), campos[2], stoi(campos[3]), stoi(campos[4]),
                     stoi(campos[5]), stoi(campos[6]), stoi(campos[7])
-                ));
+                );
+
+                // 2. Definimos la lambda
+                auto lambdaComparar = [](Cancion* a, Cancion* b) { return a->getId() < b->getId(); };
+
+                // 3. Insertamos y actualizamos la raíz en una sola línea al AVL
+                catalogoCanciones.setRaiz(
+                    catalogoCanciones.insertar(catalogoCanciones.getRaiz(), nuevaCancion, lambdaComparar)
+                );
             }
             else if (tag == "PODCAST" && campos.size() >= 4) {
                 catalogoPodcasts.insertarAlFinal(new Podcast(stoi(campos[1]), campos[2], campos[3], ""));
@@ -170,7 +188,7 @@ private:
                     if (tipo == "Cancion") {
                         for (Cancion* c : catalogoCanciones.toVector()) {
                             if (c->getNombre() == titulo) {
-                                u->cargarEnHistorial(c);
+                                u->registrarEnHistorial(c);
                                 break;
                             }
                         }
@@ -272,19 +290,27 @@ public:
 
     // Devuelve true/false; no imprime nada (la UI decide el mensaje).
     bool iniciarSesion(string email, string password) {
-        for (Usuario* u : listaUsuarios.toVector()) {
-            if (u->getEmail() == email && u->getContrasena() == password) {
+        vector<Usuario*> v = listaUsuarios.toVector();
+
+        auto credencialesValidas = [email, password](Usuario* u) {
+            return u->getEmail() == email && u->getContrasena() == password;
+            };
+
+        for (Usuario* u : v) {
+            if (credencialesValidas(u)) {
                 usuarioLogueado = u;
                 cargarHistorialUsuario(usuarioLogueado);
                 return true;
             }
         }
+
         return false;
     }
 
     void cerrarSesion() {
         usuarioLogueado = nullptr;
         cancionesEspera.vaciar(); // la cola era propia de la sesion (antes vivia y moria con GestorReproduccion)
+        cancionActual = nullptr;
     }
 
     // Solo logica de registro/persistencia. La UI imprime los mensajes de exito.
@@ -317,46 +343,49 @@ public:
         return c;
     }
 
-    void reproducirCancionActual() {
+    void reproducirAnterior() {
+        if (!usuarioLogueado) return;
 
-        Cancion* c = cancionesEspera.verFrente();
-        if (c != nullptr) {
+        // El tope de la pila es la cancion anterior. Si no hay historial, no hacemos nada.
+        Cancion* previa = usuarioLogueado->verTopeHistorial();
+        if (previa == nullptr) return;
+        usuarioLogueado->quitarTopeHistorial();
 
-            if (c->getEnReproduccion()) {
-                c->setEnReproduccion(false);
-                //logica de pausar
-            }
-
-            else {
-                c->setEnReproduccion(true);
-                //logica de dar play
-            }
-
-
+     
+        if (cancionActual != nullptr) {
+            cancionActual->setEnReproduccion(false);
         }
 
+        cancionActual = previa;
+        cancionActual->setEnReproduccion(true);
     }
 
-    // Devuelve la cancion reproducida, o nullptr si la cola estaba vacia.
+    // Alterna play/pausa de la cancion que esta sonando actualmente.
+    void togglePlayPause() {
+        if (cancionActual == nullptr) return;
+        cancionActual->setEnReproduccion(!cancionActual->getEnReproduccion());
+    }
+
+    // Avanza a la siguiente cancion de la cola. La que estaba sonando
+    // (cancionActual) pasa al historial (pila) del usuario.
     void reproducirSiguiente() {
         if (cancionesEspera.estaVacia() || !usuarioLogueado) return;
 
-        //guardamos la cancion actual en el historial
-        Cancion* c = cancionesEspera.verFrente();
-        usuarioLogueado->registrarEnHistorial(c);
-
-        guardarLinea("historial.txt", "HIST," + to_string(usuarioLogueado->getId()) + ",999," +
-            c->getNombre() + ",Cancion," + obtenerNombreArtista(c->getArtista()) + "," + obtenerHoraActual());
-
-        //sacamos de la cola de reproduccion a la cancion actual
+        Cancion* siguiente = cancionesEspera.verFrente();
         cancionesEspera.desencolar();
 
-        //reproducimos la nueva cancion
-        //c = cancionesEspera.verFrente();
-        c->setEnReproduccion(true);
-        reproducirCancionActual();
+        if (cancionActual != nullptr) {
+            cancionActual->setEnReproduccion(false);
+            usuarioLogueado->registrarEnHistorial(cancionActual);
 
+            guardarLinea("historial.txt", "HIST," + to_string(usuarioLogueado->getId()) + ",999," +
+                cancionActual->getNombre() + ",Cancion," + obtenerNombreArtista(cancionActual->getArtista()) + "," + obtenerHoraActual());
+        }
+
+        cancionActual = siguiente;
+        cancionActual->setEnReproduccion(true);
     }
+
 
     // Devuelve true si se pudo mezclar (>=2 elementos), false en caso contrario.
     bool modoAleatorio() {
@@ -371,13 +400,11 @@ public:
     // Getter puro: la impresion de la cola la hace la UI.
     vector<Cancion*> obtenerCola() { return cancionesEspera.toVector(); }
 
-    Cancion* getCancionActual() { return cancionesEspera.verFrente(); }
+    Cancion* getCancionActual() { return cancionActual; }
 
     // ---------------- BIBLIOTECA ----------------
-
     Cancion* buscarCancionId(int id) {
-        for (Cancion* c : catalogoCanciones.toVector()) { if (c->getId() == id) return c; }
-        return nullptr;
+        return catalogoCanciones.binarySearchID(catalogoCanciones.getRaiz(), id);
     }
 
     vector<Cancion*> getCatalogoCanciones() { return catalogoCanciones.toVector(); }

@@ -22,12 +22,12 @@ public:
 
     int getId() const { return id; }
     string getNombre() const { return nombre; }
+
+
 };
 
 // ============================================================
 //  CANCION 
-//  Entidad central de la app: se reproduce, se agrega a colas,
-//  playlists, favoritos y alimenta el motor de recomendaciones.
 // ============================================================
 class Cancion : public EntidadBase {
 private:
@@ -83,12 +83,12 @@ public:
     void mostrarDetalles() const override {
         switch (id_genero)
         {
-        case 10: asignarcolor(1);break; //"Metal";
-        case 20: asignarcolor(4);break; //"Rock";
-        case 40: asignarcolor(5);break; //"Pop";
-        case 60: asignarcolor(2);break; //"Electronica";
-        case 80: asignarcolor(3);break; //"Reggaeton";
-        case 90: asignarcolor(6);break; //"Cumbia";
+        case 10: asignarcolor(1); break; //"Metal";
+        case 20: asignarcolor(4); break; //"Rock";
+        case 40: asignarcolor(5); break; //"Pop";
+        case 60: asignarcolor(2); break; //"Electronica";
+        case 80: asignarcolor(3); break; //"Reggaeton";
+        case 90: asignarcolor(6); break; //"Cumbia";
         default: break; //"Desconocido";
         }
         cout << "  [ID:" << id << "] \"" << nombre << "\" | "
@@ -104,6 +104,8 @@ public:
         ss << "CANCION," << id << "," << nombre << "," << id_artista << "," << id_album << "," << duracion << "," << id_genero << "," << reproducciones;
         return ss.str();
     }
+
+
 };
 
 // ============================================================
@@ -314,9 +316,6 @@ public:
         if (c) miHistorial.push(c);
     }
 
-    void cargarEnHistorial(Cancion* c) {
-        if (c) miHistorial.push(c);
-    }
 
     void mostrarHistorial() const {
         cout << "\n--- Historial de Reproduccion de " << nombre << " ---" << endl;
@@ -359,6 +358,18 @@ public:
         ss << "USUARIO," << id << "," << nombre << "," << email << "," << contrasena;
         return ss.str();
     }
+
+    // --- HISTORIAL: acceso seguro sin copiar la Pila ---
+    Cancion* verTopeHistorial() const {
+        if (miHistorial.estaVacio()) return nullptr;
+        return miHistorial.getTope();
+    }
+
+    void quitarTopeHistorial() {
+        if (!miHistorial.estaVacio()) miHistorial.pop();
+    }
+
+    bool historialVacio() const { return miHistorial.estaVacio(); }
 };
 
 // ============================================================
@@ -398,4 +409,6 @@ public:
         ss << "PODCAST," << id << "," << nombre << "," << host << "," << descripcion;
         return ss.str();
     }
+
+
 };
