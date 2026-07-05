@@ -5,9 +5,9 @@
 
 class Algoritmos {
 public:
-    
+
     //INSERTION SORT
-  
+
     // Ideal para listas pequeñas o cadenas de texto. 
     // Lo usamos para ordenar alfabéticamente (A-Z). Complejidad: O(n^2)
     static void insertionSortPorNombre(std::vector<Cancion*>& arr) {
@@ -59,7 +59,7 @@ public:
 
     // Función para intercambiar dos elementos
     template<typename T>
-    void intercambiar(T& a, T& b) {
+    static void intercambiar(T& a, T& b) {
         T temp = a;
         a = b;
         b = temp;
@@ -67,7 +67,7 @@ public:
 
     // Heapify genérico configurado como MAX-HEAP (usa >)
     template<typename T>
-    void heapify(vector<T>& arr, int n, int i) {
+    static void heapify(vector<T>& arr, int n, int i) {
         int mayor = i; // Inicializamos el mayor como la raíz
         int izq = 2 * i + 1; // Hijo izquierdo
         int der = 2 * i + 2; // Hijo derecho
@@ -86,8 +86,9 @@ public:
     }
 
     // HeapSort genérico
+    // Usado para el ranking de Recomendaciones por distancia euclidiana (menor a mayor)
     template<typename T>
-    void heapSort(vector<T>& arr) {
+    static void heapSort(vector<T>& arr) {
         int n = arr.size();
 
         // Paso 1: Construir el Max-Heap 
@@ -101,9 +102,7 @@ public:
         }
     }
 
-    
-
-	// QUICK SORT
+    // QUICK SORT
     template <typename T>
     static int partition(vector<T>& arr, int low, int high, bool (*comparar)(T, T))
     {
@@ -134,8 +133,12 @@ public:
     }
 
     // MERGE SORT
+    // Recibe un comparador (igual que quickSort) en vez de usar el operador <=
+    // directamente sobre T: para T = Cancion*, comparar con <= compararia
+    // direcciones de memoria en vez de los datos de la cancion.
+    // "comparar(a, b)" debe significar "a va antes que b". Complejidad: O(n log n)
     template<typename T>
-    void merge(vector<T>& A, int left, int mid, int right) {
+    static void merge(vector<T>& A, int left, int mid, int right, bool (*comparar)(T, T)) {
         int n1 = mid - left + 1;
         int n2 = right - mid;
 
@@ -149,9 +152,9 @@ public:
 
         int i = 0, j = 0, k = left;
 
-        // Comparar y fusionar
+        // Comparar y fusionar (estable: si son "iguales" se prioriza L)
         while (i < n1 && j < n2) {
-            if (L[i] <= R[j]) {
+            if (!comparar(R[j], L[i])) {
                 A[k] = L[i];
                 i++;
             }
@@ -175,15 +178,16 @@ public:
         }
     }
 
+    // Usado para ordenar el catalogo por duracion (ascendente)
     template<typename T>
-    void mergeSort(vector<T>& A, int left, int right) {
+    static void mergeSort(vector<T>& A, int left, int right, bool (*comparar)(T, T)) {
         if (left >= right) return;
 
         int mid = left + (right - left) / 2;
 
-        mergeSort(A, left, mid);
-        mergeSort(A, mid + 1, right);
+        mergeSort(A, left, mid, comparar);
+        mergeSort(A, mid + 1, right, comparar);
 
-        merge(A, left, mid, right);
+        merge(A, left, mid, right, comparar);
     }
 };

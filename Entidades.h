@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string>
 #include <sstream>
-#include "vector"
+#include <vector>
 #include "EstructurasDatos.h"
 #include "Utilidades.h" 
 
@@ -68,12 +68,15 @@ public:
     int getReproducciones() const { return reproducciones; }
 
     // --- Recomendaciones ---
+    // IMPORTANTE: el orden debe coincidir con el de Gestor::calcularPreferencias
+    // (duracion, genero, artista, album), ya que ambos vectores se comparan
+    // componente a componente en DistanciaEuclidiana.
     vector<double> obtenerVectorComponentes() {
 
         vector<double> cancionComponentes = {
-            (double)id_artista,
             (double)duracion,
             (double)id_genero,
+            (double)id_artista,
             (double)id_album
         };
         return cancionComponentes;
@@ -123,17 +126,17 @@ public:
     }
 
     // --- Canciones de la playlist ---
-    void agregarCancion(Cancion* c) { 
-    
+    void agregarCancion(Cancion* c) {
+
         //validar que la canción no esté agregada en la playlist
-        if(canciones.getCabeza() != nullptr){
-        Nodo<Cancion*>* temp = canciones.getCabeza();
-        do {
-            if (temp->dato->getId() == c->getId()) { return; }
-            temp = temp->siguiente;
-        } while (temp != canciones.getCabeza());
-        //Una vez ya se haya validado, se agrega
-        canciones.insertar(c); 
+        if (canciones.getCabeza() != nullptr) {
+            Nodo<Cancion*>* temp = canciones.getCabeza();
+            do {
+                if (temp->dato->getId() == c->getId()) { return; }
+                temp = temp->siguiente;
+            } while (temp != canciones.getCabeza());
+            //Una vez ya se haya validado, se agrega
+            canciones.insertar(c);
         }
         else {
             canciones.insertar(c);
@@ -141,12 +144,6 @@ public:
         }
     }
     ListaCircularDoble<Cancion*>& getCanciones() { return canciones; }
-
-    // --- Getters ---
-    int getUsuarioId() const { return usuarioId; }
-    string getNombre() {
-        return nombre;
-    }
 
     // --- Presentacion / persistencia ---
     void mostrarDetalles() const override {
@@ -221,17 +218,6 @@ public:
         }
         return nullptr;
     }
-
-    void mostrar() {
-        for (int i = 0; i < tam; i++) {
-            if (ocupado[i]) {
-                cout << i << ": " << tabla[i]->getNombre() << endl;
-            }
-            else {
-                cout << i << ": [vacío]\n";
-            }
-        }
-    }
 };
 
 // --- Estructura de soporte para Usuario (Suscripcion) ---
@@ -261,19 +247,20 @@ private:
     ListaDoble<Cancion*> misFavoritos;
     ListaDoble<Playlist*> misPlaylists;
     Pila<Cancion*> miHistorialPila;
-    vector<Cancion*> historial;
 
     TablaHashPlaylist* playlistHash; // Para busqueda rapida de playlists por ID
+    vector<Usuario*> amigos;
+    int indiceGrafo = -1;
+
+
 
     int nextPlaylistId;
-
-    Cancion* cancionActual;
 
 public:
     Usuario(int id, string nombre, string email, string contrasena)
         : EntidadBase(id, nombre), email(email), contrasena(contrasena),
-        tienePremium(false), playlistHash(new TablaHashPlaylist(50)), nextPlaylistId(1), cancionActual(nullptr) {
-
+        tienePremium(false), playlistHash(new TablaHashPlaylist(50)), nextPlaylistId(1) {
+        amigos = vector<Usuario*>();
 
     }
 
@@ -317,14 +304,7 @@ public:
         return nullptr;
     }
 
-    // --- REPRODUCCION ---
-    void reproducirCancion(Cancion* c, int x, int y, int color) {
-        if (!c) return;
-        c->reproducir(x, y, color);
-        registrarEnHistorial(c);
-        cancionActual = c;
-        c->setEnReproduccion(true);
-    }
+
 
     // --- HISTORIAL ---
     // miHistorial es una Pila<Cancion*>: el tope siempre es la ultima cancion
@@ -332,7 +312,7 @@ public:
     void registrarEnHistorial(Cancion* c) {
         if (c) miHistorialPila.push(c);
     }
-    
+
 
     // --- PREMIUM / SUSCRIPCION ---
     bool esPremium() const { return tienePremium && plan.isPremium(); }
@@ -346,6 +326,18 @@ public:
     // --- DATOS DE CUENTA ---
     string getEmail() const { return email; }
     string getContrasena() const { return contrasena; }
+    // OJO: debe devolver por REFERENCIA. Si devuelve por valor, cualquier
+    // push_back() hecho afuera (ej. Gestor::agregarAmigo) modifica una copia
+    // temporal y el amigo nunca queda realmente guardado en este Usuario.
+    vector<Usuario*>& getAmigos() { return amigos; }
+
+    void agregarAmigo(Usuario* a) {
+        if (!a) return;
+        for (Usuario* u : amigos) {
+            if (u->getId() == a->getId()) return; // ya es amigo, evita duplicados
+        }
+        amigos.push_back(a);
+    }
 
     // --- FAVORITOS ---
     void agregarFavorito(Cancion* c) { misFavoritos.insertarAlFinal(c); }
@@ -353,9 +345,19 @@ public:
 
     // --- METODOS VIRTUALES ---
     void mostrarDetalles() const override {
-        cout << "  [ID:" << id << "] " << nombre << " | " << email << endl;
+        cout << "  [ID:" << id << "] " << nombre << " | " << email << " ";
         if (esPremium()) cout << "  Plan: Premium" << endl;
         else cout << "  Plan: Gratuito" << endl;
+    }
+
+    void mostrarAmigos() {
+        system("cls");
+        cout << "\n--- Amigos ---" << endl;
+
+        for (Usuario* a : amigos) {
+            a->mostrarDetalles();
+        }
+
     }
 
     string toString() const override {
@@ -374,46 +376,6 @@ public:
         if (!miHistorialPila.estaVacio()) miHistorialPila.pop();
     }
 
-    bool historialVacio() const { return miHistorialPila.estaVacio(); }
-};
-
-// ============================================================
-//  PODCAST 
-//  Entidad secundaria: por ahora no tiene menus propios en la UI.
-// ============================================================
-struct Episodio {
-    string nombre;
-    int duracion;
-};
-
-class Podcast : public EntidadBase {
-private:
-    string host;
-    string descripcion;
-    ListaDoble<Episodio> episodios;
-    int reproducciones;
-public:
-    Podcast(int id, string nombre, string host, string descripcion)
-        : EntidadBase(id, nombre), host(host), descripcion(descripcion), reproducciones(0) {
-    }
-
-    void agregarEpisodio(string nom, int dur) { episodios.insertarAlFinal({ nom, dur }); }
-    string getHost() const { return host; }
-
-    void reproducir() {
-        reproducciones++;
-        cout << "  >> Reproduciendo podcast: \"" << nombre << "\" | Host: " << host << endl;
-    }
-
-    void mostrarDetalles() const override {
-        cout << "  [ID:" << id << "] Podcast: \"" << nombre << "\" | Host: " << host << endl;
-    }
-
-    string toString() const override {
-        stringstream ss;
-        ss << "PODCAST," << id << "," << nombre << "," << host << "," << descripcion;
-        return ss.str();
-    }
-
-
+    void setIndiceGrafo(int i) { indiceGrafo = i; }
+    int getIndiceGrafo() const { return indiceGrafo; }
 };

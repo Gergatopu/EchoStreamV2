@@ -18,3 +18,5 @@ HIST,99,999,Painkiller,Cancion,Judas Priest,2026-07-04 19:57:34
 HIST,99,999,Snowblind,Cancion,Black Sabbath,2026-07-04 19:57:35
 HIST,99,999,Snowblind,Cancion,Black Sabbath,2026-07-04 21:04:50
 HIST,99,999,Last Nite,Cancion,The Strokes,2026-07-04 21:04:52
+HIST,99,999,Last Nite,Cancion,The Strokes,2026-07-04 21:57:36
+HIST,99,999,Last Nite,Cancion,The Strokes,2026-07-04 21:57:41

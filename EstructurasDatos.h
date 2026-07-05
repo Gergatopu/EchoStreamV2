@@ -2,6 +2,7 @@
 #include <vector>
 #include <stdexcept>
 #include <cmath>
+#include <algorithm>
 #include "Utilidades.h"
 
 using namespace std;
@@ -49,30 +50,6 @@ public:
         total++;
     }
 
-    void eliminar(T valor) {
-        if (!cabeza) return;
-        Nodo<T>* actual = cabeza;
-        do {
-            if (actual->dato == valor) {
-                if (actual == cabeza && actual->siguiente == cabeza) {
-                    delete actual;
-                    cabeza = nullptr;
-                    total--;
-                    return;
-                }
-                else {
-                    actual->anterior->siguiente = actual->siguiente;
-                    actual->siguiente->anterior = actual->anterior;
-                    if (actual == cabeza) cabeza = actual->siguiente;
-                    delete actual;
-                    total--;
-                    return;
-                }
-            }
-            actual = actual->siguiente;
-        } while (actual != cabeza);
-    }
-
     void vaciar() {
         if (!cabeza) return;
         Nodo<T>* actual = cabeza;
@@ -116,20 +93,6 @@ public:
         vaciar();
     }
 
-    void insertarAlInicio(T valor) {
-        Nodo<T>* nuevo = new Nodo<T>(valor);
-        if (!cabeza && !ultimo) {
-            cabeza = nuevo;
-            ultimo = nuevo;
-            contador++;
-            return;
-        }
-        nuevo->siguiente = cabeza;
-        cabeza->anterior = nuevo;
-        cabeza = nuevo;
-        contador++;
-    }
-
     void insertarAlFinal(T valor) {
         Nodo<T>* nuevo = new Nodo<T>(valor);
         if (!cabeza && !ultimo) {
@@ -167,8 +130,6 @@ public:
     }
 
     Nodo<T>* getCabeza() const { return cabeza; }
-    Nodo<T>* getUltimo() const { return ultimo; }
-    int getContador() const { return contador; }
 };
 
 // PILA (LIFO)
@@ -227,13 +188,6 @@ public:
         }
         return v;
     }
-
-    int obtenerTamano() const {
-        int c = 0;
-        Nodo<T>* t = tope;
-        while (t) { c++; t = t->siguiente; }
-        return c;
-    }
 };
 
 // COLA (FIFO)
@@ -260,22 +214,6 @@ public:
             fin->siguiente = nuevo;
             nuevo->anterior = fin;
             fin = nuevo;
-        }
-        tamano++;
-    }
-
-    // Inserta al frente de la cola (no es lo tipico en una FIFO, pero la
-    // necesitamos para "reproducir anterior": la cancion que estaba sonando
-    // debe volver a ser la proxima en reproducirse, no irse al final).
-    void encolarAlFrente(T valor) {
-        Nodo<T>* nuevo = new Nodo<T>(valor);
-        if (!frente) {
-            frente = fin = nuevo;
-        }
-        else {
-            nuevo->siguiente = frente;
-            frente->anterior = nuevo;
-            frente = nuevo;
         }
         tamano++;
     }
@@ -318,7 +256,6 @@ public:
         return v;
     }
 
-    int getTamano() const { return tamano; }
     bool estaVacia() const { return frente == nullptr; }
 };
 
@@ -462,18 +399,6 @@ public:
         return nodoArbol;
     }
 
-    // Función visual para entender la estructura del árbol en consola
-    void mostrarArbol2D(NodoArbol<T>* raiz, int espacio = 0, int incremento = 5) {
-        if (raiz == nullptr) return;
-        espacio += incremento;
-
-        mostrarArbol2D(raiz->der, espacio);
-        std::cout << "\n";
-        for (int i = incremento; i < espacio; i++) std::cout << " ";
-        std::cout << raiz->valor << "\n";
-        mostrarArbol2D(raiz->izq, espacio);
-    }
-
     NodoArbol<T>* getRaiz() {
         return raiz;
     }
@@ -513,4 +438,87 @@ public:
             return binarySearchID(nodo->izq, id);
         }
     }
+};
+
+template<class T>
+class CGrafo {
+private:
+    //Creando class CArco con el T dato e índice v
+    class CArco {
+    public:
+        //peso en base a la distancia euclidiana entre usuario
+        double afinidad;
+        int v; //indice del vertice de llegada
+        CArco(int vLlegada, double a) { //Constructor
+            afinidad = a;
+            v = vLlegada; //a donde llegará
+        }
+    };
+    // es el nodo
+    class CVertice {
+    public:
+        T dato; //contiene su información
+        vector<CArco*>* ady; //Lista de adyacencia de class CArco, puntero vector
+        CVertice() {
+            dato = nullptr;
+            ady = new vector<CArco*>();
+        }
+    };
+    //Lista de vértices
+    vector<CVertice*>* vertices; //creamos un vector de tipo puntero
+
+
+
+public:
+    CGrafo() {
+        vertices = new vector<CVertice*>(); //constructor de CGrafo, realiz la instnacia
+    }
+
+    //Operaciones del Grafo
+    void adicionarVertice(T dato) {
+        CVertice* vert = new CVertice(); //crear puntero temporal *vert tipo CVertice
+        vert->dato = dato;  //puntero vert->dato asigno el valor que ingresa a función
+        vertices->push_back(vert); //agrego valores en vertices, como es puntero usa ->
+        //return vertices->size() - 1; //retorna cantidad de datos en vértices
+    }
+
+    int cantidadVertices() {
+        return vertices->size(); //retorna cantidad de vértices
+    }
+
+    T obtenerVertice(int v) {
+        return (vertices->at(v))->dato; //obtiene el valor del vértice
+    }
+    void modificarVertice(int v, T dato) {
+        (vertices->at(v))->dato = dato; //permite modificar el valor dato con el índice del vértice
+    }
+    //Operaciones del arco
+    void adicionarArco(int v, int vLlegada, double afinidad) { //parámetros índice del vértice e índice del vértice de llegada
+        CVertice* ver = vertices->at(v); //*ver toma el puntero del índice del vértice de origen
+        //Crear el objeto ARCO
+        CArco* arc = new CArco(vLlegada, afinidad); //crea temporal arc con el índice de vector de llegada
+        ver->ady->push_back(arc); //
+        //return ver->ady->size() - 1;
+    }
+
+    int cantidadArcos(int v) {
+        return (vertices->at(v))->ady->size(); //cantidad de arcos de acuerdo al índice del vértice
+    }
+
+    double obtenerArco(int v, int apos) {
+        CVertice* ver = vertices->at(v); //obiene el valor del arco de acuerdo al índice del vértice
+        return (ver->ady->at(apos))->afinidad;
+    }
+
+    void modificarArco(int v, int apos, double afinidad) {
+        CVertice* ver = vertices->at(v);
+        (ver->ady->at(apos))->afinidad = afinidad;; //modifica el valor del arco
+    }
+
+    int obtenerVerticeLlegada(int v, int apos) {
+        CVertice* ver = vertices->at(v);
+        return (ver->ady->at(apos))->v; //indice del vertice de llegada
+    }
+
+
 };

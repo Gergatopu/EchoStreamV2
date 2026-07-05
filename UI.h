@@ -41,6 +41,11 @@ void mostrarTopReproducciones(Gestor* lib) {
     imprimirCanciones(lib->obtenerTopReproducciones());
 }
 
+void mostrarCancionesPorDuracion(Gestor* lib) {
+    cout << "\n  [Merge Sort] Canciones por Duracion:" << endl;
+    imprimirCanciones(lib->obtenerCancionesPorDuracion());
+}
+
 void mostrarSoloCanciones(Gestor* lib) {
     cout << "\n--- CANCIONES DISPONIBLES ---" << endl;
     imprimirCanciones(lib->getCatalogoCanciones());
@@ -66,7 +71,7 @@ class AppUI {
 private:
     Gestor* gestor;
 
-    Usuario* actual = nullptr; 
+    Usuario* actual = nullptr;
 
     // ============================================================
     //  STREAMING 
@@ -198,7 +203,7 @@ private:
         }
         else {
             for (Gestor::Recomendacion& r : recomendaciones) {
-                
+
                 if (r.distancia <= 25) { asignarcolor(7); }
 
                 else if (r.distancia <= 50 && r.distancia > 25) {
@@ -208,7 +213,7 @@ private:
                     asignarcolor(15);
                 }
 
-                cout  << " [Distancia: " << r.distancia << "]"<< '\t' <<"->";
+                cout << " [Distancia: " << r.distancia << "]" << '\t' << "->";
                 r.cancion->mostrarDetalles();
             }
         }
@@ -277,7 +282,7 @@ private:
                 { "Cerrar Sesion" , ""   , ""  , ""      , "MIX/Essentials",     },
                 { ""        , ""   , ""  , ""      , "Tus Me Gusta"  },
                 { ""        , ""   , ""  , ""      , "Recomendacion Semanal"  },
-                { ""        , ""   , ""  , ""      , "Soulmate"  },
+                { ""        , ""   , ""  , ""      , "Amigos"  },
                 { ""        , ""   , ""  , ""      , "PLAYLISTS +"  },
                 { "Historial"  , "|<" , "o" , ">|"    , "COLA"        },
             };
@@ -309,18 +314,18 @@ private:
             }
             else if (fila == 3) {
                 if (columna == 4) {
-                    //soulmate(grafos)
+                    menuAmigos();
                 };
             }
             else if (fila == 4) {
-                if (columna == 4) { menuPlaylists() ;};
+                if (columna == 4) { menuPlaylists(); };
             }
             else if (fila == 5) {
                 if (columna == 0) { mostrarHistorialUI(); }
                 else if (columna == 1) { reproducirAnteriorUI(); }
                 else if (columna == 2) {
                     if (gestor->getCancionActual() != nullptr) {
-                    verCancionActual(25, 25, 6);
+                        verCancionActual(25, 25, 6);
                     }
                 }
                 else if (columna == 3) { reproducirSiguienteUI(); }
@@ -353,7 +358,7 @@ private:
     }
 
     void agregarCancionAPlaylist(int idC, Playlist* pl) {
-        
+
 
         if (!pl) { cout << "  Playlist no encontrada." << endl; pausar(); return; }
 
@@ -367,26 +372,6 @@ private:
         }
         else { cout << "  Cancion no encontrada." << endl; }
 
-        pausar();
-    }
-
-    void verCancionesDePlaylist() {
-        vector<Playlist*> misPLs = actual->getPlaylists().toVector();
-        if (misPLs.empty()) { cout << "  No tienes playlists."; pausar(); return; }
-        for (Playlist* p : misPLs) p->mostrarDetalles();
-
-        int idPL; cout << "ID de la playlist: "; asignarcolor(14); cin >> idPL; asignarcolor(7);
-        Playlist* pl = actual->buscarPlaylistPorId(idPL);
-        if (pl) {
-            cout << "\n--- Canciones de \"" << pl->getNombre() << "\" ---" << endl;
-            vector<Cancion*> cans = pl->getCanciones().toVector();
-            if (cans.empty()) { cout << "  (Playlist vacia)" << endl; }
-            else {
-                int i = 1;
-                for (Cancion* c : cans) { cout << "  " << i++ << ". "; c->mostrarDetalles(); }
-            }
-        }
-        else { cout << "  Playlist no encontrada." << endl; }
         pausar();
     }
 
@@ -410,29 +395,116 @@ private:
 
         else {
 
-            if (sub == misPl.size() ) {
+            if (sub == misPl.size()) {
                 crearPlaylist();
             }
             else {
                 verPlaylist(op);
             }
         }
+    }
 
-        
+
+
+    void menuAmigos() {
+        system("cls");
+        cout << "\n--- Menu Amigos ---" << endl;
+
+
+        int currentY = Console::CursorTop;
+
+        vector<string> opciones = {
+            "Ver lista de amigos",
+            "Agregar nuevo amigo",
+            "Soulmate",
+            "Mostrar conexiones",
+        };
+
+        int sub = menuInteractivo(opciones, 5, currentY + 1) + 1;
+
+        if (sub == 1) { actual->mostrarAmigos(); pausar(); }
+        else if (sub == 2) { menuAgregarAmigo(); pausar(); }
+        else if (sub == 3) { mostrarSoulmate(); pausar(); }
+        else if (sub == 4) { mostrarConexiones(); pausar(); }
 
     }
+
+    void mostrarSoulmate() {
+        system("cls");
+        cout << "\n--- Tu Soulmate Musical ---" << endl;
+
+        Usuario* soulmate = gestor->obtenerSoulmate(actual);
+        if (!soulmate) {
+            cout << "\nTodavia no tenemos suficiente info: agrega amigos y escucha canciones." << endl;
+            return;
+        }
+
+        // Buscamos la afinidad ya calculada para ese amigo en la lista de conexiones
+        double afinidad = -1;
+        for (Gestor::Conexion& c : gestor->obtenerConexiones(actual)) {
+            if (c.usuario->getId() == soulmate->getId()) { afinidad = c.afinidad; break; }
+        }
+
+        cout << "\nTu soulmate musical es: " << soulmate->getNombre() << " (ID:" << soulmate->getId() << ")" << endl;
+        cout << "Distancia de gustos (mientras mas bajo, mas afinidad): " << afinidad << endl;
+    }
+
+    void mostrarConexiones() {
+        system("cls");
+        cout << "\n--- Grafo de Amistades (Lista de Adyacencia) ---" << endl;
+
+        auto listaCompleta = gestor->obtenerListaAdyacenciaCompleta();
+        for (auto& par : listaCompleta) {
+            Usuario* u = par.first;
+            cout << '\n' << u->getNombre() << " (ID:" << u->getId() << "):" << endl;
+
+            if (par.second.empty()) {
+                cout << "   (sin conexiones)" << endl;
+                continue;
+            }
+            for (Gestor::Conexion& conexion : par.second) {
+                cout << "   -> " << conexion.usuario->getNombre()
+                    << " (ID:" << conexion.usuario->getId()
+                    << ") | afinidad: " << conexion.afinidad << endl;
+            }
+        }
+    }
+
+    void menuAgregarAmigo() {
+
+        system("cls");
+        cout << "\n--- Agregar Amigo ---" << endl;
+
+
+        int currentY = Console::CursorTop;
+        vector<Usuario*> usuarios = gestor->getUsuarios();
+
+        for (Usuario* u : usuarios) {
+            u->mostrarDetalles();
+        }
+        int idNueovoAmigo;
+        cout << "Ingresa el ID del usuario que deseas agregar como amigo: ";
+        cin >> idNueovoAmigo;
+
+        gestor->agregarAmigo(idNueovoAmigo);
+
+
+
+    }
+
 
     // ============================================================
     //  EXPLORAR BIBLIOTECA  
     // ============================================================
     void menuExplorar() {
         int op = 0;
-        while (op != 4) {
+        while (op != 5) {
             cabecera("EXPLORAR BIBLIOTECA");
             vector<string> opciones = {
                 "Ver todas las canciones (Sin ordenar)",
                 "Ordenar canciones A-Z (Insercion)",
                 "Ver Top Reproducciones (Shell Sort)",
+                "Ordenar por Duracion (Merge Sort)",
                 "Volver"
             };
             op = menuInteractivo(opciones, 5, 4) + 1;
@@ -440,6 +512,7 @@ private:
             if (op == 1) { mostrarSoloCanciones(gestor); pausar(); }
             else if (op == 2) { mostrarCancionesOrdenadasA_Z(gestor); pausar(); }
             else if (op == 3) { mostrarTopReproducciones(gestor); pausar(); }
+            else if (op == 4) { mostrarCancionesPorDuracion(gestor); pausar(); }
         }
     }
 
@@ -458,15 +531,15 @@ private:
     }
 
     void agregarPlaylistCola(Playlist* pl) {
-        
+
         Nodo<Cancion*>* temp = pl->getCanciones().getCabeza();
         do {
-            
+
             Cancion* Ctemp = temp->dato;
             Cancion* c = gestor->agregarCancionAFila(Ctemp->getId());
-            if (c) cout << endl << "  Cancion encolada: " << c->getNombre() ;
+            if (c) cout << endl << "  Cancion encolada: " << c->getNombre();
             temp = temp->siguiente;
-            
+
         } while (temp != pl->getCanciones().getCabeza());
         cout << endl;
         pausar();
@@ -529,22 +602,22 @@ private:
     void agregarFavorito(vector<Cancion*>& favs) {
         //Mostras todas las canciones
         mostrarSoloCanciones(gestor);
-        
+
         //Ingresa el ID
         int idC; cout << "\nID de la cancion: "; asignarcolor(14); cin >> idC; asignarcolor(7);
 
         //buscarla en el catalogo con BinarySearch
         Cancion* nueva = gestor->buscarCancionId(idC);
-        
+
         //Si existe
         if (nueva) {
-        //comprobar si ya esta como favoritos
-        for (int i = 0; i < favs.size(); i++) {
-            if (nueva->getId() == favs[i]->getId()) {
-                cout << "\nNo se puede agregar una cancion mas de 1 vez"; pausar();
-                return;
+            //comprobar si ya esta como favoritos
+            for (int i = 0; i < favs.size(); i++) {
+                if (nueva->getId() == favs[i]->getId()) {
+                    cout << "\nNo se puede agregar una cancion mas de 1 vez"; pausar();
+                    return;
+                }
             }
-        }
             actual->agregarFavorito(nueva);
             guardarLinea("usuarios.txt", "FAVORITO," + to_string(actual->getId()) + "," + to_string(nueva->getId()));
             cout << "  Agregado a favoritos." << endl;

@@ -2,6 +2,7 @@
 #include <fstream>
 #include <sstream>
 #include <vector>
+#include <utility>
 #include "Entidades.h"
 #include "Algoritmos.h"
 
@@ -37,10 +38,9 @@ private:
     //ListaDoble<Cancion*> catalogoCanciones;
     AVL<Cancion*> catalogoCanciones;
 
-    ListaDoble<Podcast*> catalogoPodcasts;
-
     // --- Usuarios / sesion ---
     ListaDoble<Usuario*> listaUsuarios;
+    CGrafo<Usuario*> usuarios;
     Usuario* usuarioLogueado;
 
     // --- Cola de reproduccion (valida solo durante una sesion activa) ---
@@ -54,10 +54,10 @@ private:
     Cancion* cancionActual = nullptr;
 
 
+
     // ---------------- CARGA DESDE ARCHIVO ----------------
 
     // Formato CANCION (8 campos):   CANCION, id, nombre, artistaId, albumId, duracion, generoId, reproducciones
-    // Formato PODCAST  (4 campos):  PODCAST, id, nombre, host, reproducciones
     void cargarBibliotecaDesdeArchivo() {
         ifstream archivo("biblioteca.txt");
         if (!archivo.is_open()) return;
@@ -86,9 +86,6 @@ private:
                     catalogoCanciones.insertar(catalogoCanciones.getRaiz(), nuevaCancion, lambdaComparar)
                 );
             }
-            else if (tag == "PODCAST" && campos.size() >= 4) {
-                catalogoPodcasts.insertarAlFinal(new Podcast(stoi(campos[1]), campos[2], campos[3], ""));
-            }
         }
         archivo.close();
     }
@@ -96,9 +93,12 @@ private:
     // --- Helpers de carga de usuarios.txt: uno por tipo de linea ---
 
     void procesarLineaUsuario(const vector<string>& campos) {
-        // USUARIO, id, nombre, email, password
         if (campos.size() < 5) return;
-        listaUsuarios.insertarAlFinal(new Usuario(stoi(campos[1]), campos[2], campos[3], campos[4]));
+        Usuario* nuevo = new Usuario(stoi(campos[1]), campos[2], campos[3], campos[4]);
+        listaUsuarios.insertarAlFinal(nuevo);
+
+        usuarios.adicionarVertice(nuevo);
+        nuevo->setIndiceGrafo(usuarios.cantidadVertices() - 1);
     }
 
     void procesarLineaSuscripcion(const vector<string>& campos) {
@@ -152,6 +152,7 @@ private:
             else if (tag == "PLAYLIST") procesarLineaPlaylist(campos);
             else if (tag == "PLAYLIST_CANCION") procesarLineaPlaylistCancion(campos);
             else if (tag == "FAVORITO") procesarLineaFavorito(campos);
+            else if (tag == "AMIGO") procesarLineaAmigo(campos);
         }
         archivo.close();
     }
@@ -256,8 +257,20 @@ private:
         if (due && c) due->agregarFavorito(c);
     }
 
+    void procesarLineaAmigo(const vector<string>& campos) {
+        // AMIGO, idUsuario, idAmigo
+        if (campos.size() < 3) return;
+        Usuario* due = buscarUsuarioPorId(stoi(campos[1]));
+        Usuario* amigo = buscarUsuarioPorId(stoi(campos[2]));
+        if (due && amigo) due->agregarAmigo(amigo);
+    }
+
     static bool compararPorNombre(Cancion* a, Cancion* b) {
         return a->getNombre() < b->getNombre();
+    }
+
+    static bool compararPorDuracion(Cancion* a, Cancion* b) {
+        return a->getDuracion() < b->getDuracion();
     }
 
 public:
@@ -271,12 +284,16 @@ public:
 
     Gestor() : usuarioLogueado(nullptr) {
         cargarBibliotecaDesdeArchivo();
-        cargarUsuariosDesdeArchivo(); ;
+        cargarUsuariosDesdeArchivo();
+        // Las aristas de amistad no se guardan en disco (serian datos derivados
+        // y quedarian obsoletas apenas alguien escuche una cancion nueva). En
+        // su lugar se recalculan aqui, una vez que ya estan todos los usuarios
+        // y sus relaciones de amistad (AMIGO) cargados en memoria.
+        reconstruirGrafoAmistades();
     }
 
     ~Gestor() {
         catalogoCanciones.vaciar();
-        catalogoPodcasts.vaciar();
         listaUsuarios.vaciar();
         cancionesEspera.vaciar();
     }
@@ -317,6 +334,13 @@ public:
     void registrarNuevoUsuario(int id, string nom, string email, string pass, int plan) {
         Usuario* nuevo = new Usuario(id, nom, email, pass);
         listaUsuarios.insertarAlFinal(nuevo);
+
+        // Sin esto, un usuario creado en tiempo de ejecucion (no cargado desde
+        // usuarios.txt) se queda con indiceGrafo == -1 y jamas podria formar
+        // aristas de amistad, aunque agregue amigos despues.
+        usuarios.adicionarVertice(nuevo);
+        nuevo->setIndiceGrafo(usuarios.cantidadVertices() - 1);
+
         guardarLinea("usuarios.txt", nuevo->toString());
 
         if (plan == 2) {
@@ -333,6 +357,40 @@ public:
     }
 
     Usuario* getUsuarioLogueado() { return usuarioLogueado; }
+
+    vector<Usuario*> getUsuarios() {
+        return listaUsuarios.toVector();
+    }
+
+
+
+    // --- Amigos ---
+    void agregarAmigo(int idNuevo) {
+        Usuario* amigo = buscarUsuarioPorId(idNuevo);
+        if (!amigo) {
+            ubicar(25, 25); cout << "No existe un usuario con ese ID" << endl;
+            return;
+        }
+        if (amigo->getId() == usuarioLogueado->getId()) {
+            ubicar(25, 25); cout << "No puedes agregarte a ti mismo como amigo" << endl;
+            return;
+        }
+
+        // getAmigos() ahora devuelve una referencia al vector real del Usuario,
+        // asi que esta comprobacion consulta el estado verdadero (no una copia).
+        for (Usuario* u : usuarioLogueado->getAmigos()) {
+            if (u->getId() == idNuevo) {
+                ubicar(25, 25); cout << "Ya tienes a " << amigo->getNombre() << " como amigo" << endl;
+                return;
+            }
+        }
+
+        usuarioLogueado->agregarAmigo(amigo);
+        guardarLinea("usuarios.txt", "AMIGO," + to_string(usuarioLogueado->getId()) + "," + to_string(amigo->getId()));
+        crearAristaAmistad(usuarioLogueado, amigo);
+
+        ubicar(25, 25); cout << amigo->getNombre() << " agregado correctamente como amigo" << endl;
+    }
 
     // ---------------- COLA DE REPRODUCCION ----------------
 
@@ -351,7 +409,7 @@ public:
         if (previa == nullptr) return;
         usuarioLogueado->quitarTopeHistorial();
 
-     
+
         if (cancionActual != nullptr) {
             cancionActual->setEnReproduccion(false);
         }
@@ -423,6 +481,13 @@ public:
         return vista;
     }
 
+    // Catalogo ordenado por duracion ascendente (MERGE SORT)
+    vector<Cancion*> obtenerCancionesPorDuracion() {
+        vector<Cancion*> vista = catalogoCanciones.toVector();
+        Algoritmos::mergeSort(vista, 0, (int)vista.size() - 1, compararPorDuracion);
+        return vista;
+    }
+
     // ---------------- RECOMENDACIONES ----------------
 
     vector<double> calcularPreferencias(int idUsuario) {
@@ -444,6 +509,8 @@ public:
         return { duracionProm / total, generoProm / total, artistaProm / total, albumProm / total };
     }
 
+
+
     // Calcula, ordena (Heap Sort) y filtra (distancia <= 80 y no escuchadas).
     // No imprime nada: la UI decide como mostrar el resultado.
     vector<Recomendacion> obtenerRecomendaciones(vector<double> preferenciasUsuario, int idUsuario) {
@@ -452,16 +519,11 @@ public:
         if (canciones.empty()) return listaDistancias;
 
         for (Cancion* cancion : canciones) {
-            vector<double> metaDatosCancion = {
-                (double)cancion->getDuracion(), (double)cancion->getGenero(),
-                (double)cancion->getArtista(),  (double)cancion->getAlbum()
-            };
-            double dist = DistanciaEuclidiana(preferenciasUsuario, metaDatosCancion);
+            double dist = DistanciaEuclidiana(preferenciasUsuario, cancion->obtenerVectorComponentes());
             listaDistancias.push_back({ dist, cancion });
         }
 
-        Algoritmos alg;
-        alg.heapSort(listaDistancias);
+        Algoritmos::heapSort(listaDistancias);
 
         vector<Recomendacion> resultado;
         for (Recomendacion& r : listaDistancias) {
@@ -470,6 +532,98 @@ public:
             }
         }
         return resultado;
+    }
+
+
+    void crearAristaAmistad(Usuario* a, Usuario* b) {
+        if (!a || !b) return;
+        int iA = a->getIndiceGrafo();
+        int iB = b->getIndiceGrafo();
+        if (iA < 0 || iB < 0) return;
+
+        vector<double> vecA = calcularPreferencias(a->getId());
+        vector<double> vecB = calcularPreferencias(b->getId());
+        double afinidad = DistanciaEuclidiana(vecA, vecB);
+
+        usuarios.adicionarArco(iA, iB, afinidad);
+        usuarios.adicionarArco(iB, iA, afinidad);
+    }
+
+    double obtenerAfinidadDesdeIndice(int iA, int iB) {
+        Usuario* uA = usuarios.obtenerVertice(iA);
+        Usuario* uB = usuarios.obtenerVertice(iB);
+        if (!uA || !uB) return -1;
+
+        vector<double> vecA = calcularPreferencias(uA->getId());
+        vector<double> vecB = calcularPreferencias(uB->getId());
+        return DistanciaEuclidiana(vecA, vecB);
+    }
+
+    // Reconstruye todas las aristas de amistad a partir de las listas de
+    // amigos ya cargadas (cada relacion AMIGO,A,B basta una vez: crearAristaAmistad
+    // ya agrega el arco en ambos sentidos del grafo).
+    void reconstruirGrafoAmistades() {
+        for (Usuario* u : listaUsuarios.toVector()) {
+            for (Usuario* amigo : u->getAmigos()) {
+                crearAristaAmistad(u, amigo);
+            }
+        }
+    }
+
+    // Par (usuario, afinidad) para representar una conexion en la lista de adyacencia
+    struct Conexion {
+        Usuario* usuario;
+        double afinidad;
+    };
+
+    // Lista de adyacencia de un solo vertice: con quienes esta conectado y su afinidad
+    vector<Conexion> obtenerConexiones(Usuario* u) {
+        vector<Conexion> resultado;
+        if (!u) return resultado;
+        int i = u->getIndiceGrafo();
+        if (i < 0) return resultado;
+
+        int total = usuarios.cantidadArcos(i);
+        for (int k = 0; k < total; k++) {
+            int destino = usuarios.obtenerVerticeLlegada(i, k);
+            double afinidad = usuarios.obtenerArco(i, k);
+            resultado.push_back({ usuarios.obtenerVertice(destino), afinidad });
+        }
+        return resultado;
+    }
+
+    // Lista de adyacencia de TODO el grafo: cada usuario junto con sus conexiones
+    vector<pair<Usuario*, vector<Conexion>>> obtenerListaAdyacenciaCompleta() {
+        vector<pair<Usuario*, vector<Conexion>>> resultado;
+        int total = usuarios.cantidadVertices();
+        for (int i = 0; i < total; i++) {
+            Usuario* u = usuarios.obtenerVertice(i);
+            resultado.push_back({ u, obtenerConexiones(u) });
+        }
+        return resultado;
+    }
+
+    // El "soulmate" es el amigo con la MENOR distancia euclidiana de gustos
+    // musicales (menor distancia = mayor afinidad). nullptr si no tiene amigos.
+    Usuario* obtenerSoulmate(Usuario* u) {
+        if (!u) return nullptr;
+        int i = u->getIndiceGrafo();
+        if (i < 0) return nullptr;
+
+        int totalArcos = usuarios.cantidadArcos(i);
+        if (totalArcos == 0) return nullptr;
+
+        int mejorDestino = -1;
+        double mejorAfinidad = -1;
+        for (int k = 0; k < totalArcos; k++) {
+            double afinidad = usuarios.obtenerArco(i, k);
+            if (mejorDestino == -1 || afinidad < mejorAfinidad) {
+                mejorAfinidad = afinidad;
+                mejorDestino = usuarios.obtenerVerticeLlegada(i, k);
+            }
+        }
+        if (mejorDestino == -1) return nullptr;
+        return usuarios.obtenerVertice(mejorDestino);
     }
 
     // ---------------- FAVORITOS ----------------
