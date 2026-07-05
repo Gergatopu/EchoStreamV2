@@ -133,6 +133,7 @@
     <ClInclude Include="Gestores.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="UI.h" />
     <ClInclude Include="Utilidades.h" />
   </ItemGroup>
   <ItemGroup>

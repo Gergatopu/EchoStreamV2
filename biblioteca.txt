@@ -1,169 +1,180 @@
-ARTISTA,1,Bad Bunny,Reggaeton
-ARTISTA,2,Taylor Swift,Pop
-ARTISTA,3,The Weeknd,R&B
-ARTISTA,4,Rosalia,Flamenco Pop
-ARTISTA,5,Kendrick Lamar,Hip Hop
-ARTISTA,6,Dua Lipa,Dance Pop
-ARTISTA,7,Drake,Hip Hop
-ARTISTA,8,Billie Eilish,Indie Pop
-ARTISTA,9,Ed Sheeran,Pop
-ARTISTA,10,Ozuna,Reggaeton
-ARTISTA,11,J Balvin,Reggaeton
-ARTISTA,12,Shakira,Pop Latino
-ARTISTA,13,Coldplay,Rock Alternativo
-ARTISTA,14,Imagine Dragons,Rock
-ARTISTA,15,Peso Pluma,Regional Mexicano
-ARTISTA,16,Feid,Urbano Latino
-ARTISTA,17,SZA,R&B
-ARTISTA,18,Post Malone,Pop Rap
-ARTISTA,19,Ariana Grande,Pop
-ARTISTA,20,Rauw Alejandro,Urbano Latino
-CANCION,1,Titi Me Pregunto,Bad Bunny,195,Reggaeton,5
-CANCION,2,Me Porto Bonito,Bad Bunny,178,Reggaeton,0
-CANCION,3,Moscow Mule,Bad Bunny,234,Reggaeton,0
-CANCION,4,Ojitos Lindos,Bad Bunny,220,Reggaeton,0
-CANCION,5,Un Verano Sin Ti,Bad Bunny,198,Reggaeton,0
-CANCION,6,Efecto,Bad Bunny,183,Reggaeton,0
-CANCION,7,Un Preview,Bad Bunny,167,Reggaeton,3
-CANCION,8,Perro Negro,Bad Bunny,210,Reggaeton,0
-CANCION,9,Anti-Hero,Taylor Swift,200,Pop,0
-CANCION,10,Lavender Haze,Taylor Swift,202,Pop,0
-CANCION,11,Shake It Off,Taylor Swift,219,Pop,0
-CANCION,12,Cruel Summer,Taylor Swift,178,Pop,0
-CANCION,13,Blank Space,Taylor Swift,231,Pop,0
-CANCION,14,Fortnight,Taylor Swift,228,Pop,0
-CANCION,15,So Long London,Taylor Swift,264,Pop,0
-CANCION,16,Down Bad,Taylor Swift,222,Pop,0
-CANCION,17,Blinding Lights,The Weeknd,200,R&B,0
-CANCION,18,Save Your Tears,The Weeknd,215,R&B,0
-CANCION,19,Starboy,The Weeknd,230,R&B,0
-CANCION,20,Die For You,The Weeknd,260,R&B,0
-CANCION,21,Sacrifice,The Weeknd,190,R&B,0
-CANCION,22,Popular,The Weeknd,195,R&B,0
-CANCION,23,Malamente,Rosalia,203,Flamenco Pop,0
-CANCION,24,Con Altura,Rosalia,174,Flamenco Pop,0
-CANCION,25,SAOKO,Rosalia,168,Flamenco Pop,0
-CANCION,26,Despecha,Rosalia,188,Flamenco Pop,0
-CANCION,27,Chicken Teriyaki,Rosalia,122,Flamenco Pop,0
-CANCION,28,HUMBLE.,Kendrick Lamar,177,Hip Hop,0
-CANCION,29,DNA.,Kendrick Lamar,185,Hip Hop,0
-CANCION,30,Not Like Us,Kendrick Lamar,274,Hip Hop,0
-CANCION,31,Swimming Pools,Kendrick Lamar,313,Hip Hop,3
-CANCION,32,Squabble Up,Kendrick Lamar,137,Hip Hop,0
-CANCION,33,Levitate,Kendrick Lamar,198,Hip Hop,0
-CANCION,34,Levitating,Dua Lipa,203,Dance Pop,0
-CANCION,35,Dont Start Now,Dua Lipa,183,Dance Pop,0
-CANCION,36,Physical,Dua Lipa,193,Dance Pop,0
-CANCION,37,Cold Heart,Dua Lipa,209,Dance Pop,0
-CANCION,38,Illusion,Dua Lipa,188,Dance Pop,0
-CANCION,39,Training Season,Dua Lipa,196,Dance Pop,0
-CANCION,40,God's Plan,Drake,198,Hip Hop,0
-CANCION,41,Hotline Bling,Drake,267,Hip Hop,0
-CANCION,42,One Dance,Drake,173,Hip Hop,0
-CANCION,43,Rich Flex,Drake,234,Hip Hop,0
-CANCION,44,Spin Bout U,Drake,182,Hip Hop,0
-CANCION,45,Bad Guy,Billie Eilish,194,Indie Pop,0
-CANCION,46,Happier Than Ever,Billie Eilish,298,Indie Pop,0
-CANCION,47,Lovely,Billie Eilish,200,Indie Pop,0
-CANCION,48,Birds of a Feather,Billie Eilish,210,Indie Pop,0
-CANCION,49,Lunch,Billie Eilish,181,Indie Pop,0
-CANCION,50,Shape of You,Ed Sheeran,234,Pop,0
-CANCION,51,Perfect,Ed Sheeran,263,Pop,0
-CANCION,52,Thinking Out Loud,Ed Sheeran,281,Pop,0
-CANCION,53,Shivers,Ed Sheeran,207,Pop,0
-CANCION,54,Eyes Closed,Ed Sheeran,218,Pop,0
-CANCION,55,Taina,Ozuna,222,Reggaeton,0
-CANCION,56,Caramelo,Ozuna,208,Reggaeton,0
-CANCION,57,La Modelo,Ozuna,214,Reggaeton,0
-CANCION,58,Favorito,Ozuna,218,Reggaeton,0
-CANCION,59,Coco,J Balvin,193,Reggaeton,0
-CANCION,60,Mi Gente,J Balvin,189,Reggaeton,0
-CANCION,61,Safari,J Balvin,211,Reggaeton,0
-CANCION,62,Ritmo,J Balvin,206,Reggaeton,0
-CANCION,63,Shakira Bzrp Session,Shakira,196,Pop Latino,0
-CANCION,64,Waka Waka,Shakira,222,Pop Latino,4
-CANCION,65,Loba,Shakira,237,Pop Latino,0
-CANCION,66,Soltera,Shakira,205,Pop Latino,3
-CANCION,67,Yellow,Coldplay,268,Rock Alternativo,0
-CANCION,68,The Scientist,Coldplay,309,Rock Alternativo,4
-CANCION,69,Fix You,Coldplay,295,Rock Alternativo,1
-CANCION,70,A Sky Full of Stars,Coldplay,268,Rock Alternativo,0
-CANCION,71,My Universe,Coldplay,230,Rock Alternativo,0
-CANCION,72,Believer,Imagine Dragons,204,Rock,0
-CANCION,73,Thunder,Imagine Dragons,187,Rock,0
-CANCION,74,Enemy,Imagine Dragons,173,Rock,1
-CANCION,75,Bones,Imagine Dragons,175,Rock,0
-CANCION,76,Natural,Imagine Dragons,189,Rock,0
-CANCION,77,Ella Baila Sola,Peso Pluma,176,Regional Mexicano,0
-CANCION,78,La Bebe,Peso Pluma,185,Regional Mexicano,3
-CANCION,79,Por Las Noches,Peso Pluma,191,Regional Mexicano,0
-CANCION,80,Bzrp Session 55,Peso Pluma,195,Regional Mexicano,0
-CANCION,81,Felicity,Feid,199,Urbano Latino,0
-CANCION,82,Castigo,Feid,210,Urbano Latino,0
-CANCION,83,Chorrito Pa Las Animas,Feid,204,Urbano Latino,0
-CANCION,84,Normal,Feid,215,Urbano Latino,0
-CANCION,85,Kill Bill,SZA,153,R&B,0
-CANCION,86,Good Days,SZA,278,R&B,0
-CANCION,87,Snooze,SZA,221,R&B,0
-CANCION,88,Shirt,SZA,196,R&B,3
-CANCION,89,Sunflower,Post Malone,158,Pop Rap,0
-CANCION,90,Circles,Post Malone,215,Pop Rap,2
-CANCION,91,Rockstar,Post Malone,218,Pop Rap,0
-CANCION,92,Chemical,Post Malone,210,Pop Rap,0
-CANCION,93,7 Rings,Ariana Grande,178,Pop,3
-CANCION,94,Thank U Next,Ariana Grande,207,Pop,0
-CANCION,95,Positions,Ariana Grande,172,Pop,0
-CANCION,96,Yes And,Ariana Grande,210,Pop,0
-CANCION,97,Hayami,Rauw Alejandro,198,Urbano Latino,0
-CANCION,98,Punto 40,Rauw Alejandro,204,Urbano Latino,3
-CANCION,99,Esclava,Rauw Alejandro,215,Urbano Latino,0
-CANCION,100,Todo de Ti,Rauw Alejandro,188,Urbano Latino,0
-ALBUM,1,Un Verano Sin Ti,2022,Bad Bunny,Reggaeton
-ALBUM,2,Nadie Sabe Lo Que Va a Pasar Manana,2023,Bad Bunny,Reggaeton
-ALBUM,3,Midnights,2022,Taylor Swift,Pop
-ALBUM,4,The Tortured Poets Department,2024,Taylor Swift,Pop
-ALBUM,5,After Hours,2020,The Weeknd,R&B
-ALBUM,6,Dawn FM,2022,The Weeknd,R&B
-ALBUM,7,El Mal Querer,2018,Rosalia,Flamenco Pop
-ALBUM,8,Motomami,2022,Rosalia,Flamenco Pop
-ALBUM,9,Mr. Morale and The Big Steppers,2022,Kendrick Lamar,Hip Hop
-ALBUM,10,GNX,2024,Kendrick Lamar,Hip Hop
-ALBUM,11,Future Nostalgia,2020,Dua Lipa,Dance Pop
-ALBUM,12,Radical Optimism,2024,Dua Lipa,Dance Pop
-ALBUM,13,For All The Dogs,2023,Drake,Hip Hop
-ALBUM,14,Hit Me Hard and Soft,2024,Billie Eilish,Indie Pop
-ALBUM,15,Subtract,2023,Ed Sheeran,Pop
-ALBUM,16,Ozutochi,2023,Ozuna,Reggaeton
-ALBUM,17,Jose,2021,J Balvin,Reggaeton
-ALBUM,18,Las Mujeres Ya No Lloran,2024,Shakira,Pop Latino
-ALBUM,19,Music of the Spheres,2021,Coldplay,Rock Alternativo
-ALBUM,20,Loom,2024,Imagine Dragons,Rock
-ALBUM,21,Exodo,2023,Peso Pluma,Regional Mexicano
-ALBUM,22,Mor,2023,Feid,Urbano Latino
-ALBUM,23,SOS,2022,SZA,R&B
-ALBUM,24,Austin,2023,Post Malone,Pop Rap
-ALBUM,25,Eternal Sunshine,2024,Ariana Grande,Pop
-ALBUM,26,Playa del Cielo,2023,Rauw Alejandro,Urbano Latino
-PODCAST,1,El Podcast de la Republica,Ivan Torrealba,0
-PODCAST,2,Entiende Tu Mente,Molo Cebrian,0
-PODCAST,3,Cosas de Internet,Ricardo Sala,0
-PODCAST,4,Invest Like The Best,Patrick OShaughnessy,0
-PODCAST,5,Huberman Lab,Andrew Huberman,0
-PODCAST,6,La Maquina del Tiempo,Hector Morales,0
-PODCAST,7,True Crime Peru,Carmen Vilchez,0
-PODCAST,8,Codigo Fuente,Luis Roca,0
-PODCAST,9,The Joe Rogan Experience,Joe Rogan,0
-PODCAST,10,Startup Peru,Marco Flores,0
-GENERO,1,Reggaeton,Musica urbana latina de ritmo sincopado
-GENERO,2,Pop,Musica popular contemporanea de alcance masivo
-GENERO,3,R&B,Rhythm and Blues con influencias soul y funk
-GENERO,4,Hip Hop,Cultura urbana basada en rap y beats
-GENERO,5,Dance Pop,Pop electronico orientado a la pista de baile
-GENERO,6,Flamenco Pop,Fusion de flamenco tradicional con produccion moderna
-GENERO,7,Indie Pop,Pop independiente de produccion alternativa
-GENERO,8,Rock Alternativo,Rock moderno con influencias experimentales
-GENERO,9,Rock,Genero basado en guitarra electrica y bateria
-GENERO,10,Pop Latino,Pop en espanol con raices latinas
-GENERO,11,Regional Mexicano,Musica tradicional mexicana contemporanea
-GENERO,12,Urbano Latino,Fusion de generos urbanos latinoamericanos
-GENERO,13,Pop Rap,Fusion de rap con melodias pop accesibles
+CANCION,1,Master of Puppets,14,141,515,10,25000
+CANCION,2,Enter Sandman,14,142,331,10,30000
+CANCION,3,Creeping Death,14,143,396,10,18000
+CANCION,4,Symphony of Destruction,13,131,242,10,15000
+CANCION,5,Holy Wars,13,132,392,10,12000
+CANCION,6,Peace Sells,13,133,241,10,14000
+CANCION,7,Run to the Hills,19,191,230,10,14000
+CANCION,8,Aces High,19,192,271,10,13500
+CANCION,9,Fear of the Dark,19,193,438,10,19000
+CANCION,10,War Pigs,20,201,474,10,17000
+CANCION,11,Children of the Grave,20,202,315,10,11000
+CANCION,12,Snowblind,20,203,330,10,10000
+CANCION,13,Breaking the Law,18,181,155,10,16000
+CANCION,14,Painkiller,18,182,366,10,18000
+CANCION,15,You've Got Another Thing Comin',18,183,309,10,15500
+CANCION,16,Smells Like Teen Spirit,23,231,301,20,35000
+CANCION,17,Heart-Shaped Box,23,232,281,20,22000
+CANCION,18,About A Girl,23,233,168,20,18000
+CANCION,19,Paranoid Android,26,261,383,20,19000
+CANCION,20,Creep,26,262,238,20,28000
+CANCION,21,Fake Plastic Trees,26,263,290,20,15000
+CANCION,22,Reptilia,25,251,221,20,21000
+CANCION,23,Last Nite,25,252,193,20,24000
+CANCION,24,You Only Live Once,25,253,189,20,20000
+CANCION,25,Let It Be,30,301,243,20,40000
+CANCION,26,Hey Jude,30,302,431,20,45000
+CANCION,27,Come Together,30,303,259,20,42000
+CANCION,28,De Musica Ligera,27,271,212,20,32000
+CANCION,29,Persiana Americana,27,272,292,20,27000
+CANCION,30,En La Ciudad De La Furia,27,273,346,20,26000
+CANCION,31,Thriller,40,401,357,30,50000
+CANCION,32,Smooth Criminal,40,402,257,30,42000
+CANCION,33,Don't Stop 'Til You Get Enough,40,403,365,30,38000
+CANCION,34,Cruel Summer,34,341,178,30,48000
+CANCION,35,Anti-Hero,34,342,200,30,46000
+CANCION,36,Fortnight,34,343,228,30,44000
+CANCION,37,Levitating,39,391,203,30,39000
+CANCION,38,Houdini,39,392,185,30,31000
+CANCION,39,New Rules,39,393,209,30,35000
+CANCION,40,Lunch,35,351,179,30,29000
+CANCION,41,Happier Than Ever,35,352,298,30,34000
+CANCION,42,Bad Guy,35,353,194,30,41000
+CANCION,43,Eyes Closed,33,331,194,30,28000
+CANCION,44,Shape of You,33,332,233,30,47000
+CANCION,45,Thinking Out Loud,33,333,281,30,38000
+CANCION,46,One More Time,42,421,320,40,33000
+CANCION,47,Around the World,42,422,429,40,25000
+CANCION,48,Get Lucky,42,423,248,40,38000
+CANCION,49,Summer,43,431,222,40,31000
+CANCION,50,Feel So Close,43,432,206,40,29000
+CANCION,51,Slide,43,433,230,40,27000
+CANCION,52,Blinding Lights,41,411,200,40,49000
+CANCION,53,Take My Breath,41,412,220,40,34000
+CANCION,54,Starboy,41,413,230,40,42000
+CANCION,55,Wake Me Up,46,461,247,40,42000
+CANCION,56,The Nights,46,462,176,40,37000
+CANCION,57,SOS,46,463,157,40,32000
+CANCION,58,Titanium,44,441,245,40,36000
+CANCION,59,Lovers On The Sun,44,442,203,40,25000
+CANCION,60,When Love Takes Over,44,443,191,40,24000
+CANCION,61,Safaera,53,531,295,50,45000
+CANCION,62,Titi Me Pregunto,53,532,243,50,48000
+CANCION,63,Monaco,53,533,267,50,41000
+CANCION,64,Gasolina,58,581,192,50,40000
+CANCION,65,Rompe,58,582,188,50,32000
+CANCION,66,Remix,58,583,163,50,28000
+CANCION,67,Hey Mor,57,571,196,50,35000
+CANCION,68,Se Preparo,57,572,188,50,29000
+CANCION,69,Vaina Loca,57,573,176,50,31000
+CANCION,70,In Da Getto,51,511,131,50,30000
+CANCION,71,Rojo,51,512,150,50,27000
+CANCION,72,Mi Gente,51,513,185,50,38000
+CANCION,73,Playa del Cielo,52,521,192,50,25000
+CANCION,74,Todo De Ti,52,522,199,50,38000
+CANCION,75,Lokera,52,523,195,50,33000
+CANCION,76,Motor y Motivo,67,671,215,60,25000
+CANCION,77,El Ritmo de mi Corazon,67,672,198,60,22000
+CANCION,78,Lloraras,67,673,245,60,20000
+CANCION,79,Tu Traicion Se Acabo,68,681,240,60,19000
+CANCION,80,Pasitos Para Bailar,68,682,210,60,17000
+CANCION,81,Basta Ya Mi Amor,68,683,225,60,16000
+CANCION,82,El Cervecero,69,691,225,60,26000
+CANCION,83,Siempre Pierdo En El Amor,69,692,210,60,18000
+CANCION,84,Llorando Tu Partida,69,693,230,60,19000
+CANCION,85,Diganle,70,701,218,60,21000
+CANCION,86,No Deja de Latir,70,702,205,60,19500
+CANCION,87,Vuelve,70,703,195,60,18000
+CANCION,88,Como Te Voy A Olvidar,66,661,260,60,28000
+CANCION,89,17 Anos,66,662,230,60,25000
+CANCION,90,Nunca Es Suficiente,66,663,245,60,30000
+CANCION,91,Raining Blood,11,111,254,10,21000
+CANCION,92,South of Heaven,11,112,298,10,18000
+CANCION,93,War Ensemble,11,113,292,10,16000
+CANCION,94,Walk,12,121,315,10,32000
+CANCION,95,Cowboys from Hell,12,122,246,10,29000
+CANCION,96,I'm Broken,12,123,264,10,22000
+CANCION,97,Duality,15,151,252,10,38000
+CANCION,98,Wait and Bleed,15,152,147,10,25000
+CANCION,99,Psychosocial,15,153,284,10,31000
+CANCION,100,Chop Suey!,17,171,210,10,42000
+CANCION,101,B.Y.O.B.,17,172,255,10,35000
+CANCION,102,Aerials,17,173,234,10,28000
+CANCION,103,Freak on a Leash,16,161,255,10,29000
+CANCION,104,Falling Away from Me,16,162,269,10,23000
+CANCION,105,Blind,16,163,259,10,21000
+CANCION,106,Back in Black,21,211,255,20,48000
+CANCION,107,Highway to Hell,21,212,208,20,45000
+CANCION,108,Thunderstruck,21,213,292,20,42000
+CANCION,109,Stairway to Heaven,22,221,482,20,41000
+CANCION,110,Whole Lotta Love,22,222,334,20,35000
+CANCION,111,Kashmir,22,223,517,20,31000
+CANCION,112,Bohemian Rhapsody,29,291,354,20,55000
+CANCION,113,Don't Stop Me Now,29,292,209,20,43000
+CANCION,114,Another One Bites the Dust,29,293,216,20,39000
+CANCION,115,Do I Wanna Know?,24,241,272,20,38000
+CANCION,116,505,24,242,253,20,31000
+CANCION,117,I Bet You Look Good on the Dancefloor,24,243,173,20,27000
+CANCION,118,Como Un Perro,28,281,248,20,18000
+CANCION,119,En Esta Habitacion,28,282,265,20,22000
+CANCION,120,Tres,28,283,220,20,16000
+CANCION,121,Yellow,31,311,266,30,41000
+CANCION,122,Viva La Vida,31,312,242,30,45000
+CANCION,123,Clocks,31,313,307,30,36000
+CANCION,124,7 rings,36,361,178,30,39000
+CANCION,125,Into You,36,362,244,30,32000
+CANCION,126,no tears left to cry,36,363,205,30,34000
+CANCION,127,Firework,37,371,227,30,43000
+CANCION,128,Roar,37,372,223,30,41000
+CANCION,129,Hot N Cold,37,373,220,30,36000
+CANCION,130,Bad Romance,38,381,294,30,46000
+CANCION,131,Poker Face,38,382,237,30,42000
+CANCION,132,Shallow,38,383,215,30,48000
+CANCION,133,As It Was,32,321,167,30,49000
+CANCION,134,Watermelon Sugar,32,322,174,30,42000
+CANCION,135,Sign of the Times,32,323,340,30,35000
+CANCION,136,Oblivion,50,501,251,40,21000
+CANCION,137,Kill V. Maim,50,502,246,40,18000
+CANCION,138,Violence,50,503,220,40,16000
+CANCION,139,Adagio For Strings,45,451,445,40,29000
+CANCION,140,Red Lights,45,452,262,40,24000
+CANCION,141,The Business,45,453,164,40,32000
+CANCION,142,Scary Monsters and Nice Sprites,49,491,243,40,27000
+CANCION,143,Bangarang,49,492,215,40,31000
+CANCION,144,Recess,49,493,237,40,19000
+CANCION,145,Animals,48,481,304,40,39000
+CANCION,146,In The Name of Love,48,482,195,40,34000
+CANCION,147,Scared to Be Lonely,48,483,220,40,31000
+CANCION,148,Clarity,47,471,271,40,35000
+CANCION,149,Stay The Night,47,472,217,40,28000
+CANCION,150,The Middle,47,473,184,40,31000
+CANCION,151,Danza Kuduro,59,591,198,50,47000
+CANCION,152,Salio El Sol,59,592,315,50,39000
+CANCION,153,Dile,59,593,204,50,34000
+CANCION,154,Rakata,60,601,172,50,33000
+CANCION,155,Sexy Movimiento,60,602,174,50,29000
+CANCION,156,Abusadora,60,603,177,50,26000
+CANCION,157,Felices los 4,55,551,229,50,41000
+CANCION,158,Hawai,55,552,199,50,43000
+CANCION,159,HP,55,553,184,50,35000
+CANCION,160,PROVENZA,56,561,210,50,44000
+CANCION,161,BICHOTA,56,562,178,50,41000
+CANCION,162,TQG,56,563,197,50,45000
+CANCION,163,LUNA,54,541,194,50,46000
+CANCION,164,Normal,54,542,172,50,38000
+CANCION,165,Ferxxo 100,54,543,166,50,36000
+CANCION,166,Locuras Contigo,61,611,185,60,26000
+CANCION,167,Cuando Se Pone A Bailar,61,612,198,60,24000
+CANCION,168,Me Voy,61,613,155,60,21000
+CANCION,169,Loquita,62,621,168,60,25000
+CANCION,170,Nena,62,622,174,60,23000
+CANCION,171,Bronceado,62,623,172,60,20000
+CANCION,172,Un Finde,63,631,166,60,31000
+CANCION,173,Ya No Vuelvas,63,632,182,60,28000
+CANCION,174,Pobre Corazon,63,633,194,60,25000
+CANCION,175,Una Cerveza,64,641,192,60,32000
+CANCION,176,Mentirosa,64,642,200,60,29000
+CANCION,177,Luna,64,643,210,60,24000
+CANCION,178,Yo Me Enamore,65,651,222,60,26000
+CANCION,179,El Polvito Del Amor,65,652,215,60,23000
+CANCION,180,Yo Tomo Licor,65,653,198,60,21000

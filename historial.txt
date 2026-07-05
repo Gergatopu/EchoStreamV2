@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 HIST,99,999,Get Lucky,Cancion,Daft Punk,2026-06-15 01:42:03
 HIST,99,999,Starboy,Cancion,The Weeknd,2026-06-15 01:42:19
 HIST,99,999,Blinding Lights,Cancion,The Weeknd,2026-06-15 01:43:08
@@ -23,3 +24,67 @@ HIST,99,999,En La Ciudad De La Furia,Cancion,Soda Stereo,2026-06-15 03:08:20
 HIST,99,999,You Only Live Once,Cancion,The Strokes,2026-06-15 03:08:21
 HIST,99,999,Last Nite,Cancion,The Strokes,2026-06-15 03:08:22
 HIST,99,999,Let It Be,Cancion,The Beatles,2026-06-15 03:08:24
+=======
+HIST,99,999,Clocks,Cancion,Coldplay,2026-07-04 18:10:14
+HIST,99,999,Last Nite,Cancion,The Strokes,2026-07-04 18:10:15
+HIST,99,999,Smooth Criminal,Cancion,Michael Jackson,2026-07-04 18:10:16
+HIST,99,999,Let It Be,Cancion,The Beatles,2026-07-04 18:14:03
+HIST,99,999,Smooth Criminal,Cancion,Michael Jackson,2026-07-04 18:14:06
+HIST,99,999,Eyes Closed,Cancion,Ed Sheeran,2026-07-04 18:14:10
+HIST,99,999,Last Nite,Cancion,The Strokes,2026-07-04 18:14:10
+HIST,99,999,Eyes Closed,Cancion,Ed Sheeran,2026-07-04 18:14:12
+HIST,99,999,Breaking the Law,Cancion,Judas Priest,2026-07-04 18:14:13
+HIST,99,999,Snowblind,Cancion,Black Sabbath,2026-07-04 18:14:14
+HIST,99,999,Master of Puppets,Cancion,Metallica,2026-07-04 18:14:15
+HIST,99,999,El Ritmo de mi Corazon,Cancion,Grupo 5,2026-07-04 19:57:28
+HIST,99,999,Master of Puppets,Cancion,Metallica,2026-07-04 19:57:29
+HIST,99,999,Enter Sandman,Cancion,Metallica,2026-07-04 19:57:30
+HIST,99,999,Creeping Death,Cancion,Metallica,2026-07-04 19:57:31
+HIST,99,999,You Only Live Once,Cancion,The Strokes,2026-07-04 19:57:33
+HIST,99,999,Painkiller,Cancion,Judas Priest,2026-07-04 19:57:34
+HIST,99,999,Snowblind,Cancion,Black Sabbath,2026-07-04 19:57:35
+HIST,99,999,Snowblind,Cancion,Black Sabbath,2026-07-04 21:04:50
+HIST,99,999,Last Nite,Cancion,The Strokes,2026-07-04 21:04:52
+HIST,99,999,Last Nite,Cancion,The Strokes,2026-07-04 21:57:36
+HIST,99,999,Last Nite,Cancion,The Strokes,2026-07-04 21:57:41
+HIST,99,999,Snowblind,Cancion,Black Sabbath,2026-07-05 17:14:52
+HIST,99,999,Last Nite,Cancion,The Strokes,2026-07-05 17:14:53
+HIST,99,999,Clocks,Cancion,Coldplay,2026-07-05 17:16:41
+HIST,99,999,Snowblind,Cancion,Black Sabbath,2026-07-05 17:16:42
+HIST,99,999,Last Nite,Cancion,The Strokes,2026-07-05 17:16:44
+HIST,99,999,Snowblind,Cancion,Black Sabbath,2026-07-05 17:17:42
+HIST,99,999,Last Nite,Cancion,The Strokes,2026-07-05 17:17:43
+HIST,99,999,Cruel Summer,Cancion,Taylor Swift,2026-07-05 17:17:44
+HIST,99,999,Thinking Out Loud,Cancion,Ed Sheeran,2026-07-05 17:17:44
+HIST,99,999,Master of Puppets,Cancion,Metallica,2026-07-05 17:17:45
+HIST,99,999,Snowblind,Cancion,Black Sabbath,2026-07-05 17:21:29
+HIST,99,999,Snowblind,Cancion,Black Sabbath,2026-07-05 17:22:05
+HIST,99,999,Last Nite,Cancion,The Strokes,2026-07-05 17:22:06
+HIST,99,999,Snowblind,Cancion,Black Sabbath,2026-07-05 17:22:55
+HIST,99,999,Last Nite,Cancion,The Strokes,2026-07-05 17:22:57
+HIST,99,999,Clocks,Cancion,Coldplay,2026-07-05 17:23:44
+HIST,99,999,Cruel Summer,Cancion,Taylor Swift,2026-07-05 17:34:34
+HIST,99,999,Cruel Summer,Cancion,Taylor Swift,2026-07-05 17:34:35
+HIST,99,999,Snowblind,Cancion,Black Sabbath,2026-07-05 17:35:48
+HIST,99,999,Last Nite,Cancion,The Strokes,2026-07-05 17:36:01
+HIST,99,999,Snowblind,Cancion,Black Sabbath,2026-07-05 17:36:06
+HIST,99,999,Snowblind,Cancion,Black Sabbath,2026-07-05 17:36:42
+HIST,99,999,Last Nite,Cancion,The Strokes,2026-07-05 17:36:43
+HIST,99,999,Snowblind,Cancion,Black Sabbath,2026-07-05 17:38:56
+HIST,99,999,Snowblind,Cancion,Black Sabbath,2026-07-05 17:43:53
+HIST,99,999,Last Nite,Cancion,The Strokes,2026-07-05 17:43:54
+HIST,99,999,Clocks,Cancion,Coldplay,2026-07-05 17:43:55
+HIST,99,999,Snowblind,Cancion,Black Sabbath,2026-07-05 17:44:07
+HIST,99,999,Last Nite,Cancion,The Strokes,2026-07-05 17:44:08
+HIST,99,999,Clocks,Cancion,Coldplay,2026-07-05 17:44:10
+HIST,99,999,Snowblind,Cancion,Black Sabbath,2026-07-05 17:44:27
+HIST,99,999,Last Nite,Cancion,The Strokes,2026-07-05 17:44:29
+HIST,99,999,Cruel Summer,Cancion,Taylor Swift,2026-07-05 17:44:47
+HIST,99,999,Master of Puppets,Cancion,Metallica,2026-07-05 17:44:52
+HIST,99,999,Thinking Out Loud,Cancion,Ed Sheeran,2026-07-05 17:44:52
+HIST,99,999,Eyes Closed,Cancion,Ed Sheeran,2026-07-05 17:44:54
+>>>>>>> feature/Algoritmo-Recomendacion
+HIST,99,999,Snowblind,Cancion,Black Sabbath,2026-07-05 18:30:59
+HIST,99,999,Snowblind,Cancion,Black Sabbath,2026-07-05 18:31:15
+HIST,99,999,Last Nite,Cancion,The Strokes,2026-07-05 18:31:16
+HIST,99,999,Clocks,Cancion,Coldplay,2026-07-05 18:31:17
