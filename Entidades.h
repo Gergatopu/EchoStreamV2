@@ -85,11 +85,11 @@ public:
         {
         case 10: asignarcolor(1); break; //"Metal";
         case 20: asignarcolor(4); break; //"Rock";
-        case 40: asignarcolor(5); break; //"Pop";
-        case 60: asignarcolor(2); break; //"Electronica";
-        case 80: asignarcolor(3); break; //"Reggaeton";
-        case 90: asignarcolor(6); break; //"Cumbia";
-        default: break; //"Desconocido";
+        case 30: asignarcolor(13); break;//"Pop";
+        case 40: asignarcolor(2); break; //"Electronica"; 
+        case 50: asignarcolor(3); break; //"Reggaeton";
+        case 60: asignarcolor(6); break; //"Cumbia";
+        default: break;  //si es desconocido
         }
         cout << "  [ID:" << id << "] \"" << nombre << "\" | "
             << obtenerNombreArtista(id_artista) << " | "
@@ -123,7 +123,23 @@ public:
     }
 
     // --- Canciones de la playlist ---
-    void agregarCancion(Cancion* c) { canciones.insertar(c); }
+    void agregarCancion(Cancion* c) { 
+    
+        //validar que la canción no esté agregada en la playlist
+        if(canciones.getCabeza() != nullptr){
+        Nodo<Cancion*>* temp = canciones.getCabeza();
+        do {
+            if (temp->dato->getId() == c->getId()) { return; }
+            temp = temp->siguiente;
+        } while (temp != canciones.getCabeza());
+        //Una vez ya se haya validado, se agrega
+        canciones.insertar(c); 
+        }
+        else {
+            canciones.insertar(c);
+
+        }
+    }
     ListaCircularDoble<Cancion*>& getCanciones() { return canciones; }
 
     // --- Getters ---
@@ -244,7 +260,8 @@ private:
 
     ListaDoble<Cancion*> misFavoritos;
     ListaDoble<Playlist*> misPlaylists;
-    Pila<Cancion*> miHistorial;
+    Pila<Cancion*> miHistorialPila;
+    vector<Cancion*> historial;
 
     TablaHashPlaylist* playlistHash; // Para busqueda rapida de playlists por ID
 
@@ -313,21 +330,9 @@ public:
     // miHistorial es una Pila<Cancion*>: el tope siempre es la ultima cancion
     // reproducida, lo cual es justo lo que necesita "reproducir anterior".
     void registrarEnHistorial(Cancion* c) {
-        if (c) miHistorial.push(c);
+        if (c) miHistorialPila.push(c);
     }
-
-
-    void mostrarHistorial() const {
-        cout << "\n--- Historial de Reproduccion de " << nombre << " ---" << endl;
-        vector<Cancion*> historial = miHistorial.toVector();
-        if (historial.empty()) {
-            cout << "  (Historial vacio - reproduce algo primero)" << endl;
-            return;
-        }
-        for (Cancion* c : historial) {
-            c->mostrarDetalles();
-        }
-    }
+    
 
     // --- PREMIUM / SUSCRIPCION ---
     bool esPremium() const { return tienePremium && plan.isPremium(); }
@@ -361,15 +366,15 @@ public:
 
     // --- HISTORIAL: acceso seguro sin copiar la Pila ---
     Cancion* verTopeHistorial() const {
-        if (miHistorial.estaVacio()) return nullptr;
-        return miHistorial.getTope();
+        if (miHistorialPila.estaVacio()) return nullptr;
+        return miHistorialPila.getTope();
     }
 
     void quitarTopeHistorial() {
-        if (!miHistorial.estaVacio()) miHistorial.pop();
+        if (!miHistorialPila.estaVacio()) miHistorialPila.pop();
     }
 
-    bool historialVacio() const { return miHistorial.estaVacio(); }
+    bool historialVacio() const { return miHistorialPila.estaVacio(); }
 };
 
 // ============================================================

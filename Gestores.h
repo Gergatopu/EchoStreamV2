@@ -400,6 +400,8 @@ public:
     // Getter puro: la impresion de la cola la hace la UI.
     vector<Cancion*> obtenerCola() { return cancionesEspera.toVector(); }
 
+    vector<Cancion*> obtenerHistorial(int id) { return obtenerHistorialCanciones(id); }
+
     Cancion* getCancionActual() { return cancionActual; }
 
     // ---------------- BIBLIOTECA ----------------
