@@ -142,7 +142,7 @@ private:
 
     void reproducirSiguienteUI() {
         gestor->reproducirSiguiente();
-        if (gestor->getCancionActual() == nullptr) { ubicar(50, 25); asignarcolor(5); cout << "  La cola esta vacia." << endl; pausar(); }
+        if (gestor->getCancionActual() == nullptr ) { ubicar(50, 25); asignarcolor(5); cout << "  La cola esta vacia.                 " << endl; pausar(); }
     }
 
     void reproducirAnteriorUI() {
@@ -273,6 +273,7 @@ private:
                 else if (gestor->getCancionActual()->getEnReproduccion() == false || gestor->getCancionActual() == nullptr) {
                     ubicar(50, 25); asignarcolor(5); cout << "PAUSA: " << gestor->getCancionActual()->getNombre(); asignarcolor(7);
                 }
+
             }
             else {
                 ubicar(50, 25); asignarcolor(5); cout << "Reproduce algo para empezar "; asignarcolor(7);
@@ -573,19 +574,16 @@ private:
 
     void menuAgregarACola() {
         int op = 0;
-        while (op != 3) {
+        while (op != 2) {
             cabecera("AGREGAR A COLA");
-            ubicar(5, 4); cout << "Que quieres agregar?";
 
             vector<string> opciones = {
                 "Cancion individual",
-                "Playlist completa",
                 "Volver"
             };
-            op = menuInteractivo(opciones, 5, 6) + 1;
+            op = menuInteractivo(opciones, 5, 5) + 1;
 
             if (op == 1) agregarCancionIndividual();
-            else if (op == 2) agregarPlaylistCompleta();
         }
     }
 

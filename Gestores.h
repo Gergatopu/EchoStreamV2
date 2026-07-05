@@ -427,11 +427,28 @@ public:
     // Avanza a la siguiente cancion de la cola. La que estaba sonando
     // (cancionActual) pasa al historial (pila) del usuario.
     void reproducirSiguiente() {
-        if (cancionesEspera.estaVacia() || !usuarioLogueado) return;
+        if (!usuarioLogueado) return;
 
+        // 1. Si la cola esta vacia...
+        if (cancionesEspera.estaVacia()) {
+            if (cancionActual != nullptr) {
+                cancionActual->setEnReproduccion(false);
+                usuarioLogueado->registrarEnHistorial(cancionActual);
+
+                guardarLinea("historial.txt", "HIST," + to_string(usuarioLogueado->getId()) + ",999," +
+                    cancionActual->getNombre() + ",Cancion," + obtenerNombreArtista(cancionActual->getArtista()) + "," + obtenerHoraActual());
+
+                // Liberamos el reproductor para que la UI detecte que no hay nada sonando
+                cancionActual = nullptr;
+            }
+            return;
+        }
+
+        // 2. Si hay canciones en la cola, sacamos la siguiente
         Cancion* siguiente = cancionesEspera.verFrente();
         cancionesEspera.desencolar();
 
+        // Guardamos la actual al historial antes de cambiarla
         if (cancionActual != nullptr) {
             cancionActual->setEnReproduccion(false);
             usuarioLogueado->registrarEnHistorial(cancionActual);
@@ -440,6 +457,7 @@ public:
                 cancionActual->getNombre() + ",Cancion," + obtenerNombreArtista(cancionActual->getArtista()) + "," + obtenerHoraActual());
         }
 
+        // 3. Actualizamos el puntero y reproducimos la nueva
         cancionActual = siguiente;
         cancionActual->setEnReproduccion(true);
     }

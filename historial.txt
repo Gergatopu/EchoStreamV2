@@ -20,3 +20,39 @@ HIST,99,999,Snowblind,Cancion,Black Sabbath,2026-07-04 21:04:50
 HIST,99,999,Last Nite,Cancion,The Strokes,2026-07-04 21:04:52
 HIST,99,999,Last Nite,Cancion,The Strokes,2026-07-04 21:57:36
 HIST,99,999,Last Nite,Cancion,The Strokes,2026-07-04 21:57:41
+HIST,99,999,Snowblind,Cancion,Black Sabbath,2026-07-05 17:14:52
+HIST,99,999,Last Nite,Cancion,The Strokes,2026-07-05 17:14:53
+HIST,99,999,Clocks,Cancion,Coldplay,2026-07-05 17:16:41
+HIST,99,999,Snowblind,Cancion,Black Sabbath,2026-07-05 17:16:42
+HIST,99,999,Last Nite,Cancion,The Strokes,2026-07-05 17:16:44
+HIST,99,999,Snowblind,Cancion,Black Sabbath,2026-07-05 17:17:42
+HIST,99,999,Last Nite,Cancion,The Strokes,2026-07-05 17:17:43
+HIST,99,999,Cruel Summer,Cancion,Taylor Swift,2026-07-05 17:17:44
+HIST,99,999,Thinking Out Loud,Cancion,Ed Sheeran,2026-07-05 17:17:44
+HIST,99,999,Master of Puppets,Cancion,Metallica,2026-07-05 17:17:45
+HIST,99,999,Snowblind,Cancion,Black Sabbath,2026-07-05 17:21:29
+HIST,99,999,Snowblind,Cancion,Black Sabbath,2026-07-05 17:22:05
+HIST,99,999,Last Nite,Cancion,The Strokes,2026-07-05 17:22:06
+HIST,99,999,Snowblind,Cancion,Black Sabbath,2026-07-05 17:22:55
+HIST,99,999,Last Nite,Cancion,The Strokes,2026-07-05 17:22:57
+HIST,99,999,Clocks,Cancion,Coldplay,2026-07-05 17:23:44
+HIST,99,999,Cruel Summer,Cancion,Taylor Swift,2026-07-05 17:34:34
+HIST,99,999,Cruel Summer,Cancion,Taylor Swift,2026-07-05 17:34:35
+HIST,99,999,Snowblind,Cancion,Black Sabbath,2026-07-05 17:35:48
+HIST,99,999,Last Nite,Cancion,The Strokes,2026-07-05 17:36:01
+HIST,99,999,Snowblind,Cancion,Black Sabbath,2026-07-05 17:36:06
+HIST,99,999,Snowblind,Cancion,Black Sabbath,2026-07-05 17:36:42
+HIST,99,999,Last Nite,Cancion,The Strokes,2026-07-05 17:36:43
+HIST,99,999,Snowblind,Cancion,Black Sabbath,2026-07-05 17:38:56
+HIST,99,999,Snowblind,Cancion,Black Sabbath,2026-07-05 17:43:53
+HIST,99,999,Last Nite,Cancion,The Strokes,2026-07-05 17:43:54
+HIST,99,999,Clocks,Cancion,Coldplay,2026-07-05 17:43:55
+HIST,99,999,Snowblind,Cancion,Black Sabbath,2026-07-05 17:44:07
+HIST,99,999,Last Nite,Cancion,The Strokes,2026-07-05 17:44:08
+HIST,99,999,Clocks,Cancion,Coldplay,2026-07-05 17:44:10
+HIST,99,999,Snowblind,Cancion,Black Sabbath,2026-07-05 17:44:27
+HIST,99,999,Last Nite,Cancion,The Strokes,2026-07-05 17:44:29
+HIST,99,999,Cruel Summer,Cancion,Taylor Swift,2026-07-05 17:44:47
+HIST,99,999,Master of Puppets,Cancion,Metallica,2026-07-05 17:44:52
+HIST,99,999,Thinking Out Loud,Cancion,Ed Sheeran,2026-07-05 17:44:52
+HIST,99,999,Eyes Closed,Cancion,Ed Sheeran,2026-07-05 17:44:54
