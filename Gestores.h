@@ -47,9 +47,8 @@ private:
     Cola<Cancion*> cancionesEspera;
 
     // Cancion que esta sonando ahora mismo. Antes esto se inferia indirectamente
-    // del frente de la cola o del tope del historial (de ahi parte de la confusion
-    // entre Usuario y Gestor); ahora el Gestor es la unica fuente de verdad sobre
-    // "que se esta reproduciendo", y coordina la cola (siguientes) y la pila de
+    // del frente de la cola o del tope del historial, ahora el Gestor es la unica fuente de verdad sobre lo
+    // que se esta reproduciendo, y coordina la cola (siguientes) y la pila de
     // historial del usuario (anteriores) alrededor de este puntero.
     Cancion* cancionActual = nullptr;
 
@@ -125,8 +124,6 @@ private:
         int idPlaylist = stoi(campos[1]);
         int idCancion = stoi(campos[2]);
 
-        // Usuario::crearPlaylist genera el ID como (idUsuario * 100) + n,
-        // asi que podemos ubicar al dueño directamente sin recorrer a todos los usuarios.
         Usuario* due = buscarUsuarioPorId(idPlaylist / 100);
         if (!due) return;
 
@@ -157,7 +154,7 @@ private:
         archivo.close();
     }
 
-    // --- Historial (antes GestionArchivos.h / GestorArchivos) ---
+    // --- Historial ---
 
     // Carga la pila de historial del Usuario. Se llama una sola vez, al iniciar sesion.
     void cargarHistorialUsuario(Usuario* u) {
@@ -200,10 +197,7 @@ private:
         archivo.close();
     }
 
-    // Historial de un usuario ya resuelto a punteros Cancion* (para recomendaciones).
-    // Antes vivia en GestorArchivos y recibia el catalogo como parametro
-    // (catalogoCanciones.toVector()); ahora que es metodo de esta misma clase,
-    // usa catalogoCanciones directamente.
+    // Historial de un usuario 
     vector<Cancion*> obtenerHistorialCanciones(int idUsuario) {
         vector<Cancion*> historial;
         ifstream archivo("historial.txt");
@@ -247,7 +241,6 @@ private:
         return false;
     }
 
-    // --- Helpers de favoritos (menor prioridad) ---
 
     void procesarLineaFavorito(const vector<string>& campos) {
         // FAVORITO, idUsuario, idCancion
@@ -305,7 +298,6 @@ public:
         return nullptr;
     }
 
-    // Devuelve true/false; no imprime nada (la UI decide el mensaje).
     bool iniciarSesion(string email, string password) {
         vector<Usuario*> v = listaUsuarios.toVector();
 
@@ -326,7 +318,7 @@ public:
 
     void cerrarSesion() {
         usuarioLogueado = nullptr;
-        cancionesEspera.vaciar(); // la cola era propia de la sesion (antes vivia y moria con GestorReproduccion)
+        cancionesEspera.vaciar(); 
         cancionActual = nullptr;
     }
 
@@ -335,9 +327,7 @@ public:
         Usuario* nuevo = new Usuario(id, nom, email, pass);
         listaUsuarios.insertarAlFinal(nuevo);
 
-        // Sin esto, un usuario creado en tiempo de ejecucion (no cargado desde
-        // usuarios.txt) se queda con indiceGrafo == -1 y jamas podria formar
-        // aristas de amistad, aunque agregue amigos despues.
+        
         usuarios.adicionarVertice(nuevo);
         nuevo->setIndiceGrafo(usuarios.cantidadVertices() - 1);
 
@@ -376,8 +366,6 @@ public:
             return;
         }
 
-        // getAmigos() ahora devuelve una referencia al vector real del Usuario,
-        // asi que esta comprobacion consulta el estado verdadero (no una copia).
         for (Usuario* u : usuarioLogueado->getAmigos()) {
             if (u->getId() == idNuevo) {
                 ubicar(25, 25); cout << "Ya tienes a " << amigo->getNombre() << " como amigo" << endl;
@@ -463,7 +451,6 @@ public:
     }
 
 
-    // Devuelve true si se pudo mezclar (>=2 elementos), false en caso contrario.
     bool modoAleatorio() {
         vector<Cancion*> vista = cancionesEspera.toVector();
         if (vista.size() < 2) return false;
@@ -473,7 +460,6 @@ public:
         return true;
     }
 
-    // Getter puro: la impresion de la cola la hace la UI.
     vector<Cancion*> obtenerCola() { return cancionesEspera.toVector(); }
 
     vector<Cancion*> obtenerHistorial(int id) { return obtenerHistorialCanciones(id); }
@@ -530,8 +516,7 @@ public:
 
 
     // Calcula, ordena (Heap Sort) y filtra (distancia <= 80 y no escuchadas).
-    // No imprime nada: la UI decide como mostrar el resultado.
-    vector<Recomendacion> obtenerRecomendaciones(vector<double> preferenciasUsuario, int idUsuario) {
+     vector<Recomendacion> obtenerRecomendaciones(vector<double> preferenciasUsuario, int idUsuario) {
         vector<Cancion*> canciones = catalogoCanciones.toVector();
         vector<Recomendacion> listaDistancias;
         if (canciones.empty()) return listaDistancias;

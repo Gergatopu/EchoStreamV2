@@ -79,26 +79,21 @@ private:
     void mostrarCabeceraStreaming() {
         system("cls");
 
-        // Ancho total del marco (58 caracteres)
         string borde = "==========================================================";
 
         asignarcolor(14);
         Console::SetCursorPosition(35, 3);  cout << borde;
 
-        // Fila del Titulo
         Console::SetCursorPosition(35, 4);
         asignarcolor(14); cout << "| ";
         asignarcolor(7);  cout << "               ECHOSTREAM PLAYER                ";
         asignarcolor(14); cout << " |";
 
-        // Fila de Usuario y Estado
         string nombre = actual->getNombre();
         string tipo = actual->esPremium() ? "Premium" : "Gratuito";
 
-        // Formateamos el texto central: " Usuario: NOMBRE | Estado: TIPO"
         string contenido = " Usuario: " + nombre + " | Estado: " + tipo;
 
-        // El marco interno mide 54 caracteres (58 total - 2 bordes laterales "| " - 2 bordes laterales " |")
         int anchoInterior = 54;
         int espaciosNecesarios = anchoInterior - contenido.length();
 
@@ -142,7 +137,7 @@ private:
 
     void reproducirSiguienteUI() {
         gestor->reproducirSiguiente();
-        if (gestor->getCancionActual() == nullptr ) { ubicar(50, 25); asignarcolor(5); cout << "  La cola esta vacia.                 " << endl; pausar(); }
+        if (gestor->getCancionActual() == nullptr) { ubicar(50, 25); asignarcolor(5); cout << "  La cola esta vacia.                 " << endl; pausar(); }
     }
 
     void reproducirAnteriorUI() {
@@ -154,7 +149,6 @@ private:
         cabecera("GESTIONAR COLA");
         mostrarCola(gestor);
 
-        // Calculamos la posicion Y dinamicamente debajo de la cola actual impresa
         cout << "\n";
         int currentY = Console::CursorTop;
 
@@ -173,7 +167,7 @@ private:
         }
         else if (sub == 3) {
             menuAgregarACola();
-            return; // menuAgregarACola ya hace su propio pausar() en cada accion
+            return;
         }
         pausar();
     }
@@ -408,9 +402,7 @@ private:
 
 
     void menuAmigos() {
-        system("cls");
-        cout << "\n--- Menu Amigos ---" << endl;
-
+        cabecera("MENU AMIGOS");
 
         int currentY = Console::CursorTop;
 
@@ -431,12 +423,13 @@ private:
     }
 
     void mostrarSoulmate() {
-        system("cls");
-        cout << "\n--- Tu Soulmate Musical ---" << endl;
+        cabecera("TU SOULMATE MUSICAL");
 
         Usuario* soulmate = gestor->obtenerSoulmate(actual);
         if (!soulmate) {
-            cout << "\nTodavia no tenemos suficiente info: agrega amigos y escucha canciones." << endl;
+            asignarcolor(15);
+            cout << "\n  Todavia no tenemos suficiente info: agrega amigos y escucha canciones." << endl;
+            asignarcolor(7);
             return;
         }
 
@@ -446,50 +439,71 @@ private:
             if (c.usuario->getId() == soulmate->getId()) { afinidad = c.afinidad; break; }
         }
 
-        cout << "\nTu soulmate musical es: " << soulmate->getNombre() << " (ID:" << soulmate->getId() << ")" << endl;
-        cout << "Distancia de gustos (mientras mas bajo, mas afinidad): " << afinidad << endl;
+        asignarcolor(7);
+        cout << "\n  Tu soulmate musical es: ";
+        asignarcolor(6);
+        cout << soulmate->getNombre() << " (ID:" << soulmate->getId() << ")" << endl;
+
+        asignarcolor(7);
+        cout << "  Distancia de gustos (mientras mas bajo, mas afinidad): ";
+
+        // Igual criterio de colores que en Recomendaciones: mas cerca = mas brillante
+        if (afinidad <= 25) asignarcolor(2);
+        else if (afinidad <= 50) asignarcolor(6);
+        else asignarcolor(8);
+
+        cout << afinidad << endl;
+        asignarcolor(7);
     }
 
     void mostrarConexiones() {
-        system("cls");
-        cout << "\n--- Grafo de Amistades (Lista de Adyacencia) ---" << endl;
+        cabecera("GRAFO DE AMISTADES");
 
         auto listaCompleta = gestor->obtenerListaAdyacenciaCompleta();
         for (auto& par : listaCompleta) {
             Usuario* u = par.first;
+            asignarcolor(14);
             cout << '\n' << u->getNombre() << " (ID:" << u->getId() << "):" << endl;
+            asignarcolor(7);
 
             if (par.second.empty()) {
+                asignarcolor(15);
                 cout << "   (sin conexiones)" << endl;
+                asignarcolor(7);
                 continue;
             }
             for (Gestor::Conexion& conexion : par.second) {
+                // Mismo criterio que en Recomendaciones/Soulmate: mas cerca = mas brillante
+                if (conexion.afinidad <= 25) asignarcolor(2);
+                else if (conexion.afinidad <= 50) asignarcolor(6);
+                else asignarcolor(8);
+
                 cout << "   -> " << conexion.usuario->getNombre()
                     << " (ID:" << conexion.usuario->getId()
                     << ") | afinidad: " << conexion.afinidad << endl;
             }
+            asignarcolor(7);
         }
     }
 
     void menuAgregarAmigo() {
 
-        system("cls");
-        cout << "\n--- Agregar Amigo ---" << endl;
+        cabecera("AGREGAR AMIGO");
 
-
-        int currentY = Console::CursorTop;
         vector<Usuario*> usuarios = gestor->getUsuarios();
 
         for (Usuario* u : usuarios) {
             u->mostrarDetalles();
         }
+
+        asignarcolor(7);
         int idNueovoAmigo;
-        cout << "Ingresa el ID del usuario que deseas agregar como amigo: ";
+        cout << "\nIngresa el ID del usuario que deseas agregar como amigo: ";
+        asignarcolor(14);
         cin >> idNueovoAmigo;
+        asignarcolor(7);
 
         gestor->agregarAmigo(idNueovoAmigo);
-
-
 
     }
 

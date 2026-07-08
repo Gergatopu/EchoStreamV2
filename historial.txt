@@ -1,90 +1,406 @@
-<<<<<<< HEAD
-HIST,99,999,Get Lucky,Cancion,Daft Punk,2026-06-15 01:42:03
-HIST,99,999,Starboy,Cancion,The Weeknd,2026-06-15 01:42:19
-HIST,99,999,Blinding Lights,Cancion,The Weeknd,2026-06-15 01:43:08
-HIST,1,999,Smells Like Teen Spirit,Cancion,Nirvana,2026-06-15 02:29:13
-HIST,1,999,Paranoid Android,Cancion,Radiohead,2026-06-15 02:29:16
-HIST,1,999,Creep,Cancion,Radiohead,2026-06-15 02:29:17
-HIST,1,999,Reptilia,Cancion,The Strokes,2026-06-15 02:29:19
-HIST,99,999,Master of Puppets,Cancion,Metallica,2026-06-15 02:49:55
-HIST,99,999,Enter Sandman,Cancion,Metallica,2026-06-15 02:49:57
-HIST,99,999,Creeping Death,Cancion,Metallica,2026-06-15 02:49:58
-HIST,99,999,Symphony of Destruction,Cancion,Megadeth,2026-06-15 02:50:00
-HIST,99,999,Holy Wars,Cancion,Megadeth,2026-06-15 02:50:01
-HIST,99,999,Peace Sells,Cancion,Megadeth,2026-06-15 02:50:03
-HIST,99,999,Run to the Hills,Cancion,Iron Maiden,2026-06-15 02:50:04
-HIST,99,999,Creep,Cancion,Radiohead,2026-06-15 03:08:05
-HIST,99,999,Fake Plastic Trees,Cancion,Radiohead,2026-06-15 03:08:07
-HIST,99,999,Reptilia,Cancion,The Strokes,2026-06-15 03:08:09
-HIST,99,999,505,Cancion,Arctic Monkeys,2026-06-15 03:08:14
-HIST,99,999,Hey Jude,Cancion,The Beatles,2026-06-15 03:08:16
-HIST,99,999,Come Together,Cancion,The Beatles,2026-06-15 03:08:17
-HIST,99,999,Fortnight,Cancion,Taylor Swift,2026-06-15 03:08:19
-HIST,99,999,En La Ciudad De La Furia,Cancion,Soda Stereo,2026-06-15 03:08:20
-HIST,99,999,You Only Live Once,Cancion,The Strokes,2026-06-15 03:08:21
-HIST,99,999,Last Nite,Cancion,The Strokes,2026-06-15 03:08:22
-HIST,99,999,Let It Be,Cancion,The Beatles,2026-06-15 03:08:24
-=======
-HIST,99,999,Clocks,Cancion,Coldplay,2026-07-04 18:10:14
-HIST,99,999,Last Nite,Cancion,The Strokes,2026-07-04 18:10:15
-HIST,99,999,Smooth Criminal,Cancion,Michael Jackson,2026-07-04 18:10:16
-HIST,99,999,Let It Be,Cancion,The Beatles,2026-07-04 18:14:03
-HIST,99,999,Smooth Criminal,Cancion,Michael Jackson,2026-07-04 18:14:06
-HIST,99,999,Eyes Closed,Cancion,Ed Sheeran,2026-07-04 18:14:10
-HIST,99,999,Last Nite,Cancion,The Strokes,2026-07-04 18:14:10
-HIST,99,999,Eyes Closed,Cancion,Ed Sheeran,2026-07-04 18:14:12
-HIST,99,999,Breaking the Law,Cancion,Judas Priest,2026-07-04 18:14:13
-HIST,99,999,Snowblind,Cancion,Black Sabbath,2026-07-04 18:14:14
-HIST,99,999,Master of Puppets,Cancion,Metallica,2026-07-04 18:14:15
-HIST,99,999,El Ritmo de mi Corazon,Cancion,Grupo 5,2026-07-04 19:57:28
-HIST,99,999,Master of Puppets,Cancion,Metallica,2026-07-04 19:57:29
-HIST,99,999,Enter Sandman,Cancion,Metallica,2026-07-04 19:57:30
-HIST,99,999,Creeping Death,Cancion,Metallica,2026-07-04 19:57:31
-HIST,99,999,You Only Live Once,Cancion,The Strokes,2026-07-04 19:57:33
-HIST,99,999,Painkiller,Cancion,Judas Priest,2026-07-04 19:57:34
-HIST,99,999,Snowblind,Cancion,Black Sabbath,2026-07-04 19:57:35
-HIST,99,999,Snowblind,Cancion,Black Sabbath,2026-07-04 21:04:50
-HIST,99,999,Last Nite,Cancion,The Strokes,2026-07-04 21:04:52
-HIST,99,999,Last Nite,Cancion,The Strokes,2026-07-04 21:57:36
-HIST,99,999,Last Nite,Cancion,The Strokes,2026-07-04 21:57:41
-HIST,99,999,Snowblind,Cancion,Black Sabbath,2026-07-05 17:14:52
-HIST,99,999,Last Nite,Cancion,The Strokes,2026-07-05 17:14:53
-HIST,99,999,Clocks,Cancion,Coldplay,2026-07-05 17:16:41
-HIST,99,999,Snowblind,Cancion,Black Sabbath,2026-07-05 17:16:42
-HIST,99,999,Last Nite,Cancion,The Strokes,2026-07-05 17:16:44
-HIST,99,999,Snowblind,Cancion,Black Sabbath,2026-07-05 17:17:42
-HIST,99,999,Last Nite,Cancion,The Strokes,2026-07-05 17:17:43
-HIST,99,999,Cruel Summer,Cancion,Taylor Swift,2026-07-05 17:17:44
-HIST,99,999,Thinking Out Loud,Cancion,Ed Sheeran,2026-07-05 17:17:44
-HIST,99,999,Master of Puppets,Cancion,Metallica,2026-07-05 17:17:45
-HIST,99,999,Snowblind,Cancion,Black Sabbath,2026-07-05 17:21:29
-HIST,99,999,Snowblind,Cancion,Black Sabbath,2026-07-05 17:22:05
-HIST,99,999,Last Nite,Cancion,The Strokes,2026-07-05 17:22:06
-HIST,99,999,Snowblind,Cancion,Black Sabbath,2026-07-05 17:22:55
-HIST,99,999,Last Nite,Cancion,The Strokes,2026-07-05 17:22:57
-HIST,99,999,Clocks,Cancion,Coldplay,2026-07-05 17:23:44
-HIST,99,999,Cruel Summer,Cancion,Taylor Swift,2026-07-05 17:34:34
-HIST,99,999,Cruel Summer,Cancion,Taylor Swift,2026-07-05 17:34:35
-HIST,99,999,Snowblind,Cancion,Black Sabbath,2026-07-05 17:35:48
-HIST,99,999,Last Nite,Cancion,The Strokes,2026-07-05 17:36:01
-HIST,99,999,Snowblind,Cancion,Black Sabbath,2026-07-05 17:36:06
-HIST,99,999,Snowblind,Cancion,Black Sabbath,2026-07-05 17:36:42
-HIST,99,999,Last Nite,Cancion,The Strokes,2026-07-05 17:36:43
-HIST,99,999,Snowblind,Cancion,Black Sabbath,2026-07-05 17:38:56
-HIST,99,999,Snowblind,Cancion,Black Sabbath,2026-07-05 17:43:53
-HIST,99,999,Last Nite,Cancion,The Strokes,2026-07-05 17:43:54
-HIST,99,999,Clocks,Cancion,Coldplay,2026-07-05 17:43:55
-HIST,99,999,Snowblind,Cancion,Black Sabbath,2026-07-05 17:44:07
-HIST,99,999,Last Nite,Cancion,The Strokes,2026-07-05 17:44:08
-HIST,99,999,Clocks,Cancion,Coldplay,2026-07-05 17:44:10
-HIST,99,999,Snowblind,Cancion,Black Sabbath,2026-07-05 17:44:27
-HIST,99,999,Last Nite,Cancion,The Strokes,2026-07-05 17:44:29
-HIST,99,999,Cruel Summer,Cancion,Taylor Swift,2026-07-05 17:44:47
-HIST,99,999,Master of Puppets,Cancion,Metallica,2026-07-05 17:44:52
-HIST,99,999,Thinking Out Loud,Cancion,Ed Sheeran,2026-07-05 17:44:52
-HIST,99,999,Eyes Closed,Cancion,Ed Sheeran,2026-07-05 17:44:54
->>>>>>> feature/Algoritmo-Recomendacion
-HIST,99,999,Snowblind,Cancion,Black Sabbath,2026-07-05 18:30:59
-HIST,99,999,Snowblind,Cancion,Black Sabbath,2026-07-05 18:31:15
-HIST,99,999,Last Nite,Cancion,The Strokes,2026-07-05 18:31:16
-HIST,99,999,Clocks,Cancion,Coldplay,2026-07-05 18:31:17
+HIST,1,999,Master of Puppets,Cancion,Metallica,2026-07-02 09:07:00
+HIST,1,999,Fear of the Dark,Cancion,Iron Maiden,2026-07-02 09:13:00
+HIST,1,999,Run to the Hills,Cancion,Iron Maiden,2026-07-02 09:17:00
+HIST,1,999,Wait and Bleed,Cancion,Slipknot,2026-07-02 09:22:00
+HIST,1,999,I'm Broken,Cancion,Pantera,2026-07-02 09:29:00
+HIST,1,999,Aerials,Cancion,System of a Down,2026-07-02 09:32:00
+HIST,1,999,Creeping Death,Cancion,Metallica,2026-07-02 09:35:00
+HIST,1,999,Breaking the Law,Cancion,Judas Priest,2026-07-02 09:43:00
+HIST,1,999,Master of Puppets,Cancion,Metallica,2026-07-02 09:46:00
+HIST,1,999,Run to the Hills,Cancion,Iron Maiden,2026-07-02 09:53:00
+HIST,1,999,Raining Blood,Cancion,Slayer,2026-07-02 10:00:00
+HIST,1,999,Master of Puppets,Cancion,Metallica,2026-07-02 10:06:00
+HIST,1,999,Peace Sells,Cancion,Megadeth,2026-07-02 10:08:00
+HIST,1,999,Cowboys from Hell,Cancion,Pantera,2026-07-02 10:17:00
+HIST,1,999,South of Heaven,Cancion,Slayer,2026-07-02 10:20:00
+HIST,1,999,Run to the Hills,Cancion,Iron Maiden,2026-07-02 10:28:00
+HIST,1,999,War Ensemble,Cancion,Slayer,2026-07-02 10:31:00
+HIST,1,999,Chop Suey!,Cancion,System of a Down,2026-07-02 10:37:00
+HIST,1,999,Master of Puppets,Cancion,Metallica,2026-07-02 10:44:00
+HIST,1,999,Chop Suey!,Cancion,System of a Down,2026-07-02 10:49:00
+HIST,1,999,I'm Broken,Cancion,Pantera,2026-07-02 10:52:00
+HIST,2,999,Whole Lotta Love,Cancion,Led Zeppelin,2026-07-03 12:05:00
+HIST,2,999,Hey Jude,Cancion,The Beatles,2026-07-03 12:07:00
+HIST,2,999,Come Together,Cancion,The Beatles,2026-07-03 12:14:00
+HIST,2,999,Reptilia,Cancion,The Strokes,2026-07-03 12:22:00
+HIST,2,999,You Only Live Once,Cancion,The Strokes,2026-07-03 12:28:00
+HIST,2,999,En Esta Habitacion,Cancion,Libido,2026-07-03 12:31:00
+HIST,2,999,Whole Lotta Love,Cancion,Led Zeppelin,2026-07-03 12:36:00
+HIST,2,999,Stairway to Heaven,Cancion,Led Zeppelin,2026-07-03 12:43:00
+HIST,2,999,Fake Plastic Trees,Cancion,Radiohead,2026-07-03 12:48:00
+HIST,2,999,Bohemian Rhapsody,Cancion,Queen,2026-07-03 12:57:00
+HIST,2,999,Creep,Cancion,Radiohead,2026-07-03 13:05:00
+HIST,2,999,Come Together,Cancion,The Beatles,2026-07-03 13:14:00
+HIST,2,999,Tres,Cancion,Libido,2026-07-03 13:18:00
+HIST,2,999,Whole Lotta Love,Cancion,Led Zeppelin,2026-07-03 13:24:00
+HIST,2,999,Highway to Hell,Cancion,AC/DC,2026-07-03 13:28:00
+HIST,2,999,Kashmir,Cancion,Led Zeppelin,2026-07-03 13:33:00
+HIST,2,999,505,Cancion,Arctic Monkeys,2026-07-03 13:39:00
+HIST,2,999,Another One Bites the Dust,Cancion,Queen,2026-07-03 13:47:00
+HIST,3,999,Anti-Hero,Cancion,Taylor Swift,2026-07-04 09:06:00
+HIST,3,999,Anti-Hero,Cancion,Taylor Swift,2026-07-04 09:14:00
+HIST,3,999,no tears left to cry,Cancion,Ariana Grande,2026-07-04 09:18:00
+HIST,3,999,Clocks,Cancion,Coldplay,2026-07-04 09:27:00
+HIST,3,999,Bad Guy,Cancion,Billie Eilish,2026-07-04 09:29:00
+HIST,3,999,Clocks,Cancion,Coldplay,2026-07-04 09:35:00
+HIST,3,999,Thinking Out Loud,Cancion,Ed Sheeran,2026-07-04 09:39:00
+HIST,3,999,Houdini,Cancion,Dua Lipa,2026-07-04 09:42:00
+HIST,3,999,Viva La Vida,Cancion,Coldplay,2026-07-04 09:48:00
+HIST,3,999,Watermelon Sugar,Cancion,Harry Styles,2026-07-04 09:53:00
+HIST,3,999,no tears left to cry,Cancion,Ariana Grande,2026-07-04 09:57:00
+HIST,3,999,Cruel Summer,Cancion,Taylor Swift,2026-07-04 10:04:00
+HIST,3,999,Shallow,Cancion,Lady Gaga,2026-07-04 10:08:00
+HIST,3,999,Roar,Cancion,Katy Perry,2026-07-04 10:10:00
+HIST,3,999,Hot N Cold,Cancion,Katy Perry,2026-07-04 10:17:00
+HIST,3,999,Happier Than Ever,Cancion,Billie Eilish,2026-07-04 10:26:00
+HIST,4,999,Stay The Night,Cancion,Zedd,2026-07-05 13:07:00
+HIST,4,999,Get Lucky,Cancion,Daft Punk,2026-07-05 13:16:00
+HIST,4,999,When Love Takes Over,Cancion,David Guetta,2026-07-05 13:25:00
+HIST,4,999,Get Lucky,Cancion,Daft Punk,2026-07-05 13:28:00
+HIST,4,999,Bangarang,Cancion,Skrillex,2026-07-05 13:33:00
+HIST,4,999,Bangarang,Cancion,Skrillex,2026-07-05 13:38:00
+HIST,4,999,Summer,Cancion,Calvin Harris,2026-07-05 13:41:00
+HIST,4,999,When Love Takes Over,Cancion,David Guetta,2026-07-05 13:48:00
+HIST,4,999,Kill V. Maim,Cancion,Grimes,2026-07-05 13:50:00
+HIST,4,999,Take My Breath,Cancion,The Weeknd,2026-07-05 13:55:00
+HIST,4,999,Scared to Be Lonely,Cancion,Martin Garrix,2026-07-05 14:00:00
+HIST,4,999,Titanium,Cancion,David Guetta,2026-07-05 14:02:00
+HIST,4,999,Blinding Lights,Cancion,The Weeknd,2026-07-05 14:05:00
+HIST,4,999,Kill V. Maim,Cancion,Grimes,2026-07-05 14:07:00
+HIST,4,999,Scary Monsters and Nice Sprites,Cancion,Skrillex,2026-07-05 14:12:00
+HIST,4,999,Blinding Lights,Cancion,The Weeknd,2026-07-05 14:15:00
+HIST,4,999,Wake Me Up,Cancion,Avicii,2026-07-05 14:17:00
+HIST,5,999,Normal,Cancion,Feid,2026-07-06 14:05:00
+HIST,5,999,Dile,Cancion,Don Omar,2026-07-06 14:10:00
+HIST,5,999,Lokera,Cancion,Rauw Alejandro,2026-07-06 14:15:00
+HIST,5,999,HP,Cancion,Maluma,2026-07-06 14:24:00
+HIST,5,999,PROVENZA,Cancion,Karol G,2026-07-06 14:28:00
+HIST,5,999,Remix,Cancion,Daddy Yankee,2026-07-06 14:36:00
+HIST,5,999,Monaco,Cancion,Bad Bunny,2026-07-06 14:40:00
+HIST,5,999,Playa del Cielo,Cancion,Rauw Alejandro,2026-07-06 14:46:00
+HIST,5,999,Playa del Cielo,Cancion,Rauw Alejandro,2026-07-06 14:55:00
+HIST,5,999,Lokera,Cancion,Rauw Alejandro,2026-07-06 15:00:00
+HIST,5,999,Felices los 4,Cancion,Maluma,2026-07-06 15:03:00
+HIST,5,999,Abusadora,Cancion,Wisin & Yandel,2026-07-06 15:12:00
+HIST,5,999,Ferxxo 100,Cancion,Feid,2026-07-06 15:15:00
+HIST,5,999,Monaco,Cancion,Bad Bunny,2026-07-06 15:17:00
+HIST,5,999,Playa del Cielo,Cancion,Rauw Alejandro,2026-07-06 15:19:00
+HIST,5,999,Rojo,Cancion,J Balvin,2026-07-06 15:22:00
+HIST,5,999,BICHOTA,Cancion,Karol G,2026-07-06 15:27:00
+HIST,6,999,Yo Me Enamore,Cancion,Amar Azul,2026-07-07 11:03:00
+HIST,6,999,Pobre Corazon,Cancion,Ke Personajes,2026-07-07 11:07:00
+HIST,6,999,Llorando Tu Partida,Cancion,Armonia 10,2026-07-07 11:10:00
+HIST,6,999,Bronceado,Cancion,Marama,2026-07-07 11:13:00
+HIST,6,999,Un Finde,Cancion,Ke Personajes,2026-07-07 11:18:00
+HIST,6,999,Pobre Corazon,Cancion,Ke Personajes,2026-07-07 11:26:00
+HIST,6,999,Nena,Cancion,Marama,2026-07-07 11:29:00
+HIST,6,999,Nunca Es Suficiente,Cancion,Los Angeles Azules,2026-07-07 11:34:00
+HIST,6,999,Basta Ya Mi Amor,Cancion,Agua Marina,2026-07-07 11:36:00
+HIST,6,999,El Cervecero,Cancion,Armonia 10,2026-07-07 11:39:00
+HIST,6,999,El Ritmo de mi Corazon,Cancion,Grupo 5,2026-07-07 11:47:00
+HIST,6,999,Ya No Vuelvas,Cancion,Ke Personajes,2026-07-07 11:54:00
+HIST,6,999,El Ritmo de mi Corazon,Cancion,Grupo 5,2026-07-07 12:00:00
+HIST,6,999,Diganle,Cancion,Corazon Serrano,2026-07-07 12:05:00
+HIST,6,999,El Ritmo de mi Corazon,Cancion,Grupo 5,2026-07-07 12:12:00
+HIST,6,999,Nunca Es Suficiente,Cancion,Los Angeles Azules,2026-07-07 12:17:00
+HIST,6,999,Yo Me Enamore,Cancion,Amar Azul,2026-07-07 12:23:00
+HIST,6,999,Locuras Contigo,Cancion,Rombai,2026-07-07 12:31:00
+HIST,6,999,El Ritmo de mi Corazon,Cancion,Grupo 5,2026-07-07 12:35:00
+HIST,7,999,Creeping Death,Cancion,Metallica,2026-07-08 09:03:00
+HIST,7,999,Run to the Hills,Cancion,Iron Maiden,2026-07-08 09:07:00
+HIST,7,999,Aces High,Cancion,Iron Maiden,2026-07-08 09:13:00
+HIST,7,999,Freak on a Leash,Cancion,Korn,2026-07-08 09:19:00
+HIST,7,999,Aerials,Cancion,System of a Down,2026-07-08 09:24:00
+HIST,7,999,Aerials,Cancion,System of a Down,2026-07-08 09:31:00
+HIST,7,999,Snowblind,Cancion,Black Sabbath,2026-07-08 09:36:00
+HIST,7,999,Holy Wars,Cancion,Megadeth,2026-07-08 09:42:00
+HIST,7,999,B.Y.O.B.,Cancion,System of a Down,2026-07-08 09:51:00
+HIST,7,999,Duality,Cancion,Slipknot,2026-07-08 09:57:00
+HIST,7,999,Walk,Cancion,Pantera,2026-07-08 09:59:00
+HIST,7,999,Blind,Cancion,Korn,2026-07-08 10:02:00
+HIST,7,999,Cowboys from Hell,Cancion,Pantera,2026-07-08 10:10:00
+HIST,7,999,Master of Puppets,Cancion,Metallica,2026-07-08 10:16:00
+HIST,7,999,Chop Suey!,Cancion,System of a Down,2026-07-08 10:18:00
+HIST,7,999,Fear of the Dark,Cancion,Iron Maiden,2026-07-08 10:20:00
+HIST,7,999,Cowboys from Hell,Cancion,Pantera,2026-07-08 10:27:00
+HIST,7,999,Falling Away from Me,Cancion,Korn,2026-07-08 10:31:00
+HIST,7,999,Holy Wars,Cancion,Megadeth,2026-07-08 10:37:00
+HIST,7,999,Symphony of Destruction,Cancion,Megadeth,2026-07-08 10:41:00
+HIST,8,999,Heart-Shaped Box,Cancion,Nirvana,2026-07-09 13:05:00
+HIST,8,999,Come Together,Cancion,The Beatles,2026-07-09 13:09:00
+HIST,8,999,Highway to Hell,Cancion,AC/DC,2026-07-09 13:13:00
+HIST,8,999,De Musica Ligera,Cancion,Soda Stereo,2026-07-09 13:21:00
+HIST,8,999,Heart-Shaped Box,Cancion,Nirvana,2026-07-09 13:23:00
+HIST,8,999,Hey Jude,Cancion,The Beatles,2026-07-09 13:27:00
+HIST,8,999,Como Un Perro,Cancion,Libido,2026-07-09 13:34:00
+HIST,8,999,Tres,Cancion,Libido,2026-07-09 13:42:00
+HIST,8,999,Heart-Shaped Box,Cancion,Nirvana,2026-07-09 13:47:00
+HIST,8,999,Hey Jude,Cancion,The Beatles,2026-07-09 13:53:00
+HIST,8,999,Kashmir,Cancion,Led Zeppelin,2026-07-09 13:57:00
+HIST,8,999,Kashmir,Cancion,Led Zeppelin,2026-07-09 14:00:00
+HIST,8,999,Hey Jude,Cancion,The Beatles,2026-07-09 14:08:00
+HIST,8,999,Highway to Hell,Cancion,AC/DC,2026-07-09 14:10:00
+HIST,8,999,I Bet You Look Good on the Dancefloor,Cancion,Arctic Monkeys,2026-07-09 14:19:00
+HIST,8,999,Tres,Cancion,Libido,2026-07-09 14:24:00
+HIST,8,999,Don't Stop Me Now,Cancion,Queen,2026-07-09 14:29:00
+HIST,9,999,Bad Guy,Cancion,Billie Eilish,2026-07-10 10:05:00
+HIST,9,999,New Rules,Cancion,Dua Lipa,2026-07-10 10:11:00
+HIST,9,999,Don't Stop 'Til You Get Enough,Cancion,Michael Jackson,2026-07-10 10:13:00
+HIST,9,999,Hot N Cold,Cancion,Katy Perry,2026-07-10 10:21:00
+HIST,9,999,Happier Than Ever,Cancion,Billie Eilish,2026-07-10 10:23:00
+HIST,9,999,Yellow,Cancion,Coldplay,2026-07-10 10:28:00
+HIST,9,999,no tears left to cry,Cancion,Ariana Grande,2026-07-10 10:35:00
+HIST,9,999,Poker Face,Cancion,Lady Gaga,2026-07-10 10:43:00
+HIST,9,999,Lunch,Cancion,Billie Eilish,2026-07-10 10:46:00
+HIST,9,999,Thriller,Cancion,Michael Jackson,2026-07-10 10:53:00
+HIST,9,999,Shallow,Cancion,Lady Gaga,2026-07-10 11:00:00
+HIST,9,999,Houdini,Cancion,Dua Lipa,2026-07-10 11:03:00
+HIST,9,999,Clocks,Cancion,Coldplay,2026-07-10 11:09:00
+HIST,9,999,Sign of the Times,Cancion,Harry Styles,2026-07-10 11:15:00
+HIST,9,999,Smooth Criminal,Cancion,Michael Jackson,2026-07-10 11:23:00
+HIST,9,999,Clocks,Cancion,Coldplay,2026-07-10 11:30:00
+HIST,9,999,Happier Than Ever,Cancion,Billie Eilish,2026-07-10 11:38:00
+HIST,9,999,Hot N Cold,Cancion,Katy Perry,2026-07-10 11:44:00
+HIST,9,999,Shape of You,Cancion,Ed Sheeran,2026-07-10 11:48:00
+HIST,9,999,Sign of the Times,Cancion,Harry Styles,2026-07-10 11:53:00
+HIST,9,999,Cruel Summer,Cancion,Taylor Swift,2026-07-10 12:01:00
+HIST,10,999,Wake Me Up,Cancion,Avicii,2026-07-01 09:09:00
+HIST,10,999,Blinding Lights,Cancion,The Weeknd,2026-07-01 09:12:00
+HIST,10,999,Recess,Cancion,Skrillex,2026-07-01 09:21:00
+HIST,10,999,Adagio For Strings,Cancion,Tiesto,2026-07-01 09:29:00
+HIST,10,999,Wake Me Up,Cancion,Avicii,2026-07-01 09:34:00
+HIST,10,999,Lovers On The Sun,Cancion,David Guetta,2026-07-01 09:42:00
+HIST,10,999,The Business,Cancion,Tiesto,2026-07-01 09:51:00
+HIST,10,999,Oblivion,Cancion,Grimes,2026-07-01 09:59:00
+HIST,10,999,Recess,Cancion,Skrillex,2026-07-01 10:04:00
+HIST,10,999,Stay The Night,Cancion,Zedd,2026-07-01 10:08:00
+HIST,10,999,Bangarang,Cancion,Skrillex,2026-07-01 10:10:00
+HIST,10,999,Red Lights,Cancion,Tiesto,2026-07-01 10:13:00
+HIST,10,999,Starboy,Cancion,The Weeknd,2026-07-01 10:21:00
+HIST,10,999,Red Lights,Cancion,Tiesto,2026-07-01 10:26:00
+HIST,10,999,Adagio For Strings,Cancion,Tiesto,2026-07-01 10:30:00
+HIST,10,999,Get Lucky,Cancion,Daft Punk,2026-07-01 10:39:00
+HIST,10,999,Stay The Night,Cancion,Zedd,2026-07-01 10:41:00
+HIST,10,999,Take My Breath,Cancion,The Weeknd,2026-07-01 10:46:00
+HIST,10,999,Wake Me Up,Cancion,Avicii,2026-07-01 10:49:00
+HIST,10,999,Animals,Cancion,Martin Garrix,2026-07-01 10:58:00
+HIST,10,999,Feel So Close,Cancion,Calvin Harris,2026-07-01 11:02:00
+HIST,10,999,Around the World,Cancion,Daft Punk,2026-07-01 11:11:00
+HIST,11,999,Todo De Ti,Cancion,Rauw Alejandro,2026-07-02 13:05:00
+HIST,11,999,Rompe,Cancion,Daddy Yankee,2026-07-02 13:08:00
+HIST,11,999,BICHOTA,Cancion,Karol G,2026-07-02 13:16:00
+HIST,11,999,Todo De Ti,Cancion,Rauw Alejandro,2026-07-02 13:24:00
+HIST,11,999,Hawai,Cancion,Maluma,2026-07-02 13:31:00
+HIST,11,999,BICHOTA,Cancion,Karol G,2026-07-02 13:40:00
+HIST,11,999,Vaina Loca,Cancion,Ozuna,2026-07-02 13:48:00
+HIST,11,999,HP,Cancion,Maluma,2026-07-02 13:50:00
+HIST,11,999,Lokera,Cancion,Rauw Alejandro,2026-07-02 13:55:00
+HIST,11,999,Se Preparo,Cancion,Ozuna,2026-07-02 14:03:00
+HIST,11,999,Todo De Ti,Cancion,Rauw Alejandro,2026-07-02 14:11:00
+HIST,11,999,Felices los 4,Cancion,Maluma,2026-07-02 14:13:00
+HIST,11,999,Se Preparo,Cancion,Ozuna,2026-07-02 14:21:00
+HIST,11,999,Rojo,Cancion,J Balvin,2026-07-02 14:30:00
+HIST,11,999,TQG,Cancion,Karol G,2026-07-02 14:32:00
+HIST,11,999,Monaco,Cancion,Bad Bunny,2026-07-02 14:39:00
+HIST,11,999,Rompe,Cancion,Daddy Yankee,2026-07-02 14:45:00
+HIST,11,999,Mi Gente,Cancion,J Balvin,2026-07-02 14:53:00
+HIST,11,999,Rompe,Cancion,Daddy Yankee,2026-07-02 15:01:00
+HIST,12,999,Vuelve,Cancion,Corazon Serrano,2026-07-03 09:08:00
+HIST,12,999,Bronceado,Cancion,Marama,2026-07-03 09:14:00
+HIST,12,999,Pobre Corazon,Cancion,Ke Personajes,2026-07-03 09:22:00
+HIST,12,999,Un Finde,Cancion,Ke Personajes,2026-07-03 09:28:00
+HIST,12,999,Mentirosa,Cancion,Rafaga,2026-07-03 09:31:00
+HIST,12,999,Yo Me Enamore,Cancion,Amar Azul,2026-07-03 09:40:00
+HIST,12,999,Yo Tomo Licor,Cancion,Amar Azul,2026-07-03 09:42:00
+HIST,12,999,Cuando Se Pone A Bailar,Cancion,Rombai,2026-07-03 09:44:00
+HIST,12,999,Yo Me Enamore,Cancion,Amar Azul,2026-07-03 09:51:00
+HIST,12,999,Me Voy,Cancion,Rombai,2026-07-03 09:56:00
+HIST,12,999,Nena,Cancion,Marama,2026-07-03 09:59:00
+HIST,12,999,Lloraras,Cancion,Grupo 5,2026-07-03 10:01:00
+HIST,12,999,Como Te Voy A Olvidar,Cancion,Los Angeles Azules,2026-07-03 10:03:00
+HIST,12,999,Luna,Cancion,Rafaga,2026-07-03 10:08:00
+HIST,12,999,Basta Ya Mi Amor,Cancion,Agua Marina,2026-07-03 10:13:00
+HIST,12,999,Siempre Pierdo En El Amor,Cancion,Armonia 10,2026-07-03 10:15:00
+HIST,12,999,Diganle,Cancion,Corazon Serrano,2026-07-03 10:19:00
+HIST,12,999,17 Anos,Cancion,Los Angeles Azules,2026-07-03 10:24:00
+HIST,12,999,No Deja de Latir,Cancion,Corazon Serrano,2026-07-03 10:28:00
+HIST,13,999,Walk,Cancion,Pantera,2026-07-04 13:03:00
+HIST,13,999,Wait and Bleed,Cancion,Slipknot,2026-07-04 13:05:00
+HIST,13,999,Symphony of Destruction,Cancion,Megadeth,2026-07-04 13:12:00
+HIST,13,999,Chop Suey!,Cancion,System of a Down,2026-07-04 13:20:00
+HIST,13,999,Falling Away from Me,Cancion,Korn,2026-07-04 13:27:00
+HIST,13,999,Symphony of Destruction,Cancion,Megadeth,2026-07-04 13:30:00
+HIST,13,999,Master of Puppets,Cancion,Metallica,2026-07-04 13:37:00
+HIST,13,999,War Pigs,Cancion,Black Sabbath,2026-07-04 13:39:00
+HIST,13,999,I'm Broken,Cancion,Pantera,2026-07-04 13:47:00
+HIST,13,999,Falling Away from Me,Cancion,Korn,2026-07-04 13:56:00
+HIST,13,999,Snowblind,Cancion,Black Sabbath,2026-07-04 13:59:00
+HIST,13,999,Duality,Cancion,Slipknot,2026-07-04 14:07:00
+HIST,13,999,Creeping Death,Cancion,Metallica,2026-07-04 14:14:00
+HIST,13,999,I'm Broken,Cancion,Pantera,2026-07-04 14:23:00
+HIST,13,999,Walk,Cancion,Pantera,2026-07-04 14:27:00
+HIST,13,999,Symphony of Destruction,Cancion,Megadeth,2026-07-04 14:35:00
+HIST,13,999,Psychosocial,Cancion,Slipknot,2026-07-04 14:39:00
+HIST,14,999,Thunderstruck,Cancion,AC/DC,2026-07-05 14:05:00
+HIST,14,999,Let It Be,Cancion,The Beatles,2026-07-05 14:08:00
+HIST,14,999,Last Nite,Cancion,The Strokes,2026-07-05 14:13:00
+HIST,14,999,En Esta Habitacion,Cancion,Libido,2026-07-05 14:21:00
+HIST,14,999,You Only Live Once,Cancion,The Strokes,2026-07-05 14:30:00
+HIST,14,999,Persiana Americana,Cancion,Soda Stereo,2026-07-05 14:35:00
+HIST,14,999,Don't Stop Me Now,Cancion,Queen,2026-07-05 14:44:00
+HIST,14,999,Thunderstruck,Cancion,AC/DC,2026-07-05 14:53:00
+HIST,14,999,Kashmir,Cancion,Led Zeppelin,2026-07-05 15:02:00
+HIST,14,999,Hey Jude,Cancion,The Beatles,2026-07-05 15:04:00
+HIST,14,999,En La Ciudad De La Furia,Cancion,Soda Stereo,2026-07-05 15:07:00
+HIST,14,999,Let It Be,Cancion,The Beatles,2026-07-05 15:13:00
+HIST,14,999,En La Ciudad De La Furia,Cancion,Soda Stereo,2026-07-05 15:18:00
+HIST,14,999,Hey Jude,Cancion,The Beatles,2026-07-05 15:26:00
+HIST,14,999,Last Nite,Cancion,The Strokes,2026-07-05 15:31:00
+HIST,14,999,You Only Live Once,Cancion,The Strokes,2026-07-05 15:37:00
+HIST,14,999,Thunderstruck,Cancion,AC/DC,2026-07-05 15:44:00
+HIST,14,999,I Bet You Look Good on the Dancefloor,Cancion,Arctic Monkeys,2026-07-05 15:53:00
+HIST,14,999,Highway to Hell,Cancion,AC/DC,2026-07-05 16:00:00
+HIST,15,999,Firework,Cancion,Katy Perry,2026-07-06 09:04:00
+HIST,15,999,Lunch,Cancion,Billie Eilish,2026-07-06 09:10:00
+HIST,15,999,Roar,Cancion,Katy Perry,2026-07-06 09:12:00
+HIST,15,999,Watermelon Sugar,Cancion,Harry Styles,2026-07-06 09:14:00
+HIST,15,999,no tears left to cry,Cancion,Ariana Grande,2026-07-06 09:20:00
+HIST,15,999,Fortnight,Cancion,Taylor Swift,2026-07-06 09:24:00
+HIST,15,999,Roar,Cancion,Katy Perry,2026-07-06 09:33:00
+HIST,15,999,New Rules,Cancion,Dua Lipa,2026-07-06 09:36:00
+HIST,15,999,Clocks,Cancion,Coldplay,2026-07-06 09:38:00
+HIST,15,999,Roar,Cancion,Katy Perry,2026-07-06 09:44:00
+HIST,15,999,Clocks,Cancion,Coldplay,2026-07-06 09:53:00
+HIST,15,999,Sign of the Times,Cancion,Harry Styles,2026-07-06 10:02:00
+HIST,15,999,Bad Romance,Cancion,Lady Gaga,2026-07-06 10:11:00
+HIST,15,999,New Rules,Cancion,Dua Lipa,2026-07-06 10:18:00
+HIST,15,999,Happier Than Ever,Cancion,Billie Eilish,2026-07-06 10:22:00
+HIST,15,999,Lunch,Cancion,Billie Eilish,2026-07-06 10:24:00
+HIST,15,999,Firework,Cancion,Katy Perry,2026-07-06 10:30:00
+HIST,16,999,Feel So Close,Cancion,Calvin Harris,2026-07-07 09:06:00
+HIST,16,999,Animals,Cancion,Martin Garrix,2026-07-07 09:09:00
+HIST,16,999,Stay The Night,Cancion,Zedd,2026-07-07 09:13:00
+HIST,16,999,Get Lucky,Cancion,Daft Punk,2026-07-07 09:18:00
+HIST,16,999,Take My Breath,Cancion,The Weeknd,2026-07-07 09:22:00
+HIST,16,999,Kill V. Maim,Cancion,Grimes,2026-07-07 09:25:00
+HIST,16,999,Titanium,Cancion,David Guetta,2026-07-07 09:29:00
+HIST,16,999,Violence,Cancion,Grimes,2026-07-07 09:31:00
+HIST,16,999,Adagio For Strings,Cancion,Tiesto,2026-07-07 09:39:00
+HIST,16,999,Recess,Cancion,Skrillex,2026-07-07 09:48:00
+HIST,16,999,SOS,Cancion,Avicii,2026-07-07 09:57:00
+HIST,16,999,Clarity,Cancion,Zedd,2026-07-07 10:03:00
+HIST,16,999,Starboy,Cancion,The Weeknd,2026-07-07 10:05:00
+HIST,16,999,Violence,Cancion,Grimes,2026-07-07 10:10:00
+HIST,16,999,Titanium,Cancion,David Guetta,2026-07-07 10:16:00
+HIST,16,999,Violence,Cancion,Grimes,2026-07-07 10:22:00
+HIST,16,999,Around the World,Cancion,Daft Punk,2026-07-07 10:31:00
+HIST,16,999,Stay The Night,Cancion,Zedd,2026-07-07 10:34:00
+HIST,16,999,Get Lucky,Cancion,Daft Punk,2026-07-07 10:39:00
+HIST,16,999,Bangarang,Cancion,Skrillex,2026-07-07 10:45:00
+HIST,16,999,Adagio For Strings,Cancion,Tiesto,2026-07-07 10:50:00
+HIST,17,999,HP,Cancion,Maluma,2026-07-08 10:05:00
+HIST,17,999,Dile,Cancion,Don Omar,2026-07-08 10:07:00
+HIST,17,999,PROVENZA,Cancion,Karol G,2026-07-08 10:13:00
+HIST,17,999,LUNA,Cancion,Feid,2026-07-08 10:15:00
+HIST,17,999,Todo De Ti,Cancion,Rauw Alejandro,2026-07-08 10:19:00
+HIST,17,999,Lokera,Cancion,Rauw Alejandro,2026-07-08 10:28:00
+HIST,17,999,In Da Getto,Cancion,J Balvin,2026-07-08 10:37:00
+HIST,17,999,Playa del Cielo,Cancion,Rauw Alejandro,2026-07-08 10:43:00
+HIST,17,999,Vaina Loca,Cancion,Ozuna,2026-07-08 10:47:00
+HIST,17,999,Salio El Sol,Cancion,Don Omar,2026-07-08 10:55:00
+HIST,17,999,Todo De Ti,Cancion,Rauw Alejandro,2026-07-08 11:04:00
+HIST,17,999,Dile,Cancion,Don Omar,2026-07-08 11:07:00
+HIST,17,999,TQG,Cancion,Karol G,2026-07-08 11:16:00
+HIST,17,999,Hawai,Cancion,Maluma,2026-07-08 11:23:00
+HIST,17,999,Rakata,Cancion,Wisin & Yandel,2026-07-08 11:31:00
+HIST,17,999,Safaera,Cancion,Bad Bunny,2026-07-08 11:38:00
+HIST,18,999,Una Cerveza,Cancion,Rafaga,2026-07-09 12:09:00
+HIST,18,999,Cuando Se Pone A Bailar,Cancion,Rombai,2026-07-09 12:12:00
+HIST,18,999,17 Anos,Cancion,Los Angeles Azules,2026-07-09 12:14:00
+HIST,18,999,Diganle,Cancion,Corazon Serrano,2026-07-09 12:19:00
+HIST,18,999,Diganle,Cancion,Corazon Serrano,2026-07-09 12:23:00
+HIST,18,999,Yo Tomo Licor,Cancion,Amar Azul,2026-07-09 12:29:00
+HIST,18,999,Como Te Voy A Olvidar,Cancion,Los Angeles Azules,2026-07-09 12:31:00
+HIST,18,999,Locuras Contigo,Cancion,Rombai,2026-07-09 12:39:00
+HIST,18,999,Yo Tomo Licor,Cancion,Amar Azul,2026-07-09 12:42:00
+HIST,18,999,Nena,Cancion,Marama,2026-07-09 12:47:00
+HIST,18,999,Cuando Se Pone A Bailar,Cancion,Rombai,2026-07-09 12:50:00
+HIST,18,999,Como Te Voy A Olvidar,Cancion,Los Angeles Azules,2026-07-09 12:59:00
+HIST,18,999,Basta Ya Mi Amor,Cancion,Agua Marina,2026-07-09 13:02:00
+HIST,18,999,No Deja de Latir,Cancion,Corazon Serrano,2026-07-09 13:06:00
+HIST,18,999,Ya No Vuelvas,Cancion,Ke Personajes,2026-07-09 13:15:00
+HIST,18,999,Loquita,Cancion,Marama,2026-07-09 13:21:00
+HIST,18,999,Ya No Vuelvas,Cancion,Ke Personajes,2026-07-09 13:27:00
+HIST,18,999,El Cervecero,Cancion,Armonia 10,2026-07-09 13:35:00
+HIST,18,999,Cuando Se Pone A Bailar,Cancion,Rombai,2026-07-09 13:44:00
+HIST,18,999,Yo Me Enamore,Cancion,Amar Azul,2026-07-09 13:53:00
+HIST,18,999,17 Anos,Cancion,Los Angeles Azules,2026-07-09 13:58:00
+HIST,19,999,Children of the Grave,Cancion,Black Sabbath,2026-07-10 12:08:00
+HIST,19,999,Psychosocial,Cancion,Slipknot,2026-07-10 12:13:00
+HIST,19,999,Fear of the Dark,Cancion,Iron Maiden,2026-07-10 12:21:00
+HIST,19,999,Master of Puppets,Cancion,Metallica,2026-07-10 12:23:00
+HIST,19,999,Duality,Cancion,Slipknot,2026-07-10 12:30:00
+HIST,19,999,B.Y.O.B.,Cancion,System of a Down,2026-07-10 12:39:00
+HIST,19,999,War Ensemble,Cancion,Slayer,2026-07-10 12:47:00
+HIST,19,999,Cowboys from Hell,Cancion,Pantera,2026-07-10 12:55:00
+HIST,19,999,B.Y.O.B.,Cancion,System of a Down,2026-07-10 12:59:00
+HIST,19,999,Painkiller,Cancion,Judas Priest,2026-07-10 13:08:00
+HIST,19,999,You've Got Another Thing Comin',Cancion,Judas Priest,2026-07-10 13:10:00
+HIST,19,999,War Pigs,Cancion,Black Sabbath,2026-07-10 13:14:00
+HIST,19,999,Wait and Bleed,Cancion,Slipknot,2026-07-10 13:21:00
+HIST,19,999,Snowblind,Cancion,Black Sabbath,2026-07-10 13:24:00
+HIST,19,999,Freak on a Leash,Cancion,Korn,2026-07-10 13:33:00
+HIST,19,999,Aerials,Cancion,System of a Down,2026-07-10 13:36:00
+HIST,19,999,Blind,Cancion,Korn,2026-07-10 13:45:00
+HIST,19,999,Aces High,Cancion,Iron Maiden,2026-07-10 13:47:00
+HIST,20,999,Kashmir,Cancion,Led Zeppelin,2026-07-01 13:03:00
+HIST,20,999,Whole Lotta Love,Cancion,Led Zeppelin,2026-07-01 13:12:00
+HIST,20,999,505,Cancion,Arctic Monkeys,2026-07-01 13:16:00
+HIST,20,999,505,Cancion,Arctic Monkeys,2026-07-01 13:22:00
+HIST,20,999,505,Cancion,Arctic Monkeys,2026-07-01 13:24:00
+HIST,20,999,Come Together,Cancion,The Beatles,2026-07-01 13:26:00
+HIST,20,999,Let It Be,Cancion,The Beatles,2026-07-01 13:33:00
+HIST,20,999,Bohemian Rhapsody,Cancion,Queen,2026-07-01 13:35:00
+HIST,20,999,Don't Stop Me Now,Cancion,Queen,2026-07-01 13:41:00
+HIST,20,999,I Bet You Look Good on the Dancefloor,Cancion,Arctic Monkeys,2026-07-01 13:48:00
+HIST,20,999,Heart-Shaped Box,Cancion,Nirvana,2026-07-01 13:55:00
+HIST,20,999,About A Girl,Cancion,Nirvana,2026-07-01 14:03:00
+HIST,20,999,Stairway to Heaven,Cancion,Led Zeppelin,2026-07-01 14:07:00
+HIST,20,999,Como Un Perro,Cancion,Libido,2026-07-01 14:12:00
+HIST,20,999,Tres,Cancion,Libido,2026-07-01 14:20:00
+HIST,20,999,Don't Stop Me Now,Cancion,Queen,2026-07-01 14:24:00
+HIST,20,999,Persiana Americana,Cancion,Soda Stereo,2026-07-01 14:28:00
+HIST,20,999,About A Girl,Cancion,Nirvana,2026-07-01 14:32:00
+HIST,21,999,Into You,Cancion,Ariana Grande,2026-07-02 12:03:00
+HIST,21,999,Shape of You,Cancion,Ed Sheeran,2026-07-02 12:08:00
+HIST,21,999,no tears left to cry,Cancion,Ariana Grande,2026-07-02 12:16:00
+HIST,21,999,Shallow,Cancion,Lady Gaga,2026-07-02 12:23:00
+HIST,21,999,Shape of You,Cancion,Ed Sheeran,2026-07-02 12:29:00
+HIST,21,999,New Rules,Cancion,Dua Lipa,2026-07-02 12:35:00
+HIST,21,999,Viva La Vida,Cancion,Coldplay,2026-07-02 12:37:00
+HIST,21,999,Don't Stop 'Til You Get Enough,Cancion,Michael Jackson,2026-07-02 12:45:00
+HIST,21,999,Watermelon Sugar,Cancion,Harry Styles,2026-07-02 12:51:00
+HIST,21,999,Sign of the Times,Cancion,Harry Styles,2026-07-02 12:53:00
+HIST,21,999,New Rules,Cancion,Dua Lipa,2026-07-02 12:55:00
+HIST,21,999,Watermelon Sugar,Cancion,Harry Styles,2026-07-02 13:04:00
+HIST,21,999,no tears left to cry,Cancion,Ariana Grande,2026-07-02 13:10:00
+HIST,21,999,Shape of You,Cancion,Ed Sheeran,2026-07-02 13:15:00
+HIST,21,999,Lunch,Cancion,Billie Eilish,2026-07-02 13:22:00
+HIST,21,999,Sign of the Times,Cancion,Harry Styles,2026-07-02 13:27:00
+HIST,21,999,Poker Face,Cancion,Lady Gaga,2026-07-02 13:32:00
+HIST,99,999,Red Lights,Cancion,Tiesto,2026-07-10 14:09:00
+HIST,99,999,Wake Me Up,Cancion,Avicii,2026-07-10 14:15:00
+HIST,99,999,Lovers On The Sun,Cancion,David Guetta,2026-07-10 14:22:00
+HIST,99,999,Violence,Cancion,Grimes,2026-07-10 14:25:00
+HIST,99,999,Scary Monsters and Nice Sprites,Cancion,Skrillex,2026-07-10 14:34:00
+HIST,99,999,Get Lucky,Cancion,Daft Punk,2026-07-10 14:37:00
+HIST,99,999,Starboy,Cancion,The Weeknd,2026-07-10 14:41:00
+HIST,99,999,Bangarang,Cancion,Skrillex,2026-07-10 14:46:00
+HIST,99,999,Slide,Cancion,Calvin Harris,2026-07-10 14:54:00
+HIST,99,999,Summer,Cancion,Calvin Harris,2026-07-10 15:01:00
+HIST,99,999,Kill V. Maim,Cancion,Grimes,2026-07-10 15:04:00
+HIST,99,999,The Middle,Cancion,Zedd,2026-07-10 15:12:00
+HIST,99,999,Oblivion,Cancion,Grimes,2026-07-10 15:14:00
+HIST,99,999,Clarity,Cancion,Zedd,2026-07-10 15:20:00
+HIST,99,999,Animals,Cancion,Martin Garrix,2026-07-10 15:23:00
+HIST,99,999,Take My Breath,Cancion,The Weeknd,2026-07-10 15:32:00

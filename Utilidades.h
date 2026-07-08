@@ -59,8 +59,6 @@ string obtenerHoraActual() {
 
 
 
-// Version "grid": permite filas con varias opciones laterales.
-// Las celdas vacias ("") se saltan hasta encontrar una valida.
 pair<int, int> menuInteractivoGrid(const vector<vector<string>>& opciones, int posX, int posY, int anchoColumna, int altoFila) {
     int fila = 0, columna = 0;
 
@@ -82,7 +80,7 @@ encontrado:;
                 Console::SetCursorPosition(posX + (c * anchoColumna), posY + (f * altoFila));
 
                 if (f == fila && c == columna) {
-                    asignarcolor(4); 
+                    asignarcolor(4);
                     cout << ">> " << texto << "   ";
                 }
                 else {
@@ -133,7 +131,6 @@ encontrado:;
     return { fila, columna };
 }
 
-// Tu funcion original, ahora como wrapper de la version grid (1 sola columna)
 int menuInteractivo(const vector<string>& opciones, int posX, int posY) {
     vector<vector<string>> grid;
     for (const string& s : opciones) grid.push_back({ s });
@@ -144,10 +141,10 @@ string obtenerNombreGenero(int id) {
     switch (id) {
     case 10: return "Metal";
     case 20: return "Rock";
-	case 40: return "Pop";
-    case 60: return "Electronica";
-    case 80: return "Reggaeton";
-    case 90: return "Cumbia";
+    case 30: return "Pop";
+    case 40: return "Electronica";
+    case 50: return "Reggaeton";
+    case 60: return "Cumbia";
     default: return "Desconocido";
     }
 }

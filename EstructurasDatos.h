@@ -141,13 +141,6 @@ private:
 public:
     Pila() : tope(nullptr) {}
 
-    // La Pila es dueña de una cadena de Nodo<T>* (memoria propia).
-    // Copiarla por valor (constructor/operador= por defecto) copiaria
-    // solo el puntero 'tope', compartiendo los mismos nodos con el original.
-    // Al destruirse la copia, su destructor llamaria a vaciar() y borraria
-    // esos nodos, dejando al original con un puntero colgante (use-after-free).
-    // Por eso se prohibe copiar: cualquier intento de copia (ej. "Pila<T> x = obj.getPila();")
-    // sera ahora un error de compilacion en vez de un crash en tiempo de ejecucion.
     Pila(const Pila&) = delete;
     Pila& operator=(const Pila&) = delete;
 

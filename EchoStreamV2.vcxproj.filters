@@ -41,9 +41,6 @@
     <ClInclude Include="Entidades.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="GestionArchivos.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="Algoritmos.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>

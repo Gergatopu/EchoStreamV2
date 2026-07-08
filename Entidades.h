@@ -47,8 +47,7 @@ private:
 public:
     Cancion(int id, string nombre, int id_artista, int id_album, int duracion, int id_genero, int repro = 0)
         : EntidadBase(id, nombre), id_artista(id_artista), id_album(id_album),
-        duracion(duracion), id_genero(id_genero), reproducciones(repro), enReproduccion(false) {
-    }
+        duracion(duracion), id_genero(id_genero), reproducciones(repro), enReproduccion(false) {}
 
     // --- Reproduccion ---
     void reproducir(int x, int y, int color) {
@@ -67,10 +66,6 @@ public:
     int getDuracion() const { return duracion; }
     int getReproducciones() const { return reproducciones; }
 
-    // --- Recomendaciones ---
-    // IMPORTANTE: el orden debe coincidir con el de Gestor::calcularPreferencias
-    // (duracion, genero, artista, album), ya que ambos vectores se comparan
-    // componente a componente en DistanciaEuclidiana.
     vector<double> obtenerVectorComponentes() {
 
         vector<double> cancionComponentes = {
@@ -122,8 +117,7 @@ private:
     ListaCircularDoble<Cancion*> canciones;
 public:
     Playlist(int id, string nombre, string descripcion, int usuarioId)
-        : EntidadBase(id, nombre), descripcion(descripcion), usuarioId(usuarioId) {
-    }
+        : EntidadBase(id, nombre), descripcion(descripcion), usuarioId(usuarioId) {}
 
     // --- Canciones de la playlist ---
     void agregarCancion(Cancion* c) {
@@ -166,8 +160,6 @@ public:
 
 // ============================================================
 //  TABLA HASH DE PLAYLISTS 
-//  Estructura de soporte para busqueda rapida de playlists por
-//  nombre dentro de un Usuario. Depende de Playlist.
 // ============================================================
 class TablaHashPlaylist {
 private:
@@ -234,8 +226,6 @@ struct Suscripcion {
 
 // ============================================================
 //  USUARIO 
-//  Due\u00f1o de playlists, favoritos, historial y suscripcion.
-//  Depende de Cancion, Playlist y TablaHashPlaylist.
 // ============================================================
 class Usuario : public EntidadBase {
 private:
@@ -308,7 +298,7 @@ public:
 
     // --- HISTORIAL ---
     // miHistorial es una Pila<Cancion*>: el tope siempre es la ultima cancion
-    // reproducida, lo cual es justo lo que necesita "reproducir anterior".
+    // reproducida, lo cual es justo lo que se necesita para "reproducir anterior".
     void registrarEnHistorial(Cancion* c) {
         if (c) miHistorialPila.push(c);
     }
@@ -326,9 +316,6 @@ public:
     // --- DATOS DE CUENTA ---
     string getEmail() const { return email; }
     string getContrasena() const { return contrasena; }
-    // OJO: debe devolver por REFERENCIA. Si devuelve por valor, cualquier
-    // push_back() hecho afuera (ej. Gestor::agregarAmigo) modifica una copia
-    // temporal y el amigo nunca queda realmente guardado en este Usuario.
     vector<Usuario*>& getAmigos() { return amigos; }
 
     void agregarAmigo(Usuario* a) {
@@ -345,19 +332,39 @@ public:
 
     // --- METODOS VIRTUALES ---
     void mostrarDetalles() const override {
-        cout << "  [ID:" << id << "] " << nombre << " | " << email << " ";
-        if (esPremium()) cout << "  Plan: Premium" << endl;
-        else cout << "  Plan: Gratuito" << endl;
+        asignarcolor(8);
+        cout << "  [ID:" << id << "] ";
+        asignarcolor(7);
+        cout << nombre << " | ";
+        asignarcolor(15);
+        cout << email << "  ";
+        if (esPremium()) { asignarcolor(6); cout << "* Plan: Premium *" << endl; }
+        else { asignarcolor(8); cout << "  Plan: Gratuito" << endl; }
+        asignarcolor(7);
     }
 
     void mostrarAmigos() {
         system("cls");
-        cout << "\n--- Amigos ---" << endl;
+        asignarcolor(14);
+        cout << "\n========================================" << endl;
+        asignarcolor(7);
+        cout << "               MIS AMIGOS               " << endl;
+        asignarcolor(14);
+        cout << "========================================" << endl;
+        asignarcolor(7);
 
+        if (amigos.empty()) {
+            asignarcolor(15);
+            cout << "\n  Todavia no tienes amigos agregados." << endl;
+            asignarcolor(7);
+            return;
+        }
+
+        cout << endl;
         for (Usuario* a : amigos) {
             a->mostrarDetalles();
         }
-
+        asignarcolor(7);
     }
 
     string toString() const override {

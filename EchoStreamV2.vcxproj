@@ -129,7 +129,6 @@
     <ClInclude Include="Algoritmos.h" />
     <ClInclude Include="Entidades.h" />
     <ClInclude Include="EstructurasDatos.h" />
-    <ClInclude Include="GestionArchivos.h" />
     <ClInclude Include="Gestores.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
