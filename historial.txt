@@ -388,19 +388,35 @@ HIST,21,999,Shape of You,Cancion,Ed Sheeran,2026-07-02 13:15:00
 HIST,21,999,Lunch,Cancion,Billie Eilish,2026-07-02 13:22:00
 HIST,21,999,Sign of the Times,Cancion,Harry Styles,2026-07-02 13:27:00
 HIST,21,999,Poker Face,Cancion,Lady Gaga,2026-07-02 13:32:00
-HIST,99,999,Red Lights,Cancion,Tiesto,2026-07-10 14:09:00
-HIST,99,999,Wake Me Up,Cancion,Avicii,2026-07-10 14:15:00
-HIST,99,999,Lovers On The Sun,Cancion,David Guetta,2026-07-10 14:22:00
-HIST,99,999,Violence,Cancion,Grimes,2026-07-10 14:25:00
-HIST,99,999,Scary Monsters and Nice Sprites,Cancion,Skrillex,2026-07-10 14:34:00
-HIST,99,999,Get Lucky,Cancion,Daft Punk,2026-07-10 14:37:00
-HIST,99,999,Starboy,Cancion,The Weeknd,2026-07-10 14:41:00
-HIST,99,999,Bangarang,Cancion,Skrillex,2026-07-10 14:46:00
-HIST,99,999,Slide,Cancion,Calvin Harris,2026-07-10 14:54:00
-HIST,99,999,Summer,Cancion,Calvin Harris,2026-07-10 15:01:00
-HIST,99,999,Kill V. Maim,Cancion,Grimes,2026-07-10 15:04:00
-HIST,99,999,The Middle,Cancion,Zedd,2026-07-10 15:12:00
-HIST,99,999,Oblivion,Cancion,Grimes,2026-07-10 15:14:00
-HIST,99,999,Clarity,Cancion,Zedd,2026-07-10 15:20:00
-HIST,99,999,Animals,Cancion,Martin Garrix,2026-07-10 15:23:00
-HIST,99,999,Take My Breath,Cancion,The Weeknd,2026-07-10 15:32:00
+HIST,99,999,Smells Like Teen Spirit,Cancion,Nirvana,2026-07-08 20:10:01
+HIST,99,999,Master of Puppets,Cancion,Metallica,2026-07-02 09:07:00
+HIST,99,999,Heart-Shaped Box,Cancion,Nirvana,2026-07-08 20:11:02
+HIST,99,999,Fear of the Dark,Cancion,Iron Maiden,2026-07-02 09:13:00
+HIST,99,999,Paranoid Android,Cancion,Radiohead,2026-07-08 20:12:03
+HIST,99,999,Run to the Hills,Cancion,Iron Maiden,2026-07-02 09:17:00
+HIST,99,999,Creep,Cancion,Radiohead,2026-07-08 20:13:04
+HIST,99,999,Wait and Bleed,Cancion,Slipknot,2026-07-02 09:22:00
+HIST,99,999,Reptilia,Cancion,The Strokes,2026-07-08 20:14:05
+HIST,99,999,I'm Broken,Cancion,Pantera,2026-07-02 09:29:00
+HIST,99,999,Last Nite,Cancion,The Strokes,2026-07-08 20:15:06
+HIST,99,999,Aerials,Cancion,System of a Down,2026-07-02 09:32:00
+HIST,99,999,Let It Be,Cancion,The Beatles,2026-07-08 20:16:07
+HIST,99,999,Creeping Death,Cancion,Metallica,2026-07-02 09:35:00
+HIST,99,999,Come Together,Cancion,The Beatles,2026-07-08 20:17:08
+HIST,99,999,Breaking the Law,Cancion,Judas Priest,2026-07-02 09:43:00
+HIST,99,999,De Musica Ligera,Cancion,Soda Stereo,2026-07-08 20:18:09
+HIST,99,999,Master of Puppets,Cancion,Metallica,2026-07-02 09:46:00
+HIST,99,999,En La Ciudad De La Furia,Cancion,Soda Stereo,2026-07-08 20:19:10
+HIST,99,999,Run to the Hills,Cancion,Iron Maiden,2026-07-02 09:53:00
+HIST,99,999,Raining Blood,Cancion,Slayer,2026-07-02 10:00:00
+HIST,99,999,Master of Puppets,Cancion,Metallica,2026-07-02 10:06:00
+HIST,99,999,Peace Sells,Cancion,Megadeth,2026-07-02 10:08:00
+HIST,99,999,Cowboys from Hell,Cancion,Pantera,2026-07-02 10:17:00
+HIST,99,999,South of Heaven,Cancion,Slayer,2026-07-02 10:20:00
+HIST,99,999,Run to the Hills,Cancion,Iron Maiden,2026-07-02 10:28:00
+HIST,99,999,War Ensemble,Cancion,Slayer,2026-07-02 10:31:00
+HIST,99,999,Chop Suey!,Cancion,System of a Down,2026-07-02 10:37:00
+HIST,99,999,Master of Puppets,Cancion,Metallica,2026-07-02 10:44:00
+HIST,99,999,Chop Suey!,Cancion,System of a Down,2026-07-02 10:49:00
+HIST,99,999,I'm Broken,Cancion,Pantera,2026-07-02 10:52:00HIST,99,999,Adagio For Strings,Cancion,Tiesto,2026-07-08 11:24:09
+HIST,12,999,Bad Romance,Cancion,Lady Gaga,2026-07-08 11:28:01

@@ -40,16 +40,14 @@ private:
 
     // --- Usuarios / sesion ---
     ListaDoble<Usuario*> listaUsuarios;
+    // Segundo AVL 
+    AVL<Usuario*> indiceUsuariosPorId;
     CGrafo<Usuario*> usuarios;
     Usuario* usuarioLogueado;
 
     // --- Cola de reproduccion (valida solo durante una sesion activa) ---
     Cola<Cancion*> cancionesEspera;
 
-    // Cancion que esta sonando ahora mismo. Antes esto se inferia indirectamente
-    // del frente de la cola o del tope del historial, ahora el Gestor es la unica fuente de verdad sobre lo
-    // que se esta reproduciendo, y coordina la cola (siguientes) y la pila de
-    // historial del usuario (anteriores) alrededor de este puntero.
     Cancion* cancionActual = nullptr;
 
 
@@ -89,12 +87,17 @@ private:
         archivo.close();
     }
 
-    // --- Helpers de carga de usuarios.txt: uno por tipo de linea ---
+    static bool compararUsuarioPorId(Usuario* a, Usuario* b) {
+        return a->getId() < b->getId();
+    }
 
     void procesarLineaUsuario(const vector<string>& campos) {
         if (campos.size() < 5) return;
         Usuario* nuevo = new Usuario(stoi(campos[1]), campos[2], campos[3], campos[4]);
         listaUsuarios.insertarAlFinal(nuevo);
+        indiceUsuariosPorId.setRaiz(
+            indiceUsuariosPorId.insertar(indiceUsuariosPorId.getRaiz(), nuevo, compararUsuarioPorId)
+        );
 
         usuarios.adicionarVertice(nuevo);
         nuevo->setIndiceGrafo(usuarios.cantidadVertices() - 1);
@@ -124,6 +127,8 @@ private:
         int idPlaylist = stoi(campos[1]);
         int idCancion = stoi(campos[2]);
 
+        // Usuario::crearPlaylist genera el ID como (idUsuario * 100) + n,
+        // asi que podemos ubicar al dueño directamente sin recorrer a todos los usuarios.
         Usuario* due = buscarUsuarioPorId(idPlaylist / 100);
         if (!due) return;
 
@@ -154,7 +159,7 @@ private:
         archivo.close();
     }
 
-    // --- Historial ---
+    // --- Historial (antes GestionArchivos.h / GestorArchivos) ---
 
     // Carga la pila de historial del Usuario. Se llama una sola vez, al iniciar sesion.
     void cargarHistorialUsuario(Usuario* u) {
@@ -197,7 +202,10 @@ private:
         archivo.close();
     }
 
-    // Historial de un usuario 
+    // Historial de un usuario ya resuelto a punteros Cancion* (para recomendaciones).
+    // Antes vivia en GestorArchivos y recibia el catalogo como parametro
+    // (catalogoCanciones.toVector()); ahora que es metodo de esta misma clase,
+    // usa catalogoCanciones directamente.
     vector<Cancion*> obtenerHistorialCanciones(int idUsuario) {
         vector<Cancion*> historial;
         ifstream archivo("historial.txt");
@@ -241,6 +249,7 @@ private:
         return false;
     }
 
+    // --- Helpers de favoritos (menor prioridad) ---
 
     void procesarLineaFavorito(const vector<string>& campos) {
         // FAVORITO, idUsuario, idCancion
@@ -287,6 +296,7 @@ public:
 
     ~Gestor() {
         catalogoCanciones.vaciar();
+        indiceUsuariosPorId.vaciar();
         listaUsuarios.vaciar();
         cancionesEspera.vaciar();
     }
@@ -294,10 +304,10 @@ public:
     // ---------------- USUARIOS / SESION ----------------
 
     Usuario* buscarUsuarioPorId(int id) {
-        for (Usuario* u : listaUsuarios.toVector()) { if (u->getId() == id) return u; }
-        return nullptr;
+        return indiceUsuariosPorId.binarySearchID(indiceUsuariosPorId.getRaiz(), id);
     }
 
+    // Devuelve true/false; no imprime nada (la UI decide el mensaje).
     bool iniciarSesion(string email, string password) {
         vector<Usuario*> v = listaUsuarios.toVector();
 
@@ -318,7 +328,7 @@ public:
 
     void cerrarSesion() {
         usuarioLogueado = nullptr;
-        cancionesEspera.vaciar(); 
+        cancionesEspera.vaciar(); // la cola era propia de la sesion (antes vivia y moria con GestorReproduccion)
         cancionActual = nullptr;
     }
 
@@ -326,8 +336,13 @@ public:
     void registrarNuevoUsuario(int id, string nom, string email, string pass, int plan) {
         Usuario* nuevo = new Usuario(id, nom, email, pass);
         listaUsuarios.insertarAlFinal(nuevo);
+        indiceUsuariosPorId.setRaiz(
+            indiceUsuariosPorId.insertar(indiceUsuariosPorId.getRaiz(), nuevo, compararUsuarioPorId)
+        );
 
-        
+        // Sin esto, un usuario creado en tiempo de ejecucion (no cargado desde
+        // usuarios.txt) se queda con indiceGrafo == -1 y jamas podria formar
+        // aristas de amistad, aunque agregue amigos despues.
         usuarios.adicionarVertice(nuevo);
         nuevo->setIndiceGrafo(usuarios.cantidadVertices() - 1);
 
@@ -366,6 +381,8 @@ public:
             return;
         }
 
+        // getAmigos() ahora devuelve una referencia al vector real del Usuario,
+        // asi que esta comprobacion consulta el estado verdadero (no una copia).
         for (Usuario* u : usuarioLogueado->getAmigos()) {
             if (u->getId() == idNuevo) {
                 ubicar(25, 25); cout << "Ya tienes a " << amigo->getNombre() << " como amigo" << endl;
@@ -406,18 +423,14 @@ public:
         cancionActual->setEnReproduccion(true);
     }
 
-    // Alterna play/pausa de la cancion que esta sonando actualmente.
     void togglePlayPause() {
         if (cancionActual == nullptr) return;
         cancionActual->setEnReproduccion(!cancionActual->getEnReproduccion());
     }
 
-    // Avanza a la siguiente cancion de la cola. La que estaba sonando
-    // (cancionActual) pasa al historial (pila) del usuario.
     void reproducirSiguiente() {
         if (!usuarioLogueado) return;
 
-        // 1. Si la cola esta vacia...
         if (cancionesEspera.estaVacia()) {
             if (cancionActual != nullptr) {
                 cancionActual->setEnReproduccion(false);
@@ -426,7 +439,6 @@ public:
                 guardarLinea("historial.txt", "HIST," + to_string(usuarioLogueado->getId()) + ",999," +
                     cancionActual->getNombre() + ",Cancion," + obtenerNombreArtista(cancionActual->getArtista()) + "," + obtenerHoraActual());
 
-                // Liberamos el reproductor para que la UI detecte que no hay nada sonando
                 cancionActual = nullptr;
             }
             return;
@@ -515,8 +527,7 @@ public:
 
 
 
-    // Calcula, ordena (Heap Sort) y filtra (distancia <= 80 y no escuchadas).
-     vector<Recomendacion> obtenerRecomendaciones(vector<double> preferenciasUsuario, int idUsuario) {
+    vector<Recomendacion> obtenerRecomendaciones(vector<double> preferenciasUsuario, int idUsuario) {
         vector<Cancion*> canciones = catalogoCanciones.toVector();
         vector<Recomendacion> listaDistancias;
         if (canciones.empty()) return listaDistancias;
