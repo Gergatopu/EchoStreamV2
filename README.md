@@ -44,7 +44,6 @@ El proyecto simula una plataforma de streaming musical inspirada en Spotify, per
 
 - **Gerardo Morales**
 - **Ilder Ojeda**
-- **Gonzalo Becerra**
 
 ---
 
